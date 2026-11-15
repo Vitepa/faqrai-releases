@@ -1,5 +1,5 @@
 {
- "verze": "2026-11-15",
+ "verze": "2026-11-16",
  "popis": "Daňové parametry ČR pro FaqrAi a FaqrAi Simple. Hodnoty zveřejněné ve Sbírce zákonů a na webu Finanční správy, ČSSZ a MPSV.",
  "platiProRoky": [
   2026
@@ -71,7 +71,9 @@
     "p2": 16745,
     "p3": 27139,
     "poznamka": "od 1. 1. 2026; MF avizovalo snížení 1. pásma v průběhu roku 2026"
-   }
+   },
+   "zalohaDanMin": 30000,
+   "zalohaDanMid": 150000
   }
  },
  "firma": {
@@ -80,7 +82,7 @@
    "minMzda": 22400
   }
  },
- "podpis": "oft7VqQw6jovFmXuGoLJ9aeWZ5RAHK82MzeUzCsQos3ePL/YF2givBXEWhyq1xcMo65RPsa0FnXK4zqe/Kw5Bg==",
+ "podpis": "dodTN182zZcO6s4GArcIjJI/+vFZv4SAvwr2vL3CJvEdlsMRnKq/i788A0D9a5AZL02SZJ8UTefkaSn49leoBg==",
  "urok": {
   "prirazka": 8,
   "poznamka": "Zákonný úrok z prodlení = 2T repo sazba ČNB platná k 1. dni pololetí, v němž prodlení vzniklo, + 8 p. b. (NV 351/2013 Sb.)",
