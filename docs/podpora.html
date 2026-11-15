@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Podpora – FaqrAi</title><meta name="description" content="Formulář podpory FaqrAi: produkt, verze, popis problému. Odpovídáme v pracovní dny."><meta property="og:title" content="Podpora – FaqrAi"><meta property="og:description" content="Formulář podpory FaqrAi: produkt, verze, popis problému. Odpovídáme v pracovní dny."><meta property="og:image" content="img/og.jpg"><meta property="og:type" content="website"><link rel="icon" href="img/logo-faqrai.svg"><link rel="stylesheet" href="style.css"></head>
+<body>
+<header class="top"><div class="wrap"><a class="brand" href="./"><img src="img/logo-faqrai.svg" alt="">FaqrAi</a><nav class="main"><a href="./#produkty">Produkty</a><a href="./#cenik">Ceník</a><a href="napoveda.html">Nápověda</a><a href="stahnout.html">Ke stažení</a><a class="btn primary" href="objednavka.html">Koupit licenci</a></nav></div></header>
+
+<section><div class="wrap" style="max-width:860px">
+  <h1 style="font-size:36px">Podpora</h1>
+  <p class="muted" id="hours"></p>
+  <form id="sf" class="card" novalidate>
+    <div class="row">
+      <label class="f">Produkt<select id="product"></select></label>
+      <label class="f">Verze programu<input id="version" placeholder="např. 2.2.0 (O programu)"></label>
+      <label class="f">Systém<select id="os"><option>Windows 11</option><option>Windows 10</option><option>macOS (Apple Silicon)</option><option>macOS (Intel)</option><option>jiný</option></select></label>
+      <label class="f">Číslo licence (pokud máte)<input id="lic" class="mono" maxlength="8" placeholder="např. 65F109C1"></label>
+      <label class="f">E-mail<input id="email" type="email" required></label>
+      <label class="f">Jméno / firma<input id="name"></label>
+      <label class="f span2">Typ požadavku<select id="kind"><option>Něco nefunguje</option><option>Dotaz, jak něco udělat</option><option>Návrh na vylepšení</option><option>Licence a fakturace</option><option>Partnerství (účetní kanceláře)</option></select></label>
+      <label class="f span2">Popis<textarea id="text" rows="6" placeholder="Co jste udělali, co se stalo, co jste čekali. Hodí se přesné znění hlášky."></textarea></label>
+    </div>
+    <p class="small muted" style="margin:10px 0">Tip: v programu O programu → „Zkopírovat informace pro podporu“ vloží verzi, systém a číslo licence najednou. Doklady ani data neposílejte, pokud si je nevyžádáme.</p>
+    <div id="err"></div>
+    <button class="btn primary" type="submit">Odeslat</button>
+    <div id="done" class="notice" style="margin-top:14px" hidden></div>
+  </form>
+</div></section>
+<footer><div class="wrap"><div><b>FaqrAi</b> · <span id="provider"></span></div><div class="small"><a href="./">Úvod</a> · <a href="pro-koho.html">Pro koho</a> · <a href="ucetni.html">Pro účetní</a> · <a href="napoveda.html">Nápověda</a> · <a href="podpora.html">Podpora</a> · <a href="licencni-podminky.html">Podmínky</a></div></div></footer>
+<script src="config.js"></script>
+<script>(function(){const C=window.FAQRAI_CFG;document.getElementById("provider").textContent=[C.provider.name,C.provider.ico?"IČO "+C.provider.ico:"",C.provider.email].filter(Boolean).join(" · ");})();</script>
+<script>(function(){const C=window.FAQRAI_CFG,$=s=>document.querySelector(s);$("#hours").textContent="Odpovídáme "+C.support.hours+". Zákazníci s placenou podporou mají přednost.";$("#product").innerHTML=C.products.map(p=>`<option>${p.name}</option>`).join("")+"<option>Web / objednávka</option>";
+$("#sf").addEventListener("submit",async e=>{e.preventDefault();const v=id=>$("#"+id).value.trim();if(!v("email")||!v("text")){$("#err").innerHTML='<div class="notice" style="margin:10px 0;background:#fdebe7;border-color:#f1b0a8">Vyplňte e-mail a popis.</div>';return;}$("#err").innerHTML="";
+const body=`Produkt: ${v("product")}\nVerze: ${v("version")}\nSystém: ${v("os")}\nLicence: ${v("lic")}\nTyp: ${v("kind")}\nOd: ${v("name")} <${v("email")}>\n\n${v("text")}`;let sent=false;
+if(C.support.endpoint){try{const r=await fetch(C.support.endpoint,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({email:v("email"),name:v("name"),product:v("product"),version:v("version"),os:v("os"),licence:v("lic"),kind:v("kind"),text:v("text"),_subject:"Podpora: "+v("kind")+" – "+v("product")})});sent=r.ok;}catch(_){}}
+if(!sent)location.href="mailto:"+encodeURIComponent(C.provider.email)+"?subject="+encodeURIComponent("Podpora FaqrAi: "+v("kind")+" – "+v("product"))+"&body="+encodeURIComponent(body);
+$("#done").hidden=false;$("#done").textContent=sent?"Požadavek jsme přijali, ozveme se na "+v("email")+".":"Otevřel se e-mailový program s připraveným textem – zprávu prosím odešlete. Pokud se neotevřel, napište na "+C.provider.email+".";});})();</script></body></html>

@@ -1,15 +1,96 @@
-/* Nastavení webu FaqrAi – upravte zde, nic jiného není potřeba měnit. */
+/* ============================================================================
+   Nastavení webu FaqrAi. Všechno, co se prodává a za kolik, je tady – HTML se
+   měnit nemusí. Ceny v Kč. Po změně stačí soubor nahrát na hosting.
+   ============================================================================ */
 window.FAQRAI_CFG = {
-  provider: { name: "Pavel Vítek", ico: "",          // IČO doplňte, jakmile ho máte
-              email: "pavel.vitek16@gmail.com", vatPayer: false, address: "" },
-  orderEmail: "pavel.vitek16@gmail.com",            // kam chodí objednávky
-  orderEndpoint: "",                                // volitelné: URL formulářové služby (Formspree, Getform…) – objednávka se tam pošle POSTem a nemusíte spoléhat na e-mail
-  account: { number: "", iban: "" },                // bankovní účet pro platbu (IBAN kvůli QR platbě), např. "CZ6508000000192000145399"
-  releases: "https://github.com/Vitepa/faqrai-releases/releases/latest",
-  /* Ceny v Kč. Neplátce DPH: ceny jsou konečné. */
-  prices: {
-    simple: { year: 990,  lifetime: 2490, support: 490,  name: "FaqrAi Simple", desc: "OSVČ – faktury, výdaje, daně a přehledy" },
-    faqrai: { year: 2490, lifetime: 5990, support: 990,  seatYear: 990, seatLifetime: 1990, name: "FaqrAi", desc: "Malé firmy – faktury, DPH, zálohy, pokladna, sklad" }
+  provider: {
+    name: "Pavel Vítek", ico: "",            // IČO doplňte, jakmile ho máte
+    email: "pavel.vitek16@gmail.com", address: "",
+    vatPayer: false                          // true = ceny níže jsou bez DPH a k objednávce se připočte 21 %
   },
-  trialDays: 30
+  orderEmail: "pavel.vitek16@gmail.com",     // kam chodí objednávky (mailto, když není endpoint)
+  orderEndpoint: "",                         // volitelné: URL formulářové služby (Formspree, Getform, vlastní API) – objednávka tam jde POSTem jako JSON
+  account: { number: "", iban: "" },         // bankovní účet; IBAN je potřeba pro QR platbu (např. "CZ6508000000192000145399")
+  releases: "https://github.com/Vitepa/faqrai-releases/releases/latest",
+  releasesApi: "https://api.github.com/repos/Vitepa/faqrai-releases/releases",   // pro stránku Ke stažení (verze, soubory, změny)
+  publicKey: "5Begww25ucs6NtjGc04n9BNlK9saI39/nNcVYj2U75o=",                     // veřejný klíč licencí (ověření na webu); musí být shodný s src/licence-public-key.txt
+  trialDays: 30,
+  invoiceDueDays: 14,
+
+  /* ---- Produkty --------------------------------------------------------------
+     id        – interní klíč (používá se v odkazech ?p=simple a v objednávce)
+     byte      – číslo produktu v licenci (1 Simple, 2 FaqrAi; další 3, 4…)
+     seats     – prodává se na počet zařízení (true) / osobní licence (false)
+     year      – cena za 1 rok (první zařízení); seatYear – každé další zařízení za rok
+     lifetime  – cena neomezené licence (null = nenabízet); seatLifetime – další zařízení neomezeně
+     lifetimeUpdates – kolik let aktualizací má neomezená licence v ceně
+     available – false = jen „Připravujeme“, nelze objednat (lze přihlásit zájem)
+  --------------------------------------------------------------------------- */
+  products: [
+    { id: "simple", byte: 1, name: "FaqrAi Simple", short: "Simple", color: "#2741A0", logo: "img/logo-simple.svg", available: true,
+      desc: "OSVČ – faktury, výdaje, daně a přehledy", seats: false,
+      year: 990, lifetime: 2490, lifetimeUpdates: 2,
+      bullets: ["faktury plátce i neplátce DPH, QR platba, opravné doklady", "daňové přiznání a přehledy ČSSZ / ZP, vedlejší činnost", "další příjmy (§ 8–10), paušální daň, přenos ztráty", "OCR skenů, balík pro účetní, pokladna"] },
+    { id: "faqrai", byte: 2, name: "FaqrAi", short: "FaqrAi", color: "#0F766E", logo: "img/logo-faqrai.svg", available: true,
+      desc: "Malé firmy – faktury, DPH, zálohy, pokladna, sklad", seats: true, maxSeats: 50,
+      year: 2490, seatYear: 990, lifetime: 5990, seatLifetime: 1990, lifetimeUpdates: 2,
+      bullets: ["zálohové faktury, DDPP, vyúčtování, EUR", "DPH na vstupu i výstupu, kontrolní hlášení", "pokladna, sklad, role zařízení", "export Pohoda XML a ISDOC"] },
+    { id: "duo", byte: 3, name: "FaqrAi Duo", short: "Duo", color: "#6D28D9", logo: "img/logo-duo.svg", available: false, eta: "2027",
+      desc: "Podvojné účetnictví pro s.r.o. a spolky", seats: true, year: 4990, seatYear: 1490, lifetime: null,
+      bullets: ["účetní deník, hlavní kniha, osnova pro podnikatele", "předkontace dokladů z FaqrAi", "rozvaha, výsledovka, příloha", "přiznání k DPPO"] },
+    { id: "cloud", byte: 4, name: "FaqrAi Cloud", short: "Cloud", color: "#0369A1", logo: "img/logo-cloud.svg", available: false, eta: "2027",
+      desc: "Stejné programy v prohlížeči a na telefonu", seats: true, year: 1490, seatYear: 490, lifetime: null, perUserLabel: "uživatel",
+      bullets: ["sdílená evidence v týmu v reálném čase", "faktura a foto dokladu z telefonu", "přístup účetní bez instalace", "servery v EU, export dat kdykoli"] }
+  ],
+
+  /* ---- Délky licence a slevy za platbu předem ---- */
+  terms: [
+    { years: 1, label: "1 rok", discount: 0 },
+    { years: 2, label: "2 roky", discount: 0.10 },
+    { years: 3, label: "3 roky", discount: 0.15 },
+    { lifetime: true, label: "Neomezená platnost" }
+  ],
+
+  /* ---- Doplňky ---------------------------------------------------------------
+     mode: "year" (× počet let licence), "once" (jednorázově), "seatYear" (× zařízení × roky), "seatOnce"
+     products: na které produkty se vztahuje (vynechat = na všechny); default: předvybrat
+  --------------------------------------------------------------------------- */
+  addons: [
+    { id: "support",  name: "Podpora e-mailem",            mode: "year", price: { simple: 490, faqrai: 990, duo: 1490, cloud: 0 }, desc: "odpověď do 2 pracovních dnů, po dobu licence", default: false },
+    { id: "priority", name: "Přednostní podpora",          mode: "year", price: 1990, desc: "odpověď do 1 pracovního dne, telefon, vzdálená pomoc", products: ["faqrai", "duo"] },
+    { id: "training", name: "Online zaškolení (60 min)",   mode: "once", price: 1490, desc: "videohovor, nastavení programu a první doklady" },
+    { id: "migration", name: "Převod dat z jiného programu", mode: "once", price: 2490, desc: "odběratelé, ceník a otevřené faktury z CSV/XML exportu" },
+    { id: "install",  name: "Instalace na dálku",          mode: "seatOnce", price: 490, desc: "nainstalujeme a nastavíme na každém zařízení" }
+  ],
+
+  /* ---- Balíčky (předvolby jedním kliknutím) ---- */
+  bundles: [
+    { id: "start",  name: "Start",  product: "simple", term: 1, addons: [],                       note: "OSVČ začíná" },
+    { id: "klid",   name: "Klid",   product: "simple", term: 3, addons: ["support"],              note: "3 roky, podpora, −15 %" },
+    { id: "firma",  name: "Firma",  product: "faqrai", term: 1, seats: 3, addons: ["support"],    note: "3 zařízení s podporou" },
+    { id: "rozjezd", name: "Rozjezd", product: "faqrai", term: 2, seats: 2, addons: ["support", "training"], note: "2 roky, zaškolení" }
+  ],
+
+  /* ---- Slevové kódy ----------------------------------------------------------
+     percent nebo amount; validUntil (RRRR-MM-DD); products (jen pro některé); minTotal
+  --------------------------------------------------------------------------- */
+  coupons: [
+    { code: "UCETNI10", percent: 10, note: "doporučení účetní" },
+    { code: "START2027", amount: 500, validUntil: "2027-01-31", products: ["simple"], minTotal: 990 }
+  ],
+
+  /* ---- Přechod mezi produkty a prodloužení ---- */
+  upgrade: { from: "simple", to: "faqrai", credit: 0.5, note: "Při přechodu ze Simple na FaqrAi započteme 50 % z ceny zbývající doby licence Simple." },
+  renewalDiscount: 0.05,   // sleva při prodloužení před koncem platnosti (zadané číslo stávající licence)
+
+  /* ---- Newsletter a podpora ---- */
+  newsletter: { endpoint: "", provider: "", note: "Čtvrtletně: změny sazeb a limitů, termíny, novinky v programech. Žádný spam, odhlášení jedním kliknutím." }, // endpoint = URL formulářové služby (Buttondown/Mailchimp/Formspree). Prázdné = odběr e-mailem na orderEmail.
+  support: { endpoint: "", hours: "pracovní dny 9–17, odpověď do 2 pracovních dnů (s placenou podporou), jinak dle možností" },
+  siteUrl: "https://vitepa.github.io/faqrai-releases/",   // veřejná adresa webu (pro sdílení a sitemap)
+
+  /* ---- Texty ---- */
+  texts: {
+    afterOrder: "Fakturu pošleme e-mailem; licenční klíč vydáme po připsání platby, obvykle do jednoho pracovního dne.",
+    consent: "Souhlasím s licenčními podmínkami a se zpracováním údajů pro vystavení faktury a licence. Jako podnikatel objednávám na IČO; právo spotřebitele na odstoupení od smlouvy se neuplatní."
+  }
 };

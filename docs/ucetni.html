@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pro účetní kanceláře – FaqrAi</title><meta name="description" content="Partnerský program FaqrAi: slevový kód pro klienty, provize, licence pro více klientů, import do Pohody."><meta property="og:title" content="Pro účetní kanceláře – FaqrAi"><meta property="og:description" content="Partnerský program FaqrAi: slevový kód pro klienty, provize, licence pro více klientů, import do Pohody."><meta property="og:image" content="img/og.jpg"><meta property="og:type" content="website"><link rel="icon" href="img/logo-faqrai.svg"><link rel="stylesheet" href="style.css"></head>
+<body>
+<header class="top"><div class="wrap"><a class="brand" href="./"><img src="img/logo-faqrai.svg" alt="">FaqrAi</a><nav class="main"><a href="./#produkty">Produkty</a><a href="./#cenik">Ceník</a><a href="napoveda.html">Nápověda</a><a href="stahnout.html">Ke stažení</a><a class="btn primary" href="objednavka.html">Koupit licenci</a></nav></div></header>
+
+<section><div class="wrap">
+  <h1 style="font-size:36px">Pro účetní kanceláře</h1>
+  <p class="muted">Klient, který fakturuje ve FaqrAi, vám posílá doklady s náležitostmi, v jednom balíku a ve formátu, který importujete. Odměňujeme to.</p>
+  <div class="grid c3" style="margin-top:22px">
+    <div class="card"><h3>Doporučení</h3><p class="small muted">Dostanete vlastní slevový kód (10 % pro klienta). Z každé licence zaplacené s vaším kódem vám náleží <b>20 % provize</b>, při prodloužení 10 %. Vyúčtování čtvrtletně na fakturu.</p></div>
+    <div class="card"><h3>Licence pro klienty</h3><p class="small muted">Od 5 licencí <b>množstevní sleva 15 %</b>, od 15 licencí 25 %. Jedna faktura, klíče vystavené na jména klientů, správa prodloužení na jednom místě.</p></div>
+    <div class="card"><h3>Přístup k datům</h3><p class="small muted">Klient vám ve FaqrAi přidělí roli <b>jen čtení</b> nebo <b>uživatel</b> na vašem počítači (sdílená složka v cloudu). Vidíte vše průběžně, měsíční balík už jen formálně.</p></div>
+  </div>
+  <h2 style="margin-top:40px">Co dostanete v balíku od klienta</h2>
+  <div class="features" style="margin-top:16px">
+    <div><h3>Pohoda XML</h3><p>Vydané i přijaté faktury v <span class="mono">dataPack</span> 2.0 – import přes Soubor → Datová komunikace.</p></div>
+    <div><h3>ISDOC</h3><p>Pro Money S3, iDoklad, ABRA Flexi a další. Každá faktura zvlášť v podsložce <span class="mono">isdoc/</span>.</p></div>
+    <div><h3>CSV + PDF + přílohy</h3><p>Kniha faktur, výdaje, skeny přijatých dokladů pojmenované datem a dodavatelem.</p></div>
+    <div><h3>Podklady OSVČ</h3><p>Přiznání po řádcích (příloha 1 i 2), přehledy ČSSZ a ZP, vedlejší činnost po měsících.</p></div>
+    <div><h3>DPH</h3><p>Řádky přiznání, kontrolní hlášení A.4/A.5/B.2/B.3, souhrnné hlášení.</p></div>
+    <div><h3>Pokladna a sklad</h3><p>Pokladní kniha PDF/CSV, stav zásob a pohyby.</p></div>
+  </div>
+  <div class="card" style="margin-top:30px"><h3>Chci do programu</h3><p class="small muted">Napište nám název kanceláře, IČO a přibližný počet klientů. Pošleme smlouvu o spolupráci a váš kód do dvou pracovních dnů.</p><p><a class="btn primary" id="mail" href="#">Napsat e-mail</a> <a class="btn" href="podpora.html">Nebo přes formulář</a></p></div>
+</div></section>
+<footer><div class="wrap"><div><b>FaqrAi</b> · <span id="provider"></span></div><div class="small"><a href="./">Úvod</a> · <a href="pro-koho.html">Pro koho</a> · <a href="ucetni.html">Pro účetní</a> · <a href="napoveda.html">Nápověda</a> · <a href="podpora.html">Podpora</a> · <a href="licencni-podminky.html">Podmínky</a></div></div></footer>
+<script src="config.js"></script>
+<script>(function(){const C=window.FAQRAI_CFG;document.getElementById("provider").textContent=[C.provider.name,C.provider.ico?"IČO "+C.provider.ico:"",C.provider.email].filter(Boolean).join(" · ");})();</script>
+<script>document.getElementById("mail").href="mailto:"+window.FAQRAI_CFG.orderEmail+"?subject="+encodeURIComponent("FaqrAi – partnerský program pro účetní");</script></body></html>
