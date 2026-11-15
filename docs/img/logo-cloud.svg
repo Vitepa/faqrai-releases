@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0EA5E9"/><stop offset="1" stop-color="#1D4ED8"/></linearGradient></defs>
+  <rect x="48" y="48" width="928" height="928" rx="220" fill="url(#bg)"/>
+  <!-- list dokladu -->
+  <path d="M290 200 H622 L774 352 V700 Q774 740 734 740 H290 Q250 740 250 700 V240 Q250 200 290 200 Z" fill="#FFFFFF"/>
+  <path d="M622 200 V312 Q622 352 662 352 H774 Z" fill="#BFDBFE"/>
+  <rect x="336" y="300" width="72" height="330" rx="14" fill="#0B1F3A"/>
+  <rect x="336" y="300" width="250" height="72" rx="14" fill="#0B1F3A"/>
+  <rect x="336" y="460" width="200" height="64" rx="14" fill="#0B1F3A"/>
+  <!-- oblak -->
+  <path d="M300 860 H720 Q800 860 800 790 Q800 724 736 718 Q730 640 650 640 Q600 640 572 676 Q546 650 506 650 Q430 650 414 718 Q340 716 320 770 Q300 800 300 860 Z" fill="#E0F2FE"/>
+  <path d="M300 860 H720 Q800 860 800 790 Q800 724 736 718 Q730 640 650 640 Q600 640 572 676 Q546 650 506 650 Q430 650 414 718 Q340 716 320 770 Q300 800 300 860 Z" fill="none" stroke="#0B1F3A" stroke-width="22" stroke-linejoin="round"/>
+  <!-- synchronizační šipky -->
+  <path d="M520 792 a56 56 0 1 1 16 -40" fill="none" stroke="#0B1F3A" stroke-width="20" stroke-linecap="round"/>
+  <path d="M548 740 L536 760 L512 752" fill="none" stroke="#0B1F3A" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="720" cy="760" r="48" fill="#F0A020"/>
+  <path d="M698 762 L714 778 L744 744" fill="none" stroke="#0B1F3A" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

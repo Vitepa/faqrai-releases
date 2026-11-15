@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#15998D"/><stop offset="1" stop-color="#0B5B55"/>
+    </linearGradient>
+  </defs>
+  <rect x="48" y="48" width="928" height="928" rx="220" fill="url(#bg)"/>
+  <!-- druhý list vzadu: firma = víc dokladů -->
+  <path d="M352 150 H690 L832 292 V712 Q832 752 792 752 H352 Q312 752 312 712 V190 Q312 150 352 150 Z" fill="#9FD9D1" opacity=".55"/>
+  <!-- přední list -->
+  <path d="M290 236 H622 L774 388 V828 Q774 868 734 868 H290 Q250 868 250 828 V276 Q250 236 290 236 Z" fill="#FFFFFF"/>
+  <path d="M622 236 V348 Q622 388 662 388 H774 Z" fill="#BFE6E0"/>
+  <rect x="336" y="340" width="72" height="420" rx="14" fill="#13202B"/>
+  <rect x="336" y="340" width="250" height="72" rx="14" fill="#13202B"/>
+  <rect x="336" y="508" width="200" height="64" rx="14" fill="#13202B"/>
+  <circle cx="666" cy="724" r="88" fill="#F0A020"/>
+  <path d="M622 726 L655 759 L716 692" fill="none" stroke="#13202B" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3553C4"/><stop offset="1" stop-color="#1E3385"/>
+    </linearGradient>
+  </defs>
+  <rect x="48" y="48" width="928" height="928" rx="220" fill="url(#bg)"/>
+  <!-- list dokladu s přehnutým rohem -->
+  <path d="M290 196 H622 L774 348 V788 Q774 828 734 828 H290 Q250 828 250 788 V236 Q250 196 290 196 Z" fill="#FFFFFF"/>
+  <path d="M622 196 V308 Q622 348 662 348 H774 Z" fill="#C9D3F3"/>
+  <!-- písmeno F složené z řádků faktury -->
+  <rect x="336" y="300" width="72" height="420" rx="14" fill="#1B1F2B"/>
+  <rect x="336" y="300" width="250" height="72" rx="14" fill="#1B1F2B"/>
+  <rect x="336" y="468" width="200" height="64" rx="14" fill="#1B1F2B"/>
+  <!-- uhrazeno -->
+  <circle cx="666" cy="684" r="88" fill="#1F9D63"/>
+  <path d="M622 686 L655 719 L716 652" fill="none" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

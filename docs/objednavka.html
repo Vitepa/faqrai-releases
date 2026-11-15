@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Objednávka licence – FaqrAi</title>
+<link rel="icon" href="img/logo-faqrai.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="./"><img src="img/logo-faqrai.svg" alt="">FaqrAi</a>
+  <nav class="main"><a href="./#produkty">Produkty</a><a href="./#cenik">Ceník</a><a href="./#faq">Otázky</a></nav>
+</div></header>
+
+<section><div class="wrap">
+  <h1 style="font-size:36px">Objednávka licence</h1>
+  <p class="muted">Vyplňte IČO, zbytek doplníme z registru ARES. Po odeslání vám pošleme fakturu; licenční klíč přijde e-mailem po zaplacení (obvykle do jednoho pracovního dne).</p>
+
+  <div class="steps" style="margin:22px 0 30px"><div><b>Vyberte licenci</b><br><span class="small muted">produkt, délka, zařízení, podpora</span></div><div><b>Fakturační údaje</b><br><span class="small muted">IČO → ARES, e-mail pro klíč</span></div><div><b>Platba převodem</b><br><span class="small muted">QR platba, klíč po připsání</span></div></div>
+
+  <form id="orderForm" class="order" novalidate>
+    <div>
+      <fieldset><legend>1. Licence</legend>
+        <div class="choice" id="productChoice">
+          <label><input type="radio" name="product" value="simple"><b>FaqrAi Simple</b><br><span class="small muted" id="descSimple"></span></label>
+          <label><input type="radio" name="product" value="faqrai"><b>FaqrAi</b><br><span class="small muted" id="descFaqrai"></span></label>
+        </div>
+        <div class="row" style="margin-top:14px">
+          <label class="f">Délka licence<select id="term"><option value="1">1 rok</option><option value="2">2 roky (−10 %)</option><option value="3">3 roky (−15 %)</option><option value="life">Neomezená platnost</option></select><span class="hint" id="termHint">Aktualizace a daňové parametry jsou v ceně po dobu licence; u neomezené licence 2 roky od nákupu.</span></label>
+          <label class="f" id="seatsField">Počet zařízení<input id="seats" type="number" min="1" max="50" value="1"><span class="hint">Počítače, na kterých poběží FaqrAi současně. Lze později rozšířit.</span></label>
+          <label class="f">Podpora e-mailem<select id="support"><option value="0">Bez podpory (nápověda v programu)</option><option value="1">Podpora na 1 rok</option><option value="life">Podpora po celou dobu licence</option></select></label>
+          <label class="f">Jméno držitele licence<input id="holder" placeholder="jak bude uvedeno v klíči (obvykle název firmy nebo jméno)"><span class="hint">Zadává se v programu spolu s klíčem – přesně takto.</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset><legend>2. Fakturační údaje</legend>
+        <div class="row c3">
+          <label class="f">IČO<input id="ico" inputmode="numeric" maxlength="8" placeholder="12345678" autocomplete="off"><span class="hint" id="aresMsg">Po zadání 8 číslic načteme údaje z ARES.</span></label>
+          <label class="f span2">Název / jméno<input id="name" required></label>
+        </div>
+        <div class="row c3">
+          <label class="f">DIČ<input id="dic" placeholder="CZ12345678"></label>
+          <label class="f span2">Ulice a číslo<input id="street" required></label>
+        </div>
+        <div class="row c3">
+          <label class="f">PSČ<input id="zip" inputmode="numeric" required></label>
+          <label class="f span2">Město<input id="city" required></label>
+        </div>
+        <div class="row">
+          <label class="f">E-mail (sem pošleme fakturu a klíč)<input id="email" type="email" required></label>
+          <label class="f">Telefon (nepovinné)<input id="phone" type="tel"></label>
+        </div>
+        <label class="f" style="margin-top:12px">Poznámka<textarea id="note" rows="2" placeholder="např. číslo objednávky, požadavek na jiný e-mail pro klíč…"></textarea></label>
+        <label style="display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-size:14px"><input type="checkbox" id="agree" style="margin-top:4px"> Souhlasím s <a href="licencni-podminky.html" target="_blank" rel="noopener">licenčními podmínkami</a> a se zpracováním údajů pro vystavení faktury a licence. Jako podnikatel objednávám na IČO; právo na odstoupení od smlouvy spotřebitele se neuplatní.</label>
+      </fieldset>
+      <div id="formErr"></div>
+      <button class="btn primary" type="submit" id="submitBtn" style="font-size:17px;padding:14px 24px">Odeslat objednávku</button>
+      <p class="small muted" style="margin-top:10px">Odesláním se nic neplatí. Fakturu pošleme e-mailem; klíč vydáme po připsání platby.</p>
+    </div>
+
+    <aside class="summary card">
+      <h3>Shrnutí</h3>
+      <table id="sumTable"></table>
+      <p class="small muted" id="vatNote"></p>
+      <div class="notice small">Zkušební verzi můžete používat už teď – <a id="dl" href="#" rel="noopener">stáhnout</a>. Po zadání klíče data zůstanou.</div>
+    </aside>
+  </form>
+
+  <div id="done" class="done" hidden></div>
+</div></section>
+
+<footer><div class="wrap"><div><b>FaqrAi</b> · <span id="provider"></span></div><div class="small"><a href="./">Zpět na úvod</a></div></div></footer>
+
+<script src="config.js"></script>
+<script src="qrcode.js"></script>
+<script>
+(function(){
+  const C = window.FAQRAI_CFG, P = C.prices, $ = s => document.querySelector(s);
+  const kc = n => new Intl.NumberFormat("cs-CZ").format(n) + " Kč";
+  const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  $("#descSimple").textContent = P.simple.desc; $("#descFaqrai").textContent = P.faqrai.desc;
+  $("#vatNote").textContent = C.provider.vatPayer ? "Ceny bez DPH 21 %; DPH bude na faktuře." : "Nejsme plátci DPH – ceny jsou konečné.";
+  $("#provider").textContent = [C.provider.name, C.provider.ico ? "IČO " + C.provider.ico : "", C.provider.email].filter(Boolean).join(" · ");
+  $("#dl").href = C.releases;
+  const q = new URLSearchParams(location.search); const pre = q.get("p") === "faqrai" ? "faqrai" : "simple";
+  document.querySelector(`input[name=product][value=${pre}]`).checked = true;
+
+  function state(){
+    const product = document.querySelector("input[name=product]:checked").value, term = $("#term").value, seats = Math.max(1, Math.min(50, parseInt($("#seats").value, 10) || 1)), support = $("#support").value;
+    const pr = P[product], years = term === "life" ? null : parseInt(term, 10), disc = years === 2 ? 0.10 : years === 3 ? 0.15 : 0;
+    const lines = [];
+    if(term === "life"){ lines.push({ t: `${pr.name} – neomezená licence`, a: pr.lifetime }); if(product === "faqrai" && seats > 1) lines.push({ t: `Další zařízení ${seats - 1}× (neomezeně)`, a: (seats - 1) * pr.seatLifetime }); }
+    else { lines.push({ t: `${pr.name} – licence na ${years} ${years === 1 ? "rok" : "roky"}`, a: pr.year * years }); if(product === "faqrai" && seats > 1) lines.push({ t: `Další zařízení ${seats - 1}× na ${years} ${years === 1 ? "rok" : "roky"}`, a: (seats - 1) * pr.seatYear * years }); if(disc) lines.push({ t: `Sleva za ${years} roky předem (−${disc * 100} %)`, a: -Math.round(lines.reduce((s, l) => s + l.a, 0) * disc) }); }
+    if(support === "1") lines.push({ t: "Podpora e-mailem na 1 rok", a: pr.support });
+    if(support === "life") lines.push({ t: term === "life" ? "Podpora e-mailem na 2 roky" : `Podpora e-mailem na ${years} ${years === 1 ? "rok" : "roky"}`, a: pr.support * (term === "life" ? 2 : years) });
+    const subtotal = lines.reduce((s, l) => s + l.a, 0), vat = C.provider.vatPayer ? Math.round(subtotal * 0.21) : 0;
+    return { product, pr, term, years, seats, support, lines, subtotal, vat, total: subtotal + vat };
+  }
+  function renderSum(){
+    const s = state(); $("#seatsField").style.display = s.product === "faqrai" ? "" : "none";
+    $("#sumTable").innerHTML = s.lines.map(l => `<tr><td>${esc(l.t)}</td><td class="r">${kc(l.a)}</td></tr>`).join("") + (s.vat ? `<tr><td>DPH 21 %</td><td class="r">${kc(s.vat)}</td></tr>` : "") + `<tr class="total"><td>Celkem</td><td class="r">${kc(s.total)}</td></tr>`;
+  }
+  document.querySelectorAll("#orderForm input, #orderForm select").forEach(el => el.addEventListener("input", renderSum));
+  renderSum();
+
+  /* ARES – veřejné REST API; když prohlížeč volání nepovolí (CORS), údaje jdou vyplnit ručně */
+  let aresT = null;
+  $("#ico").addEventListener("input", () => {
+    const ico = $("#ico").value.replace(/\D/g, ""); $("#ico").value = ico; clearTimeout(aresT);
+    if(ico.length !== 8){ $("#aresMsg").textContent = "Po zadání 8 číslic načteme údaje z ARES."; $("#aresMsg").className = "hint"; return; }
+    if(!icoValid(ico)){ $("#aresMsg").textContent = "IČO nemá platný kontrolní součet – zkontrolujte ho."; $("#aresMsg").className = "hint err"; return; }
+    $("#aresMsg").textContent = "Hledám v ARES…"; $("#aresMsg").className = "hint";
+    aresT = setTimeout(async () => {
+      try {
+        const r = await fetch("https://ares.gov.cz/ekonomicke-subjekty-v-be/rest/ekonomicke-subjekty/" + ico, { headers: { Accept: "application/json" } });
+        if(!r.ok) throw new Error(r.status === 404 ? "Subjekt s tímto IČO v ARES není." : "ARES odpověděl " + r.status);
+        const j = await r.json(), a = j.sidlo || {};
+        $("#name").value = j.obchodniJmeno || ""; $("#dic").value = j.dic || "";
+        $("#street").value = a.textovaAdresa ? (a.nazevUlice ? `${a.nazevUlice} ${a.cisloDomovni || ""}${a.cisloOrientacni ? "/" + a.cisloOrientacni : ""}`.trim() : `${a.nazevObce || ""} ${a.cisloDomovni || ""}`.trim()) : "";
+        $("#zip").value = a.psc ? String(a.psc).replace(/(\d{3})(\d{2})/, "$1 $2") : ""; $("#city").value = a.nazevObce || "";
+        if(!$("#holder").value) $("#holder").value = j.obchodniJmeno || "";
+        $("#aresMsg").textContent = "Údaje načteny z ARES – zkontrolujte je."; $("#aresMsg").className = "hint ok";
+      } catch(e){ $("#aresMsg").textContent = (/fetch/i.test(e.message) ? "ARES se teď nepodařilo načíst." : e.message) + " Údaje vyplňte ručně."; $("#aresMsg").className = "hint err"; }
+    }, 400);
+  });
+  function icoValid(ico){ if(!/^\d{8}$/.test(ico)) return false; let s = 0; for(let i = 0; i < 7; i++) s += (+ico[i]) * (8 - i); const m = s % 11; const c = m === 0 ? 1 : m === 1 ? 0 : 11 - m; return c === +ico[7]; }
+
+  $("#orderForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    const s = state(), errs = [];
+    const v = id => $("#" + id).value.trim();
+    if(!icoValid(v("ico"))) errs.push("Zadejte platné IČO (objednávky přijímáme od podnikatelů).");
+    for(const [id, lab] of [["name","název nebo jméno"],["street","ulici"],["zip","PSČ"],["city","město"],["email","e-mail"],["holder","jméno držitele licence"]]) if(!v(id)) errs.push("Vyplňte " + lab + ".");
+    if(v("email") && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("email"))) errs.push("E-mail nevypadá platně.");
+    if(!$("#agree").checked) errs.push("Potvrďte souhlas s licenčními podmínkami.");
+    if(errs.length){ $("#formErr").innerHTML = `<div class="notice" style="margin:12px 0;border-color:#f1b0a8;background:#fdebe7">${errs.map(esc).join("<br>")}</div>`; return; }
+    $("#formErr").innerHTML = "";
+    const no = "FQ" + new Date().toISOString().slice(2, 10).replace(/-/g, "") + String(Math.floor(Math.random() * 900) + 100);
+    const order = { cislo: no, datum: new Date().toISOString(), produkt: s.pr.name, licence: s.term === "life" ? "neomezená" : s.years + " rok/y", zarizeni: s.product === "faqrai" ? s.seats : 1, podpora: s.support === "0" ? "ne" : s.support === "1" ? "1 rok" : "po dobu licence", drzitel: v("holder"), polozky: s.lines, celkem: s.total, ico: v("ico"), dic: v("dic"), nazev: v("name"), ulice: v("street"), psc: v("zip"), mesto: v("city"), email: v("email"), telefon: v("phone"), poznamka: v("note") };
+    const text = `OBJEDNÁVKA ${no}\n\nProdukt: ${order.produkt}\nLicence: ${order.licence}${s.product === "faqrai" ? `, zařízení: ${order.zarizeni}` : ""}\nPodpora: ${order.podpora}\nDržitel licence: ${order.drzitel}\n\n${s.lines.map(l => `${l.t}: ${kc(l.a)}`).join("\n")}\nCelkem: ${kc(s.total)}\n\nFakturační údaje:\n${order.nazev}\nIČO ${order.ico}${order.dic ? ", DIČ " + order.dic : ""}\n${order.ulice}, ${order.psc} ${order.mesto}\nE-mail: ${order.email}${order.telefon ? "\nTelefon: " + order.telefon : ""}${order.poznamka ? "\n\nPoznámka: " + order.poznamka : ""}\n\nSouhlas s licenčními podmínkami: ano (${new Date().toLocaleString("cs-CZ")})`;
+    $("#submitBtn").disabled = true; $("#submitBtn").textContent = "Odesílám…";
+    let sent = false;
+    if(C.orderEndpoint){ try { const r = await fetch(C.orderEndpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify({ ...order, text, _subject: "Objednávka " + no }) }); sent = r.ok; } catch(_){} }
+    if(!sent) location.href = `mailto:${encodeURIComponent(C.orderEmail)}?subject=${encodeURIComponent("Objednávka " + no + " – " + order.produkt)}&body=${encodeURIComponent(text)}`;
+    showDone(order, text, sent);
+  });
+  function showDone(o, text, sent){
+    $("#orderForm").hidden = true; const d = $("#done"); d.hidden = false;
+    const vs = o.cislo.replace(/\D/g, ""), iban = (C.account.iban || "").replace(/\s/g, "");
+    let qr = ""; if(iban){ try { const q = qrcode(0, "M"); q.addData(`SPD*1.0*ACC:${iban}*AM:${o.celkem.toFixed(2)}*CC:CZK*X-VS:${vs}*MSG:FAQRAI ${o.cislo}`); q.make(); qr = q.createSvgTag({ cellSize: 2, margin: 0, scalable: true }); } catch(_){} }
+    d.innerHTML = `<h2>Děkujeme, objednávka ${esc(o.cislo)} je na cestě</h2>
+      <p>${sent ? "Objednávku jsme přijali." : "Otevřel se váš e-mailový program s předvyplněnou objednávkou – <b>zprávu prosím odešlete</b>. Pokud se neotevřel, zkopírujte text níže a pošlete ho na " + esc(C.orderEmail) + "."} Na <b>${esc(o.email)}</b> přijde faktura; licenční klíč vydáme po připsání platby, obvykle do jednoho pracovního dne.</p>
+      ${C.account.number || iban ? `<div class="grid c2" style="align-items:start"><div><h3>Platba převodem</h3><table class="small"><tr><td>Částka</td><td class="mono"><b>${kc(o.celkem)}</b></td></tr>${C.account.number ? `<tr><td>Účet</td><td class="mono">${esc(C.account.number)}</td></tr>` : ""}${iban ? `<tr><td>IBAN</td><td class="mono">${esc(iban)}</td></tr>` : ""}<tr><td>Variabilní symbol</td><td class="mono">${esc(vs)}</td></tr><tr><td>Zpráva</td><td class="mono">FAQRAI ${esc(o.cislo)}</td></tr></table><p class="small muted">Můžete zaplatit hned podle QR kódu, nebo počkat na fakturu – údaje budou stejné.</p></div>${qr ? `<div class="qr">${qr}</div>` : ""}</div>` : `<p class="small muted">Platební údaje budou na faktuře.</p>`}
+      <details style="margin-top:14px"><summary class="small">Text objednávky</summary><pre class="small" style="white-space:pre-wrap;font-family:var(--mono)">${esc(text)}</pre></details>
+      <p style="margin-top:18px"><a class="btn" href="${esc(C.releases)}">Stáhnout program</a> <a class="btn" href="./">Zpět na úvod</a></p>`;
+    window.scrollTo(0, 0);
+  }
+})();
+</script>
+</body>
+</html>
