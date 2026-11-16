@@ -91,6 +91,6 @@ window.FAQRAI_CFG = {
   /* ---- Texty ---- */
   texts: {
     afterOrder: "Fakturu pošleme e-mailem; licenční klíč vydáme po připsání platby, obvykle do jednoho pracovního dne.",
-    consent: "Souhlasím s licenčními podmínkami a se zpracováním údajů pro vystavení faktury a licence. Jako podnikatel objednávám na IČO; právo spotřebitele na odstoupení od smlouvy se neuplatní."
+    consent: "Souhlasím s obchodními a licenčními podmínkami a beru na vědomí informace o zpracování osobních údajů. Jako podnikatel objednávám na IČO; právo spotřebitele na odstoupení od smlouvy se neuplatní."
   }
 };

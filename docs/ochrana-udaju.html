@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ochrana osobních údajů – FaqrAi</title><meta name="description" content="Jak FaqrAi zpracovává osobní údaje zákazníků a uživatelů webu (GDPR)."><meta property="og:title" content="Ochrana osobních údajů – FaqrAi"><meta property="og:description" content="Jak FaqrAi zpracovává osobní údaje zákazníků a uživatelů webu (GDPR)."><meta property="og:image" content="img/og.jpg"><link rel="icon" href="img/logo-faqrai.svg"><link rel="stylesheet" href="style.css">
+<style>.legal{max-width:820px}.legal h2{font-size:20px;margin-top:28px}.legal p,.legal li{font-size:15px;color:#2a3542}.legal ol{padding-left:22px}</style></head>
+<body>
+<header class="top"><div class="wrap"><a class="brand" href="./"><img src="img/logo-faqrai.svg" alt="">FaqrAi</a><nav class="main"><a href="./#produkty">Produkty</a><a href="./#cenik">Ceník</a><a href="napoveda.html">Nápověda</a><a class="btn primary" href="objednavka.html">Koupit licenci</a></nav></div></header>
+
+<section><div class="wrap legal">
+<h1 style="font-size:32px">Ochrana osobních údajů</h1>
+<p class="muted">Informace podle čl. 13 nařízení (EU) 2016/679 (GDPR) · platné od 16. 11. 2026</p>
+<h2>1. Správce</h2><p><span data-provider></span>. Pověřence pro ochranu osobních údajů nemáme; dotazy posílejte na <span data-email></span>.</p>
+<h2>2. Jaké údaje a proč</h2>
+<ol>
+<li><b>Objednávka a licence</b> – jméno/název, IČO, DIČ, adresa, e-mail, telefon, jméno držitele licence, číslo licence, historie objednávek. Účel: uzavření a plnění smlouvy, vystavení daňových dokladů, vydání a správa licence (čl. 6 odst. 1 písm. b) a c) GDPR). Doba: po dobu platnosti licence a dále 10 let kvůli účetním a daňovým předpisům.</li>
+<li><b>Podpora</b> – e-mail, obsah dotazu, verze programu, systém, číslo licence, výpis chyb, který nám sami pošlete. Účel: vyřízení požadavku (plnění smlouvy, oprávněný zájem na kvalitě programu). Doba: 3 roky od vyřízení.</li>
+<li><b>Newsletter</b> – e-mail. Účel: zasílání informací o daňových změnách a novinkách na základě souhlasu (čl. 6 odst. 1 písm. a)). Odhlásit se lze kdykoli odkazem ve zprávě nebo e-mailem; údaj pak smažeme.</li>
+<li><b>Web</b> – nepoužíváme analytické ani reklamní cookies ani sledovací skripty. Hosting (GitHub Pages, GitHub Inc.) zaznamenává technické údaje o přístupu (IP adresa, čas, prohlížeč) pro zabezpečení provozu po dobu nezbytnou. Formuláře odesílají údaje přímo nám (e-mailem nebo přes formulářovou službu uvedenou v nastavení webu).</li>
+<li><b>Ověření IČO</b> – IČO zadané v objednávce se odesílá do veřejného registru ARES (Ministerstvo financí) pro doplnění fakturačních údajů.</li>
+</ol>
+<h2>3. Data v programu</h2>
+<p>Program FaqrAi ukládá veškerou evidenci (faktury, odběratele, doklady) výhradně na zařízení uživatele nebo do úložiště, které si uživatel sám zvolí. Poskytovatel k těmto datům nemá přístup a nejsou mu zasílána. Program se připojuje jen na: GitHub (kontrola aktualizací a daňových parametrů; přenáší se jen verze programu a systém), ARES (ověření IČO), registr plátců DPH a VIES (ověření DIČ), banku zvolenou uživatelem (Fio API, pokud uživatel vloží token) a poštovní server zadaný uživatelem (odesílání dokladů). Při zpracování dat zákazníka v programu je uživatel sám správcem osobních údajů svých odběratelů.</p>
+<h2>4. Příjemci</h2>
+<p>Účetní poskytovatele (daňové doklady), poskytovatel e-mailu a hostingu, případně formulářová služba pro příjem objednávek. Údaje nepředáváme mimo EU/EHP s výjimkou poskytovatelů, kteří poskytují odpovídající záruky (standardní smluvní doložky).</p>
+<h2>5. Vaše práva</h2>
+<p>Máte právo na přístup k údajům, opravu, výmaz, omezení zpracování, přenositelnost, vznést námitku a odvolat souhlas. Žádost vyřídíme do 30 dnů. Můžete podat stížnost u Úřadu pro ochranu osobních údajů (www.uoou.cz).</p>
+<h2>6. Zabezpečení</h2>
+<p>Objednávky a licence vedeme v evidenci chráněné heslem a šifrováním; soukromý klíč pro vydávání licencí je uložen šifrovaně mimo síť. E-mailová komunikace probíhá šifrovaně (TLS).</p>
+</div></section>
+<footer><div class="wrap"><div><b>FaqrAi</b> · <span id="provider"></span></div><div class="small"><a href="./">Úvod</a> · <a href="obchodni-podminky.html">Obchodní podmínky</a> · <a href="ochrana-udaju.html">Ochrana údajů</a> · <a href="licencni-podminky.html">Licenční podmínky</a></div></div></footer>
+<script src="config.js"></script>
+<script>(function(){const C=window.FAQRAI_CFG;const t=[C.provider.name,C.provider.ico?"IČO "+C.provider.ico:"",C.provider.email].filter(Boolean).join(" · ");document.getElementById("provider").textContent=t;document.querySelectorAll("[data-provider]").forEach(e=>e.textContent=C.provider.name+(C.provider.ico?", IČO "+C.provider.ico:" (IČO bude doplněno)")+(C.provider.address?", "+C.provider.address:"")+", e-mail "+C.provider.email);document.querySelectorAll("[data-email]").forEach(e=>e.textContent=C.provider.email);})();</script>
+</body></html>

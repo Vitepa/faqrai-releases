@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="cs"><head><meta charset="utf-8"><title>FaqrAi – leták</title>
+<style>
+@page{size:A4;margin:0}body{margin:0;font:13px/1.45 "Archivo","Inter",Arial,sans-serif;color:#13202B}
+.page{width:210mm;height:296mm;overflow:hidden;padding:12mm 14mm;box-sizing:border-box;display:flex;flex-direction:column;gap:12px;position:relative;background:#fff}
+.hero{padding:16px 20px!important;background:linear-gradient(135deg,#1b2a4a,#0f766e);color:#fff;border-radius:16px;padding:22px 24px;display:flex;gap:20px;align-items:center}
+.hero img{width:84px;height:84px;border-radius:22px}.hero h1{margin:0;font-size:34px;letter-spacing:-.02em}.hero p{margin:4px 0 0;font-size:16px;opacity:.92}
+h2{font-size:17px;margin:4px 0 6px}.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{border:1px solid #E3E8EE;border-radius:12px;padding:12px 14px}.card h3{margin:0 0 4px;font-size:14px}.card ul{margin:0;padding-left:16px}.card li{margin:2px 0}
+.simple{border-top:4px solid #2741A0}.faqrai{border-top:4px solid #0F766E}
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.feat div{background:#F6F8FA;border-radius:10px;padding:9px 11px}.feat b{display:block;font-size:12px}.feat span{font-size:11px;color:#5B6B7A}
+.price{display:flex;gap:12px}.price div{flex:1;border:1px solid #E3E8EE;border-radius:12px;padding:12px}.price .v{font-size:24px;font-weight:800}.price small{color:#5B6B7A}
+.foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;border-top:1px solid #E3E8EE;padding-top:10px;font-size:11px;color:#5B6B7A}
+.qr{width:70px;height:70px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;counter-reset:s}.steps div{border:1px solid #E3E8EE;border-radius:10px;padding:10px 10px 10px 36px;position:relative;font-size:12px}.steps div::before{counter-increment:s;content:counter(s);position:absolute;left:10px;top:10px;width:20px;height:20px;border-radius:50%;background:#13202B;color:#fff;font-weight:800;font-size:11px;display:grid;place-items:center}
+</style></head><body>
+<div class="page">
+  <div class="hero"><img src="../img/logo-faqrai.svg" alt=""><div><h1>FaqrAi</h1><p>Faktury a daně bez účetního slovníku. Pro OSVČ a malé firmy, Windows a macOS.</p></div></div>
+  <div class="cols">
+    <div class="card simple"><h3>FaqrAi Simple – pro OSVČ</h3><ul><li>faktury plátce i neplátce DPH, QR platba, razítko „Uhrazeno“</li><li>daňové přiznání a přehledy ČSSZ / ZP řádek po řádku</li><li>vedlejší činnost (důchod, zaměstnání, studium) po měsících</li><li>rezerva na daň a odvody z každé faktury</li><li>další příjmy: nájem, kapitál, cenné papíry, kryptoaktiva</li><li>paušální daň, přenos ztráty, zálohy na příští rok</li></ul></div>
+    <div class="card faqrai"><h3>FaqrAi – pro malé firmy</h3><ul><li>zálohové faktury, daňový doklad k platbě, vyúčtování</li><li>DPH na vstupu i výstupu, kontrolní a souhrnné hlášení</li><li>pokladna (PPD/VPD, pokladní kniha), prodejky, sklad</li><li>licence na počet zařízení, role správce / uživatel / jen čtení</li><li>export do Pohody (XML) a ISDOC pro ostatní programy</li><li>EUR, angličtina, němčina, slovenština</li></ul></div>
+  </div>
+  <h2>Co umí oba programy</h2>
+  <div class="feat">
+    <div><b>Balík pro účetní</b><span>jeden ZIP za měsíc: PDF, ISDOC, CSV, přílohy – rovnou e-mailem</span></div>
+    <div><b>OCR skenů</b><span>vyfoťte doklad, program přečte částku, DIČ, datum – offline</span></div>
+    <div><b>ARES, VIES, registr plátců</b><span>IČO → adresa, ověření DIČ</span></div>
+    <div><b>Upomínky podle pravidel</b><span>3 / 14 / 30 dní, úrok z prodlení, odeslání z programu</span></div>
+    <div><b>Banka</b><span>import výpisu CSV nebo Fio API, párování podle VS</span></div>
+    <div><b>Termíny</b><span>přiznání, přehledy, splatnosti – i do kalendáře (ICS)</span></div>
+    <div><b>Opakované faktury a ceník</b><span>pravidelné faktury jedním kliknutím</span></div>
+    <div><b>Data u vás</b><span>jeden soubor na disku nebo ve vašem cloudu, denní zálohy, šifrovaná záloha</span></div>
+    <div><b>Vždy aktuální</b><span>podepsané daňové parametry, tiché aktualizace programu</span></div>
+  </div>
+  <h2>Ceník</h2>
+  <div class="price"><div><div class="v">990 Kč <small>/ rok</small></div><small>FaqrAi Simple · osobní licence · neomezená 2 490 Kč</small></div><div><div class="v">2 490 Kč <small>/ rok</small></div><small>FaqrAi · první zařízení, další 990 Kč · neomezená 5 990 Kč</small></div><div><div class="v">30 dní</div><small>zkušební verze zdarma, plná, bez karty</small></div></div>
+  <h2>Jak začít</h2>
+  <div class="steps"><div><b>Stáhněte</b><br>faqrai.cz → Ke stažení, instalace za minutu</div><div><b>Vyplňte IČO</b><br>údaje se doplní z ARES, vystavte první fakturu</div><div><b>Kupte licenci</b><br>na webu, klíč přijde e-mailem po zaplacení</div></div>
+  <div class="foot"><div><b>FaqrAi</b> · Pavel Vítek · pavel.vitek16@gmail.com<br>Ceny bez DPH nejsou účtovány – nejsme plátci. Výpočty v programu jsou pomůcka, ne daňové poradenství.</div><div style="text-align:right">vitepa.github.io/faqrai-releases<br><span style="font-size:10px">leták 11/2026</span></div></div>
+</div>
+</body></html>
