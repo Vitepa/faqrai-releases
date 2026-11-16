@@ -67,13 +67,75 @@
    "najemPausal": 30,
    "najemPausalMax": 600000,
    "pausalniDan": {
-    "p1": 9984,
+    "p1": 9162,
     "p2": 16745,
     "p3": 27139,
-    "poznamka": "od 1. 1. 2026; MF avizovalo snížení 1. pásma v průběhu roku 2026"
+    "poznamka": "1. pásmo sníženo od července 2026 zpětně od 1. 1. 2026 (min. sociální základ 35 % místo 40 %)"
    },
    "zalohaDanMin": 30000,
    "zalohaDanMid": 150000
+  },
+  "2027": {
+   "avgWage": 51663,
+   "sleva": 30840,
+   "manzel": 24840,
+   "limit23": 1859868,
+   "rozhodna": 123992,
+   "minVZsocMes": 5683,
+   "minSocZal": 1660,
+   "minVZsocMainMes": 18083,
+   "minSocZalMain": 5281,
+   "maxVZ": 2479824,
+   "socRate": 0.292,
+   "socShare": 0.55,
+   "healthRate": 0.135,
+   "healthShare": 0.5,
+   "minVZhealthMes": 25832,
+   "minHealthZal": 3488,
+   "kids": [
+    15204,
+    22320,
+    27840
+   ],
+   "minWage": 24900,
+   "giftMax": 0.3,
+   "interestMax": 150000,
+   "savingsMax": 48000,
+   "invalid12": 2520,
+   "invalid3": 5040,
+   "pausal": {
+    "30": 600000,
+    "40": 800000,
+    "60": 1200000,
+    "80": 1600000
+   },
+   "dl": {
+    "dap": "2028-05-02",
+    "pay": "2028-05-02",
+    "prehled": "2028-06-02",
+    "advisor": "2028-07-03",
+    "papir": "2028-04-03",
+    "poznamka": "papírově do 3. 4. 2028 (1. 4. je sobota), elektronicky do 2. 5. 2028, s poradcem do 3. 7. 2028; přehledy do měsíce po podání"
+   },
+   "osvobozeniCP": 100000,
+   "osvobozeniKrypto": 100000,
+   "casovyTestRoky": 3,
+   "maxOsvobozeniProdej": 40000000,
+   "prilezitostne": 50000,
+   "najemPausal": 30,
+   "najemPausalMax": 600000,
+   "pausalniDan": {
+    "p1": 9662,
+    "p2": 16745,
+    "p3": 27139,
+    "poznamka": "od 1. 1. 2027 (NV 177/2026 Sb.): 100 + 1,15×5 281 (6 074) + 3 488"
+   },
+   "zalohaDanMin": 30000,
+   "zalohaDanMid": 150000,
+   "student": 4020,
+   "skolkovneMax": 24900,
+   "podaniLimit": 100000,
+   "zdroj": "NV č. 177/2026 Sb. (průměrná mzda 51 663 Kč), sdělení MPSV (min. mzda 24 900 Kč), zákon č. 360/2025 Sb. a novela ZDP 2027 (školkovné, sleva na studenta, limit pro podání přiznání 100 000 Kč)"
   }
  },
  "firma": {
@@ -82,7 +144,7 @@
    "minMzda": 22400
   }
  },
- "podpis": "dodTN182zZcO6s4GArcIjJI/+vFZv4SAvwr2vL3CJvEdlsMRnKq/i788A0D9a5AZL02SZJ8UTefkaSn49leoBg==",
+ "podpis": "XKV3aHiCVxe3NWB+bVRMXgeFtKIYdPwuGJy4MOqzt1E9CGBUxFohmJztcHnU5MacsHO3KsxPR0zozER8+zIiDA==",
  "urok": {
   "prirazka": 8,
   "poznamka": "Zákonný úrok z prodlení = 2T repo sazba ČNB platná k 1. dni pololetí, v němž prodlení vzniklo, + 8 p. b. (NV 351/2013 Sb.)",
