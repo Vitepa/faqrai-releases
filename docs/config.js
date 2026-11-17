@@ -41,9 +41,9 @@ window.FAQRAI_CFG = {
     { id: "duo", byte: 3, name: "FaqrAi Duo", short: "Duo", color: "#6D28D9", logo: "img/logo-duo.svg", available: false, eta: "2027",
       desc: "Podvojné účetnictví pro s.r.o. a spolky", seats: true, year: 4990, seatYear: 1490, lifetime: null,
       bullets: ["účetní deník, hlavní kniha, osnova pro podnikatele", "předkontace dokladů z FaqrAi", "rozvaha, výsledovka, příloha", "přiznání k DPPO"] },
-    { id: "cloud", byte: 4, name: "FaqrAi Cloud", short: "Cloud", color: "#0369A1", logo: "img/logo-cloud.svg", available: false, eta: "2027",
-      desc: "Stejné programy v prohlížeči a na telefonu", seats: true, year: 1490, seatYear: 490, lifetime: null, perUserLabel: "uživatel",
-      bullets: ["sdílená evidence v týmu v reálném čase", "faktura a foto dokladu z telefonu", "přístup účetní bez instalace", "servery v EU, export dat kdykoli"] }
+    { id: "server", byte: 4, name: "FaqrAi Server", short: "Server", color: "#17465C", logo: "img/logo-server.svg", available: false, eta: "2027",
+      desc: "Server ve vaší síti pro celou firmu", seats: true, year: 14900, seatYear: 990, lifetime: null, perUserLabel: "uživatel",
+      bullets: ["všechny počítače s FaqrAi nad jednou šifrovanou databází", "přihlášení přes Active Directory nebo Entra ID", "doklady i v SharePointu, přístup z prohlížeče", "sám se aktualizuje, FixPacky i bez internetu"] }
   ],
 
   /* ---- Délky licence a slevy za platbu předem ---- */
