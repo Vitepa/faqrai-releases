@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ke stažení – FaqrAi</title><link rel="icon" href="img/logo-faqrai.svg"><link rel="stylesheet" href="style.css"></head>
 <body>
-<header class="top"><div class="wrap"><a class="brand" href="./"><img src="img/logo-faqrai.svg" alt="">FaqrAi</a><nav class="main"><a href="./#produkty">Produkty</a><a href="./#cenik">Ceník</a><a href="overeni.html">Ověřit licenci</a><a class="btn primary" href="objednavka.html">Koupit licenci</a></nav></div></header>
+<header class="top"><div class="wrap">
+  <a class="brand" href="./"><img src="img/logo-faqrai.svg" alt="">FaqrAi</a>
+  <nav class="main" aria-label="Hlavní nabídka"><a href="./#co-umi">Co umí</a><a href="./#programy">Programy</a><a href="./#cenik" class="keep">Ceník</a><a href="stahnout.html" aria-current="page">Ke stažení</a><a href="napoveda.html">Nápověda</a><a class="btn primary" href="objednavka.html">Koupit licenci</a></nav>
+</div></header>
 <section><div class="wrap">
   <h1 style="font-size:36px">Ke stažení</h1>
   <p class="muted">Zkušební verze na <span id="trial"></span> dní, plná, bez omezení. Po zadání licenčního klíče data zůstanou. Program se dál aktualizuje sám.</p>
   <div class="grid c2" style="margin-top:22px" id="dlCards"><div class="dl-card">Načítám seznam verzí…</div></div>
   <div class="grid c2" style="margin-top:22px">
-    <div class="card"><h3>Windows</h3><p class="small muted">Spusťte stažený <span class="mono">.exe</span>. Instalačka zatím není podepsaná certifikátem, Windows SmartScreen proto ukáže varování: klikněte na <b>Další informace → Přesto spustit</b>. Při spuštění nad existující instalací nabídne Aktualizovat / Opravit / Odstranit. Data uživatele se při odinstalaci nikdy nemažou.</p></div>
+    <div class="card"><h3>Windows</h3><p class="small muted">Stáhněte malý instalátor (<span class="mono">…-Setup.exe</span>, asi 0,5 MB): sám najde nejnovější verzi, stáhne ji, ověří její kontrolní součet a nainstaluje. Plná instalačka se hodí pro počítač bez internetu. Instalačka zatím není podepsaná certifikátem, Windows SmartScreen proto ukáže varování: klikněte na <b>Další informace → Přesto spustit</b>. Při spuštění nad existující instalací nabídne Aktualizovat / Opravit / Odstranit. Data uživatele se při odinstalaci nikdy nemažou.</p></div>
     <div class="card"><h3>macOS</h3><p class="small muted">Stáhněte ZIP pro svůj procesor (<b>Apple Silicon</b> = M1 a novější, <b>Intel</b> = starší Macy), rozbalte a přetáhněte aplikaci do složky Aplikace. Při prvním spuštění klikněte pravým tlačítkem → <b>Otevřít</b> → Otevřít. Hlásí-li macOS, že je aplikace poškozená, spusťte v Terminálu: <span class="mono">xattr -cr "/Applications/FaqrAi.app"</span> (resp. „FaqrAi Simple.app“).</p></div>
   </div>
   <h2 style="margin-top:40px">Co je nového</h2>
   <div class="changelog" id="changelog"><p class="muted">Načítám…</p></div>
   <p class="small muted" style="margin-top:14px">Všechny verze a soubory: <a id="relLink" href="#">GitHub Releases</a>. Kontrolní součty (SHA‑512) jsou v souborech <span class="mono">*.yml</span> u každého vydání.</p>
 </div></section>
-<footer><div class="wrap"><div><b>FaqrAi</b> · <span id="provider"></span></div><div class="small"><a href="./">Zpět na úvod</a></div></div></footer>
+<footer><div class="wrap">
+  <div><b>FaqrAi</b><br><span id="provider"></span><br><span class="small">Výpočty v programech jsou pomůcka, ne daňové poradenství.</span></div>
+  <nav aria-label="Odkazy v patičce"><a href="stahnout.html">Ke stažení</a><a href="objednavka.html">Koupit licenci</a><a href="overeni.html">Ověření licence</a><a href="napoveda.html">Nápověda</a><a href="podpora.html">Podpora</a><a href="pro-koho.html">Pro koho</a><a href="ucetni.html">Pro účetní</a><a href="srovnani.html">Srovnání</a><a href="obchodni-podminky.html">Obchodní podmínky</a><a href="licencni-podminky.html">Licenční podmínky</a><a href="ochrana-udaju.html">Ochrana údajů</a></nav>
+</div></footer>
 <script src="config.js"></script>
 <script>
 (function(){
@@ -23,14 +29,14 @@
   $("#trial").textContent = C.trialDays; $("#relLink").href = C.releases.replace(/\/latest$/, "");
   $("#provider").textContent = [C.provider.name, C.provider.ico ? "IČO " + C.provider.ico : "", C.provider.email].filter(Boolean).join(" · ");
   const ua = navigator.userAgent, isMac = /Mac/.test(ua), isWin = /Windows/.test(ua);
-  const mb = n => (n / 1048576).toFixed(0) + " MB";
-  const kinds = [["Windows", /Windows-x64\.exe$/, "win"], ["macOS Apple Silicon", /macOS-arm64\.zip$/, "mac"], ["macOS Intel", /macOS-x64\.zip$/, "mac"]];
+  const mb = n => { const v = n / 1048576; return (v < 10 ? v.toFixed(1).replace(".", ",") : v.toFixed(0)) + " MB"; };
+  const kinds = [["Windows", /-Setup\.exe$/, "win"], ["Windows – plná instalačka (bez internetu)", /Windows-x64\.exe$/, "winfull"], ["macOS Apple Silicon", /macOS-arm64\.zip$/, "mac"], ["macOS Intel", /macOS-x64\.zip$/, "mac"]];
   fetch(C.releasesApi + "?per_page=10", { headers: { Accept: "application/vnd.github+json" } }).then(r => { if(!r.ok) throw 0; return r.json(); }).then(rels => {
     const rel = rels.find(r => !r.draft && !r.prerelease) || rels[0]; if(!rel) throw 0;
-    const groups = [["FaqrAi Simple", /^FaqrAi-Simple-/, "img/logo-simple.svg", "simple"], ["FaqrAi", /^FaqrAi-\d/, "img/logo-faqrai.svg", "faqrai"]];
+    const groups = [["FaqrAi Simple", /^FaqrAi-Simple-/, "img/logo-simple.svg", "simple"], ["FaqrAi", /^FaqrAi-(\d|Setup)/, "img/logo-faqrai.svg", "faqrai"]];
     $("#dlCards").innerHTML = groups.map(([name, re, logo, id]) => {
       const assets = rel.assets.filter(a => re.test(a.name));
-      const rows = kinds.map(([lab, kre, os]) => { const a = assets.find(x => kre.test(x.name)); if(!a) return ""; const rec = (os === "win" && isWin) || (os === "mac" && isMac); return `<a href="${a.browser_download_url}"${rec ? ' style="font-weight:800"' : ""}><span>${lab}${rec ? ' <span class="pill ok">pro váš systém</span>' : ""}</span><span class="size">${mb(a.size)}</span></a>`; }).join("");
+      const rows = kinds.map(([lab, kre, os]) => { const a = assets.find(x => kre.test(x.name)); if(!a) return ""; const malyWin = assets.some(x => /-Setup\.exe$/.test(x.name)); const rec = (os === "win" && isWin) || (os === "winfull" && isWin && !malyWin) || (os === "mac" && isMac); return `<a href="${a.browser_download_url}"${rec ? ' style="font-weight:800"' : ""}><span>${lab}${rec ? ' <span class="pill ok">pro váš systém</span>' : ""}</span><span class="size">${mb(a.size)}</span></a>`; }).join("");
       return `<div class="dl-card"><img src="${logo}" alt="" style="width:48px;height:48px;border-radius:12px"><div class="big">${esc(name)} <span class="muted" style="font-size:15px;font-weight:600">${esc(rel.tag_name.replace(/^v/, ""))}</span></div><div class="small muted">vydáno ${new Date(rel.published_at).toLocaleDateString("cs-CZ")}</div><div class="assets" style="margin-top:10px">${rows || '<p class="muted small">Soubory se připravují.</p>'}</div><p style="margin-top:12px"><a class="btn" href="objednavka.html?p=${id}">Koupit licenci</a></p></div>`; }).join("");
     $("#changelog").innerHTML = rels.filter(r => !r.draft).slice(0, 8).map((r, i) => `<details ${i === 0 ? "open" : ""}><summary>${esc(r.name || r.tag_name)} <span class="muted small">· ${new Date(r.published_at).toLocaleDateString("cs-CZ")}</span></summary><div class="body">${esc(r.body || "Bez popisu.")}</div></details>`).join("");
   }).catch(() => { $("#dlCards").innerHTML = `<div class="dl-card">Seznam verzí se nepodařilo načíst. Stáhněte program přímo z <a href="${esc(C.releases)}">GitHub Releases</a>.</div>`; $("#changelog").innerHTML = `<p class="muted">Seznam změn najdete u jednotlivých vydání na GitHubu.</p>`; });

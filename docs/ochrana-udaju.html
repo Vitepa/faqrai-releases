@@ -2,7 +2,10 @@
 <html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ochrana osobních údajů – FaqrAi</title><meta name="description" content="Jak FaqrAi zpracovává osobní údaje zákazníků a uživatelů webu (GDPR)."><meta property="og:title" content="Ochrana osobních údajů – FaqrAi"><meta property="og:description" content="Jak FaqrAi zpracovává osobní údaje zákazníků a uživatelů webu (GDPR)."><meta property="og:image" content="img/og.jpg"><link rel="icon" href="img/logo-faqrai.svg"><link rel="stylesheet" href="style.css">
 <style>.legal{max-width:820px}.legal h2{font-size:20px;margin-top:28px}.legal p,.legal li{font-size:15px;color:#2a3542}.legal ol{padding-left:22px}</style></head>
 <body>
-<header class="top"><div class="wrap"><a class="brand" href="./"><img src="img/logo-faqrai.svg" alt="">FaqrAi</a><nav class="main"><a href="./#produkty">Produkty</a><a href="./#cenik">Ceník</a><a href="napoveda.html">Nápověda</a><a class="btn primary" href="objednavka.html">Koupit licenci</a></nav></div></header>
+<header class="top"><div class="wrap">
+  <a class="brand" href="./"><img src="img/logo-faqrai.svg" alt="">FaqrAi</a>
+  <nav class="main" aria-label="Hlavní nabídka"><a href="./#co-umi">Co umí</a><a href="./#programy">Programy</a><a href="./#cenik" class="keep">Ceník</a><a href="stahnout.html">Ke stažení</a><a href="napoveda.html">Nápověda</a><a class="btn primary" href="objednavka.html">Koupit licenci</a></nav>
+</div></header>
 
 <section><div class="wrap legal">
 <h1 style="font-size:32px">Ochrana osobních údajů</h1>
@@ -17,7 +20,7 @@
 <li><b>Ověření IČO</b> – IČO zadané v objednávce se odesílá do veřejného registru ARES (Ministerstvo financí) pro doplnění fakturačních údajů.</li>
 </ol>
 <h2>3. Data v programu</h2>
-<p>Program FaqrAi ukládá veškerou evidenci (faktury, odběratele, doklady) výhradně na zařízení uživatele nebo do úložiště, které si uživatel sám zvolí. Poskytovatel k těmto datům nemá přístup a nejsou mu zasílána. Program se připojuje jen na: GitHub (kontrola aktualizací a daňových parametrů; přenáší se jen verze programu a systém), ARES (ověření IČO), registr plátců DPH a VIES (ověření DIČ), banku zvolenou uživatelem (Fio API, pokud uživatel vloží token) a poštovní server zadaný uživatelem (odesílání dokladů). Při zpracování dat zákazníka v programu je uživatel sám správcem osobních údajů svých odběratelů.</p>
+<p>Program FaqrAi ukládá veškerou evidenci (faktury, odběratele, doklady) výhradně na zařízení uživatele nebo do úložiště, které si uživatel sám zvolí. Poskytovatel k těmto datům nemá přístup a nejsou mu zasílána. Program se připojuje jen na: GitHub (kontrola aktualizací a daňových parametrů; přenáší se jen verze programu a systém), ARES (ověření IČO), registr plátců DPH a VIES (ověření DIČ), Českou národní banku (kurzy měn), banku zvolenou uživatelem (Fio API, MONETA API nebo Raiffeisenbank Premium API – stažení pohybů na účtu), poštovní server zadaný uživatelem (odesílání dokladů přes SMTP, hledání nedoručenek přes IMAP) a platební bránu Comgate nebo Stripe, pokud ji uživatel nastaví (číslo faktury, částka, měna a e-mail odběratele pro odkaz k platbě). Uživatel je sám správcem osobních údajů svých odběratelů, včetně jmen a čísel účtů plátců z bankovních výpisů; poskytovatel k nim nemá přístup, a proto není jejich zpracovatelem a smlouva o zpracování osobních údajů se neuzavírá. Hesla, bankovní tokeny a certifikáty program ukládá šifrovaně v systémovém úložišti (Windows Data Protection API, Klíčenka macOS); bance doporučujeme vydat jen oprávnění ke čtení pohybů.</p>
 <h2>4. Příjemci</h2>
 <p>Účetní poskytovatele (daňové doklady), poskytovatel e-mailu a hostingu, případně formulářová služba pro příjem objednávek. Údaje nepředáváme mimo EU/EHP s výjimkou poskytovatelů, kteří poskytují odpovídající záruky (standardní smluvní doložky).</p>
 <h2>5. Vaše práva</h2>
@@ -25,7 +28,10 @@
 <h2>6. Zabezpečení</h2>
 <p>Objednávky a licence vedeme v evidenci chráněné heslem a šifrováním; soukromý klíč pro vydávání licencí je uložen šifrovaně mimo síť. E-mailová komunikace probíhá šifrovaně (TLS).</p>
 </div></section>
-<footer><div class="wrap"><div><b>FaqrAi</b> · <span id="provider"></span></div><div class="small"><a href="./">Úvod</a> · <a href="obchodni-podminky.html">Obchodní podmínky</a> · <a href="ochrana-udaju.html">Ochrana údajů</a> · <a href="licencni-podminky.html">Licenční podmínky</a></div></div></footer>
+<footer><div class="wrap">
+  <div><b>FaqrAi</b><br><span id="provider"></span><br><span class="small">Výpočty v programech jsou pomůcka, ne daňové poradenství.</span></div>
+  <nav aria-label="Odkazy v patičce"><a href="stahnout.html">Ke stažení</a><a href="objednavka.html">Koupit licenci</a><a href="overeni.html">Ověření licence</a><a href="napoveda.html">Nápověda</a><a href="podpora.html">Podpora</a><a href="pro-koho.html">Pro koho</a><a href="ucetni.html">Pro účetní</a><a href="srovnani.html">Srovnání</a><a href="obchodni-podminky.html">Obchodní podmínky</a><a href="licencni-podminky.html">Licenční podmínky</a><a href="ochrana-udaju.html">Ochrana údajů</a></nav>
+</div></footer>
 <script src="config.js"></script>
 <script>(function(){const C=window.FAQRAI_CFG;const t=[C.provider.name,C.provider.ico?"IČO "+C.provider.ico:"",C.provider.email].filter(Boolean).join(" · ");document.getElementById("provider").textContent=t;document.querySelectorAll("[data-provider]").forEach(e=>e.textContent=C.provider.name+(C.provider.ico?", IČO "+C.provider.ico:" (IČO bude doplněno)")+(C.provider.address?", "+C.provider.address:"")+", e-mail "+C.provider.email);document.querySelectorAll("[data-email]").forEach(e=>e.textContent=C.provider.email);})();</script>
 </body></html>

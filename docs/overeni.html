@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ověření licence – FaqrAi</title><link rel="icon" href="img/logo-faqrai.svg"><link rel="stylesheet" href="style.css"></head>
 <body>
-<header class="top"><div class="wrap"><a class="brand" href="./"><img src="img/logo-faqrai.svg" alt="">FaqrAi</a><nav class="main"><a href="./#produkty">Produkty</a><a href="stahnout.html">Ke stažení</a><a class="btn primary" href="objednavka.html">Koupit licenci</a></nav></div></header>
+<header class="top"><div class="wrap">
+  <a class="brand" href="./"><img src="img/logo-faqrai.svg" alt="">FaqrAi</a>
+  <nav class="main" aria-label="Hlavní nabídka"><a href="./#co-umi">Co umí</a><a href="./#programy">Programy</a><a href="./#cenik" class="keep">Ceník</a><a href="stahnout.html">Ke stažení</a><a href="napoveda.html">Nápověda</a><a class="btn primary" href="objednavka.html">Koupit licenci</a></nav>
+</div></header>
 <section><div class="wrap" style="max-width:820px">
   <h1 style="font-size:36px">Ověření licenčního klíče</h1>
   <p class="muted">Zadejte jméno držitele a klíč přesně tak, jak jste je dostali. Ověření probíhá <b>jen ve vašem prohlížeči</b> pomocí veřejného klíče vydavatele – nic se nikam neodesílá. Hodí se, když si nejste jistí, na koho licence zní, do kdy platí nebo pro kolik zařízení.</p>
@@ -15,7 +18,10 @@
   </form>
   <p class="small muted" style="margin-top:16px">Ověření na webu nekontroluje seznam odvolaných licencí ani počet už aktivovaných zařízení – to dělá program. Prohlížeč musí umět Ed25519 (Chrome 113+, Edge 113+, Safari 17+, Firefox 130+).</p>
 </div></section>
-<footer><div class="wrap"><div><b>FaqrAi</b> · <span id="provider"></span></div><div class="small"><a href="./">Zpět na úvod</a></div></div></footer>
+<footer><div class="wrap">
+  <div><b>FaqrAi</b><br><span id="provider"></span><br><span class="small">Výpočty v programech jsou pomůcka, ne daňové poradenství.</span></div>
+  <nav aria-label="Odkazy v patičce"><a href="stahnout.html">Ke stažení</a><a href="objednavka.html">Koupit licenci</a><a href="overeni.html">Ověření licence</a><a href="napoveda.html">Nápověda</a><a href="podpora.html">Podpora</a><a href="pro-koho.html">Pro koho</a><a href="ucetni.html">Pro účetní</a><a href="srovnani.html">Srovnání</a><a href="obchodni-podminky.html">Obchodní podmínky</a><a href="licencni-podminky.html">Licenční podmínky</a><a href="ochrana-udaju.html">Ochrana údajů</a></nav>
+</div></footer>
 <script src="config.js"></script>
 <script src="nacl-fast.min.js"></script>
 <script>
@@ -47,8 +53,8 @@
     const hash = new Uint8Array(await crypto.subtle.digest("SHA-256", enc(normName(name)))).slice(0, 8);
     if(!hash.every((b, i) => b === payload[10 + i])) throw new Error("Klíč je pravý, ale nepatří k zadanému jménu. Zadejte jméno přesně tak, jak je uvedeno v licenci.");
     const dv = new DataView(payload.buffer, payload.byteOffset, payload.byteLength);
-    const exp = dv.getUint16(7), sup = ver >= 2 ? dv.getUint16(18) : 0, seats = ver >= 3 ? payload[20] : 0;
-    return { id: dv.getUint32(1).toString(16).toUpperCase().padStart(8, "0"), product: ver >= 3 ? payload[9] : 1, issued: dayToIso(dv.getUint16(5)), expires: exp === UNLIMITED ? null : dayToIso(exp), support: sup === 0 ? null : sup === UNLIMITED ? "neomezená" : dayToIso(sup), seats: seats || null, ver };
+    const exp = dv.getUint16(7), sup = ver >= 2 ? dv.getUint16(18) : 0, seats = ver >= 3 ? payload[20] : 0, firmsB = ver >= 3 ? payload[21] : 0;
+    return { id: dv.getUint32(1).toString(16).toUpperCase().padStart(8, "0"), product: ver >= 3 ? payload[9] : 1, issued: dayToIso(dv.getUint16(5)), expires: exp === UNLIMITED ? null : dayToIso(exp), support: sup === 0 ? null : sup === UNLIMITED ? "neomezená" : dayToIso(sup), seats: seats || null, firms: firmsB === 255 ? null : Math.max(1, firmsB), ver };
   }
   $("#f").addEventListener("submit", async e => {
     e.preventDefault(); const out = $("#out");
@@ -56,7 +62,7 @@
       const r = await verify($("#name").value, $("#key").value); const today = new Date().toISOString().slice(0, 10);
       const valid = !r.expires || r.expires >= today;
       out.innerHTML = `<div class="notice" style="background:${valid ? "#e4f5ea" : "#fdebe7"};border-color:${valid ? "#b7e1c3" : "#f1b0a8"}"><b>${valid ? "Licence je platná." : "Licence vypršela " + fmt(r.expires) + "."}</b></div>
-        <dl class="kv" style="margin-top:14px"><dt>Číslo licence</dt><dd class="mono">${esc(r.id)}</dd><dt>Produkt</dt><dd>${esc(PRODUCTS[r.product] || "neznámý (" + r.product + ")")}</dd><dt>Držitel</dt><dd>${esc($("#name").value.trim())}</dd><dt>Vydána</dt><dd>${fmt(r.issued)}</dd><dt>Platnost</dt><dd>${r.expires ? "do " + fmt(r.expires) : "neomezená"}</dd><dt>Podpora</dt><dd>${r.support ? (r.support === "neomezená" ? r.support : "do " + fmt(r.support)) : "není součástí"}</dd><dt>Zařízení</dt><dd>${r.seats ? r.seats : "bez omezení počtu (osobní licence)"}</dd></dl>
+        <dl class="kv" style="margin-top:14px"><dt>Číslo licence</dt><dd class="mono">${esc(r.id)}</dd><dt>Produkt</dt><dd>${esc(PRODUCTS[r.product] || "neznámý (" + r.product + ")")}</dd><dt>Držitel</dt><dd>${esc($("#name").value.trim())}</dd><dt>Vydána</dt><dd>${fmt(r.issued)}</dd><dt>Platnost</dt><dd>${r.expires ? "do " + fmt(r.expires) : "neomezená"}</dd><dt>Podpora</dt><dd>${r.support ? (r.support === "neomezená" ? r.support : "do " + fmt(r.support)) : "není součástí"}</dd><dt>Zařízení</dt><dd>${r.seats ? r.seats : "bez omezení počtu (osobní licence)"}</dd>${r.product === 2 ? `<dt>Firmy</dt><dd>${r.firms == null ? "bez omezení" : r.firms} <a class="small" href="objednavka.html?typ=firmy">přidat další</a></dd>` : ""}</dl>
         ${!valid ? `<p style="margin-top:12px"><a class="btn primary" href="objednavka.html?m=renew&p=${r.product === 2 ? "faqrai" : "simple"}">Prodloužit licenci</a></p>` : r.expires && (new Date(r.expires) - new Date(today)) / 86400000 < 60 ? `<p class="small muted" style="margin-top:10px">Platnost končí za ${Math.round((new Date(r.expires) - new Date(today)) / 86400000)} dní – <a href="objednavka.html?m=renew&p=${r.product === 2 ? "faqrai" : "simple"}">prodloužit se slevou</a>.</p>` : ""}`;
     } catch(err){ out.innerHTML = `<div class="notice" style="background:#fdebe7;border-color:#f1b0a8">${esc(err.message)}</div>`; }
   });

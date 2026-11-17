@@ -2,7 +2,10 @@
 <html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Srovnání s jinými programy – FaqrAi</title><meta name="description" content="Férové srovnání FaqrAi s on-line fakturačními službami a účetními programy podle způsobu práce, dat a ceny."><meta property="og:title" content="Srovnání s jinými programy – FaqrAi"><meta property="og:description" content="Férové srovnání FaqrAi s on-line fakturačními službami a účetními programy podle způsobu práce, dat a ceny."><meta property="og:image" content="img/og.jpg"><link rel="icon" href="img/logo-faqrai.svg"><link rel="stylesheet" href="style.css">
 <style>.legal{max-width:820px}.legal h2{font-size:20px;margin-top:28px}.legal p,.legal li{font-size:15px;color:#2a3542}.legal ol{padding-left:22px}</style></head>
 <body>
-<header class="top"><div class="wrap"><a class="brand" href="./"><img src="img/logo-faqrai.svg" alt="">FaqrAi</a><nav class="main"><a href="./#produkty">Produkty</a><a href="./#cenik">Ceník</a><a href="napoveda.html">Nápověda</a><a class="btn primary" href="objednavka.html">Koupit licenci</a></nav></div></header>
+<header class="top"><div class="wrap">
+  <a class="brand" href="./"><img src="img/logo-faqrai.svg" alt="">FaqrAi</a>
+  <nav class="main" aria-label="Hlavní nabídka"><a href="./#co-umi">Co umí</a><a href="./#programy">Programy</a><a href="./#cenik" class="keep">Ceník</a><a href="stahnout.html">Ke stažení</a><a href="napoveda.html">Nápověda</a><a class="btn primary" href="objednavka.html">Koupit licenci</a></nav>
+</div></header>
 
 <section><div class="wrap">
 <h1 style="font-size:36px">Jak se FaqrAi liší od ostatních</h1>
@@ -27,7 +30,10 @@
 <h2 style="margin-top:36px">Kdy FaqrAi není ta správná volba</h2>
 <div class="grid c3"><div class="card"><h3>Potřebujete podvojné účetnictví teď</h3><p class="small muted">s.r.o. s povinností vést účetnictví zatím obsloužíme jen fakturací a doklady; účtování nechte účetní nebo počkejte na FaqrAi Duo.</p></div><div class="card"><h3>Fakturuje víc lidí z různých míst</h3><p class="small muted">Sdílená složka v cloudu funguje pro postupnou práci; na souběžnou práci více lidí je lepší on-line služba nebo FaqrAi Cloud.</p></div><div class="card"><h3>Chcete podávat přiznání přímo z programu</h3><p class="small muted">FaqrAi připraví čísla do řádků; podání děláte v EPO/datové schránce. Přímé podání mají velké účetní programy.</p></div></div>
 </div></section>
-<footer><div class="wrap"><div><b>FaqrAi</b> · <span id="provider"></span></div><div class="small"><a href="./">Úvod</a> · <a href="obchodni-podminky.html">Obchodní podmínky</a> · <a href="ochrana-udaju.html">Ochrana údajů</a> · <a href="licencni-podminky.html">Licenční podmínky</a></div></div></footer>
+<footer><div class="wrap">
+  <div><b>FaqrAi</b><br><span id="provider"></span><br><span class="small">Výpočty v programech jsou pomůcka, ne daňové poradenství.</span></div>
+  <nav aria-label="Odkazy v patičce"><a href="stahnout.html">Ke stažení</a><a href="objednavka.html">Koupit licenci</a><a href="overeni.html">Ověření licence</a><a href="napoveda.html">Nápověda</a><a href="podpora.html">Podpora</a><a href="pro-koho.html">Pro koho</a><a href="ucetni.html">Pro účetní</a><a href="srovnani.html">Srovnání</a><a href="obchodni-podminky.html">Obchodní podmínky</a><a href="licencni-podminky.html">Licenční podmínky</a><a href="ochrana-udaju.html">Ochrana údajů</a></nav>
+</div></footer>
 <script src="config.js"></script>
 <script>(function(){const C=window.FAQRAI_CFG;const t=[C.provider.name,C.provider.ico?"IČO "+C.provider.ico:"",C.provider.email].filter(Boolean).join(" · ");document.getElementById("provider").textContent=t;document.querySelectorAll("[data-provider]").forEach(e=>e.textContent=C.provider.name+(C.provider.ico?", IČO "+C.provider.ico:" (IČO bude doplněno)")+(C.provider.address?", "+C.provider.address:"")+", e-mail "+C.provider.email);document.querySelectorAll("[data-email]").forEach(e=>e.textContent=C.provider.email);})();</script>
 </body></html>

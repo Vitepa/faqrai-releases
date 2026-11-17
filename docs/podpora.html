@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Podpora – FaqrAi</title><meta name="description" content="Formulář podpory FaqrAi: produkt, verze, popis problému. Odpovídáme v pracovní dny."><meta property="og:title" content="Podpora – FaqrAi"><meta property="og:description" content="Formulář podpory FaqrAi: produkt, verze, popis problému. Odpovídáme v pracovní dny."><meta property="og:image" content="img/og.jpg"><meta property="og:type" content="website"><link rel="icon" href="img/logo-faqrai.svg"><link rel="stylesheet" href="style.css"></head>
 <body>
-<header class="top"><div class="wrap"><a class="brand" href="./"><img src="img/logo-faqrai.svg" alt="">FaqrAi</a><nav class="main"><a href="./#produkty">Produkty</a><a href="./#cenik">Ceník</a><a href="napoveda.html">Nápověda</a><a href="stahnout.html">Ke stažení</a><a class="btn primary" href="objednavka.html">Koupit licenci</a></nav></div></header>
+<header class="top"><div class="wrap">
+  <a class="brand" href="./"><img src="img/logo-faqrai.svg" alt="">FaqrAi</a>
+  <nav class="main" aria-label="Hlavní nabídka"><a href="./#co-umi">Co umí</a><a href="./#programy">Programy</a><a href="./#cenik" class="keep">Ceník</a><a href="stahnout.html">Ke stažení</a><a href="napoveda.html">Nápověda</a><a class="btn primary" href="objednavka.html">Koupit licenci</a></nav>
+</div></header>
 
 <section><div class="wrap" style="max-width:860px">
   <h1 style="font-size:36px">Podpora</h1>
@@ -23,10 +26,13 @@
     <div id="done" class="notice" style="margin-top:14px" hidden></div>
   </form>
 </div></section>
-<footer><div class="wrap"><div><b>FaqrAi</b> · <span id="provider"></span></div><div class="small"><a href="./">Úvod</a> · <a href="pro-koho.html">Pro koho</a> · <a href="ucetni.html">Pro účetní</a> · <a href="napoveda.html">Nápověda</a> · <a href="podpora.html">Podpora</a> · <a href="licencni-podminky.html">Podmínky</a></div></div></footer>
+<footer><div class="wrap">
+  <div><b>FaqrAi</b><br><span id="provider"></span><br><span class="small">Výpočty v programech jsou pomůcka, ne daňové poradenství.</span></div>
+  <nav aria-label="Odkazy v patičce"><a href="stahnout.html">Ke stažení</a><a href="objednavka.html">Koupit licenci</a><a href="overeni.html">Ověření licence</a><a href="napoveda.html">Nápověda</a><a href="podpora.html">Podpora</a><a href="pro-koho.html">Pro koho</a><a href="ucetni.html">Pro účetní</a><a href="srovnani.html">Srovnání</a><a href="obchodni-podminky.html">Obchodní podmínky</a><a href="licencni-podminky.html">Licenční podmínky</a><a href="ochrana-udaju.html">Ochrana údajů</a></nav>
+</div></footer>
 <script src="config.js"></script>
 <script>(function(){const C=window.FAQRAI_CFG;document.getElementById("provider").textContent=[C.provider.name,C.provider.ico?"IČO "+C.provider.ico:"",C.provider.email].filter(Boolean).join(" · ");})();</script>
-<script>(function(){const C=window.FAQRAI_CFG,$=s=>document.querySelector(s);$("#hours").textContent="Odpovídáme "+C.support.hours+". Zákazníci s placenou podporou mají přednost.";$("#product").innerHTML=C.products.map(p=>`<option>${p.name}</option>`).join("")+"<option>Web / objednávka</option>";
+<script>(function(){const C=window.FAQRAI_CFG,$=s=>document.querySelector(s);$("#hours").textContent="Odpovídáme "+C.support.hours+". Podpora e-mailem je v ceně každé licence.";$("#product").innerHTML=C.products.map(p=>`<option>${p.name}</option>`).join("")+"<option>Web / objednávka</option>";
 $("#sf").addEventListener("submit",async e=>{e.preventDefault();const v=id=>$("#"+id).value.trim();if(!v("email")||!v("text")){$("#err").innerHTML='<div class="notice" style="margin:10px 0;background:#fdebe7;border-color:#f1b0a8">Vyplňte e-mail a popis.</div>';return;}$("#err").innerHTML="";
 const body=`Produkt: ${v("product")}\nVerze: ${v("version")}\nSystém: ${v("os")}\nLicence: ${v("lic")}\nTyp: ${v("kind")}\nOd: ${v("name")} <${v("email")}>\n\n${v("text")}`;let sent=false;
 if(C.support.endpoint){try{const r=await fetch(C.support.endpoint,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({email:v("email"),name:v("name"),product:v("product"),version:v("version"),os:v("os"),licence:v("lic"),kind:v("kind"),text:v("text"),_subject:"Podpora: "+v("kind")+" – "+v("product")})});sent=r.ok;}catch(_){}}
