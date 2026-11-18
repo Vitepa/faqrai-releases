@@ -22,21 +22,25 @@ window.FAQRAI_CFG = {
      byte      – číslo produktu v licenci (1 Simple, 2 FaqrAi; další 3, 4…)
      seats     – prodává se na počet zařízení (true) / osobní licence (false)
      year      – cena za 1 rok (první zařízení); seatYear – každé další zařízení za rok
-     lifetime  – cena neomezené licence (null = nenabízet); seatLifetime – další zařízení neomezeně.
-                 Neomezená licence je bez dalších poplatků: aktualizace, daňové parametry i podpora e-mailem v ceně.
-     Podpora e-mailem je u všech licencí v ceně po dobu platnosti; žádné doplňkové služby se neprodávají.
+     lifetime  – cena trvalé licence (null = nenabízet); seatLifetime – další zařízení trvale.
+                 Trvalá licence (licenční podmínky 2.0, čl. 3.2 a 4.3): verze z doby nákupu napořád, v ceně rok
+                 opravných aktualizací (fixpacků), daňových parametrů a podpory e-mailem; nové verze (upgrady) ne.
+     maintenance – roční údržba trvalé licence: prodlouží podporu a fixpacky o rok a zahrnuje nové verze (upgrady)
+                 vydané v tom roce; seatMaintenance / firmMaintenance – za každé další zařízení / firmu.
+     Časově omezená licence (1–3 roky) má po celou dobu v ceně všechno: fixpacky, nové verze, parametry i podporu.
      firmYear / firmLifetime – příplatek za každou další firmu v jednom programu (jen FaqrAi; vynechat = nenabízet)
      available – false = jen „Připravujeme“, nelze objednat (lze přihlásit zájem)
   --------------------------------------------------------------------------- */
   products: [
     { id: "simple", byte: 1, name: "FaqrAi Simple", short: "Simple", color: "#2741A0", logo: "img/logo-simple.svg", available: true,
       desc: "OSVČ – faktury, výdaje, daně a přehledy", seats: false,
-      year: 1490, lifetime: 4490,
+      year: 1490, lifetime: 4490, maintenance: 990,
       bullets: ["faktury plátce i neplátce DPH, QR platba, opravné doklady", "daňové přiznání a přehledy ČSSZ / ZP, vedlejší činnost", "další příjmy (§ 8–10), paušální daň, přenos ztráty", "OCR skenů, balík pro účetní, pokladna"] },
     { id: "faqrai", byte: 2, name: "FaqrAi", short: "FaqrAi", color: "#0F766E", logo: "img/logo-faqrai.svg", available: true,
       desc: "Malé firmy – faktury, DPH, zálohy, pokladna, sklad", seats: true, maxSeats: 50,
       year: 3490, seatYear: 990, lifetime: 9990, seatLifetime: 2990,
-      firmYear: 1490, firmLifetime: 3990, maxFirms: 50,   // každá další firma (s.r.o.) v jednom programu; první je v ceně
+      firmYear: 1490, firmLifetime: 3990, maxFirms: 50,
+      maintenance: 2490, seatMaintenance: 590, firmMaintenance: 990,   // každá další firma (s.r.o.) v jednom programu; první je v ceně
       bullets: ["zálohové faktury, DDPP, vyúčtování, EUR", "DPH na vstupu i výstupu, kontrolní hlášení", "pokladna, sklad, role zařízení", "více firem (s.r.o.) v jednom programu", "export Pohoda XML a ISDOC"] },
     { id: "duo", byte: 3, name: "FaqrAi Duo", short: "Duo", color: "#6D28D9", logo: "img/logo-duo.svg", available: false, eta: "2027",
       desc: "Podvojné účetnictví pro s.r.o. a spolky", seats: true, year: 4990, seatYear: 1490, lifetime: null,
@@ -51,7 +55,7 @@ window.FAQRAI_CFG = {
     { years: 1, label: "1 rok", discount: 0 },
     { years: 2, label: "2 roky", discount: 0.10 },
     { years: 3, label: "3 roky", discount: 0.15 },
-    { lifetime: true, label: "Neomezená platnost" }
+    { lifetime: true, label: "Trvalá licence" }
   ],
 
   /* ---- Doplňky ---------------------------------------------------------------
@@ -65,7 +69,7 @@ window.FAQRAI_CFG = {
     { id: "start",  name: "OSVČ na rok",     product: "simple", term: 1, addons: [], note: "1 490 Kč" },
     { id: "klid",   name: "OSVČ na 3 roky",  product: "simple", term: 3, addons: [], note: "−15 %" },
     { id: "firma",  name: "Firma, 3 počítače", product: "faqrai", term: 1, seats: 3, addons: [], note: "na rok" },
-    { id: "navzdy", name: "Firma navždy",    product: "faqrai", term: null, seats: 1, addons: [], note: "bez dalších poplatků" }
+    { id: "navzdy", name: "Firma – trvalá licence", product: "faqrai", term: null, seats: 1, addons: [], note: "rok aktualizací v ceně" }
   ],
 
   /* ---- Slevové kódy ----------------------------------------------------------
@@ -88,6 +92,7 @@ window.FAQRAI_CFG = {
   /* ---- Texty ---- */
   texts: {
     afterOrder: "Fakturu pošleme e-mailem; licenční klíč vydáme po připsání platby, obvykle do jednoho pracovního dne.",
+    maintenanceNote: "Údržba je pro trvalé licence: prodlouží podporu e-mailem a opravné aktualizace o zvolenou dobu a zahrnuje nové verze programu vydané v tom období. Navazuje na konec dosavadní podpory.",
     consent: "Souhlasím s obchodními a licenčními podmínkami a beru na vědomí informace o zpracování osobních údajů. Jako podnikatel objednávám na IČO; právo spotřebitele na odstoupení od smlouvy se neuplatní."
   }
 };
