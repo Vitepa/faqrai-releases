@@ -12,7 +12,8 @@ window.FAQRAI_CFG = {
   orderEndpoint: "",                         // volitelné: URL formulářové služby (Formspree, Getform, vlastní API) – objednávka tam jde POSTem jako JSON
   account: { number: "", iban: "" },         // bankovní účet; IBAN je potřeba pro QR platbu (např. "CZ6508000000192000145399")
   releases: "https://github.com/Vitepa/faqrai-releases/releases/latest",
-  releasesApi: "https://api.github.com/repos/Vitepa/faqrai-releases/releases",   // pro stránku Ke stažení (verze, soubory, změny)
+  releasesApi: "https://api.github.com/repos/Vitepa/faqrai-releases/releases",   // pro stránku Ke stažení (seznam změn)
+  sluzba: "https://faqrai-stahovani.faqrai.workers.dev",                          // služba ke stažení (cloudflare/stahovani): instalačky aktuální verze
   publicKey: "5Begww25ucs6NtjGc04n9BNlK9saI39/nNcVYj2U75o=",                     // veřejný klíč licencí (ověření na webu); musí být shodný s src/licence-public-key.txt
   trialDays: 30,
   invoiceDueDays: 14,
