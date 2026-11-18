@@ -123,7 +123,7 @@
     const terms = C.terms.filter(t => !t.lifetime || P.lifetime);
     if(ST.term >= terms.length) ST.term = 0;
     $("#term").innerHTML = terms.map((t, i) => `<option value="${i}" ${i === ST.term ? "selected" : ""}>${esc(t.label)}${t.discount ? ` (−${Math.round(t.discount * 100)} %)` : ""}${t.lifetime ? ` – ${kc(P.lifetime)}` : ""}</option>`).join("");
-    $("#termHint").textContent = terms[ST.term].lifetime ? "Platí navždy a bez dalších poplatků – aktualizace, daňové parametry i podpora e-mailem jsou v ceně." : "Aktualizace, daňové parametry i podpora e-mailem jsou v ceně po celou dobu licence.";
+    $("#termHint").textContent = terms[ST.term].lifetime ? "Platí navždy. První rok jsou v ceně opravné aktualizace (fixpacky), daňové parametry i podpora e-mailem; nové verze (upgrady) a prodloužení podpory za příplatek." : "Aktualizace, daňové parametry i podpora e-mailem jsou v ceně po celou dobu licence.";
     $("#seatsField").style.display = P.seats ? "" : "none"; $("#seats").max = P.maxSeats || 50; $("#seats").value = ST.seats;
     $("#seatsLabel").textContent = ST.mode === "extend" ? `Počet nových ${P.perUserLabel ? "uživatelů" : "zařízení"}` : `Počet ${P.perUserLabel ? "uživatelů" : "zařízení"}`;
     const F = !!P.firmYear; $("#firmsField").style.display = F ? "" : "none"; $("#firms").max = P.maxFirms || 50; $("#firms").min = ST.mode === "extend" ? 0 : 1; $("#firms").value = ST.firms; $("#seats").min = ST.mode === "extend" ? 0 : 1;
