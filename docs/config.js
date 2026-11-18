@@ -23,10 +23,10 @@ window.FAQRAI_CFG = {
      seats     – prodává se na počet zařízení (true) / osobní licence (false)
      year      – cena za 1 rok (první zařízení); seatYear – každé další zařízení za rok
      lifetime  – cena trvalé licence (null = nenabízet); seatLifetime – další zařízení trvale.
-                 Trvalá licence (licenční podmínky 2.0, čl. 3.2 a 4.3): verze z doby nákupu napořád, v ceně rok
-                 opravných aktualizací (fixpacků), daňových parametrů a podpory e-mailem; nové verze (upgrady) ne.
-     maintenance – roční údržba trvalé licence: prodlouží podporu a fixpacky o rok a zahrnuje nové verze (upgrady)
-                 vydané v tom roce; seatMaintenance / firmMaintenance – za každé další zařízení / firmu.
+                 Trvalá licence (licenční podmínky 2.1, čl. 3.2 a 4): fixpacky, daňové parametry a povinné upgrady
+                 vždy, podpora e-mailem rok; nové verze s novými funkcemi (upgrady) jen s platnou podporou / údržbou.
+     maintenance – roční údržba trvalé licence: prodlouží podporu o rok a zahrnuje upgrady vydané v tom roce;
+                 seatMaintenance / firmMaintenance – za každé další zařízení / firmu.
      Časově omezená licence (1–3 roky) má po celou dobu v ceně všechno: fixpacky, nové verze, parametry i podporu.
      firmYear / firmLifetime – příplatek za každou další firmu v jednom programu (jen FaqrAi; vynechat = nenabízet)
      available – false = jen „Připravujeme“, nelze objednat (lze přihlásit zájem)
@@ -92,7 +92,7 @@ window.FAQRAI_CFG = {
   /* ---- Texty ---- */
   texts: {
     afterOrder: "Fakturu pošleme e-mailem; licenční klíč vydáme po připsání platby, obvykle do jednoho pracovního dne.",
-    maintenanceNote: "Údržba je pro trvalé licence: prodlouží podporu e-mailem a opravné aktualizace o zvolenou dobu a zahrnuje nové verze programu vydané v tom období. Navazuje na konec dosavadní podpory.",
+    maintenanceNote: "Údržba je pro trvalé licence: prodlouží podporu e-mailem o zvolenou dobu a zahrnuje nové verze programu s novými funkcemi vydané v tom období. Opravy a povinné aktualizace dostáváte i bez ní. Navazuje na konec dosavadní podpory.",
     consent: "Souhlasím s obchodními a licenčními podmínkami a beru na vědomí informace o zpracování osobních údajů. Jako podnikatel objednávám na IČO; právo spotřebitele na odstoupení od smlouvy se neuplatní."
   }
 };
