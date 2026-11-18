@@ -1,5 +1,5 @@
 {
- "verze": "2026-11-17",
+ "verze": "2026-11-18",
  "popis": "Daňové parametry ČR pro FaqrAi a FaqrAi Simple. Hodnoty zveřejněné ve Sbírce zákonů a na webu Finanční správy, ČSSZ a MPSV.",
  "platiProRoky": [
   2026
@@ -103,7 +103,7 @@
     27840
    ],
    "minWage": 24900,
-   "giftMax": 0.3,
+   "giftMax": 0.15,
    "interestMax": 150000,
    "savingsMax": 48000,
    "invalid12": 2520,
@@ -140,7 +140,7 @@
    "student": 4020,
    "skolkovneMax": 24900,
    "podaniLimit": 100000,
-   "zdroj": "NV č. 177/2026 Sb. (průměrná mzda 51 663 Kč), sdělení MPSV (min. mzda 24 900 Kč), zákon č. 360/2025 Sb. a novela ZDP 2027 (školkovné, sleva na studenta, limit pro podání přiznání 100 000 Kč)",
+   "zdroj": "NV č. 177/2026 Sb. (průměrná mzda 51 663 Kč), sdělení MPSV (min. mzda 24 900 Kč), zákon č. 360/2025 Sb. a novela ZDP 2027 (školkovné, sleva na studenta, limit pro podání přiznání 100 000 Kč); dary: zvýšený limit 30 % podle zákona č. 24/2025 Sb. platí do roku 2026, od 2027 § 15 odst. 1 ZDP 15 %",
    "ztpp": 16140,
    "bloodValue": 3000,
    "ltcMax": 48000,
@@ -154,7 +154,7 @@
    "minMzda": 22400
   }
  },
- "podpis": "aeUsT53YvUgHoUM/jQu0QaTUF66mLJYXmIxVEQsYjOQgE2MrYorMkG4h2Ebqojz6WnyPXus4Pt/ykJ39l0iPDA==",
+ "podpis": "Uozdf9n0Ou4/dfWH0NpcoMMVBsnNSOPsI8+7l2F6LShm/dDHU5uCIFX/AColrk/bwxVkkpmYMcFRAPsiEu69Aw==",
  "urok": {
   "prirazka": 8,
   "poznamka": "Zákonný úrok z prodlení = 2T repo sazba ČNB platná k 1. dni pololetí, v němž prodlení vzniklo, + 8 p. b. (NV 351/2013 Sb.)",
