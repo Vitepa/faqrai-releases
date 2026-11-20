@@ -4,7 +4,7 @@
    ============================================================================ */
 window.FAQRAI_CFG = {
   provider: {
-    name: "Pavel Vítek", ico: "",            // IČO doplňte, jakmile ho máte
+    name: "Pavel Vítek", ico: "30286573",
     email: "pavel.vitek16@gmail.com", address: "",
     vatPayer: false                          // true = ceny níže jsou bez DPH a k objednávce se připočte 21 %
   },
