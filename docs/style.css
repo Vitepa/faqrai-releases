@@ -198,3 +198,4 @@ section.alt{background:var(--paper);border-color:var(--rule)}
 .faq p{color:var(--muted);margin:10px 0 0;max-width:72ch}
 @media (max-width:520px){.sheet{padding:22px 18px}.sheet .foot{grid-template-columns:auto 1fr;grid-template-areas:"qr stamp" "total total"}.sheet .qr{grid-area:qr}.stamp{grid-area:stamp;font-size:26px}.sheet .total{grid-area:total}.sheet .total b{font-size:20px}.sheet td.r,.sheet th.r{font-size:12px;padding-left:8px}}
 .dl-card,.done,.gallery figure{border-radius:2px}.summary{border-radius:2px}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}

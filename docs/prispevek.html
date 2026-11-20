@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Podpořte vývoj – FaqrAi</title><meta name="description" content="Dobrovolný příspěvek na vývoj programů FaqrAi a FaqrAi Simple převodem nebo QR platbou."><meta property="og:title" content="Podpořte vývoj – FaqrAi"><meta property="og:description" content="Dobrovolný příspěvek na vývoj programů FaqrAi a FaqrAi Simple převodem nebo QR platbou."><meta property="og:image" content="img/og.jpg"><meta property="og:type" content="website"><link rel="icon" href="img/logo-faqrai.svg"><link rel="stylesheet" href="style.css"></head>
+<body>
+<a class="skip" href="#obsah">Přeskočit na obsah</a>
+<header class="top"><div class="wrap">
+  <a class="brand" href="./"><img src="img/logo-faqrai.svg" alt="">FaqrAi</a>
+  <nav class="main" aria-label="Hlavní nabídka"><a href="./#co-umi">Co umí</a><a href="./#programy">Programy</a><a href="./#cenik" class="keep">Ceník</a><a href="stahnout.html">Ke stažení</a><a href="napoveda.html">Nápověda</a><a class="btn primary" href="objednavka.html">Koupit licenci</a></nav>
+</div></header>
+
+<main id="obsah">
+<section><div class="wrap" style="max-width:860px">
+  <h1 style="font-size:36px">Podpořte vývoj FaqrAi</h1>
+  <p class="lead">FaqrAi vyvíjím sám, bez investorů a bez reklam. Pokud vám program ušetří čas, můžete jeho další vývoj podpořit dobrovolným příspěvkem v libovolné výši.</p>
+
+  <div class="split" style="gap:32px;margin:28px 0;align-items:start">
+    <div class="card" id="pay">
+      <h2 style="font-size:20px;margin-top:0">Převodem z banky</h2>
+      <div id="amounts" class="row c3" style="margin-bottom:12px"></div>
+      <label class="f">Jiná částka (Kč)<input id="amount" inputmode="numeric" maxlength="7" placeholder="např. 300"></label>
+      <div id="qr" style="margin:16px 0 8px"></div>
+      <dl id="acc" class="small" style="margin:0"></dl>
+    </div>
+    <div>
+      <h2 style="font-size:20px;margin-top:0">Co je dobré vědět</h2>
+      <ul>
+        <li><b>Příspěvek je zcela dobrovolný.</b> Není podmínkou zkušební verze, beta testování ani podpory.</li>
+        <li><b>Nic za něj nekupujete.</b> Příspěvek není platbou za licenci a nedává nárok na licenci, rychlejší podporu ani přednost při vývoji. Licenci si můžete <a href="objednavka.html">koupit zvlášť</a>.</li>
+        <li><b>Nejde o dar neziskové organizaci.</b> Příjemcem je podnikatel <span id="who"></span>, příspěvek proto nelze odečíst od základu daně a potvrzení o daru pro daňové účely nevystavuji.</li>
+        <li>Do zprávy pro příjemce stačí napsat „PRISPEVEK FAQRAI“; osobní údaje tam psát nemusíte.</li>
+        <li>Poslali jste částku omylem nebo v jiné výši? Napište na <a id="mail"></a> a peníze vrátím.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="muted">Děkuji. Každý příspěvek pomůže udržet program aktuální podle nových předpisů.</p>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <div><b>FaqrAi</b><br><span id="provider"></span><br><span class="small">Výpočty v programech jsou pomůcka, ne daňové poradenství.</span></div>
+  <nav aria-label="Odkazy v patičce"><a href="stahnout.html">Ke stažení</a><a href="objednavka.html">Koupit licenci</a><a href="overeni.html">Ověření licence</a><a href="napoveda.html">Nápověda</a><a href="podpora.html">Podpora</a><a href="beta.html">Beta testování</a><a href="prispevek.html">Podpořit vývoj</a><a href="pro-koho.html">Pro koho</a><a href="ucetni.html">Pro účetní</a><a href="srovnani.html">Srovnání</a><a href="obchodni-podminky.html">Obchodní podmínky</a><a href="licencni-podminky.html">Licenční podmínky</a><a href="ochrana-udaju.html">Ochrana údajů</a></nav>
+</div></footer>
+<script src="config.js"></script>
+<script>(function(){const C=window.FAQRAI_CFG;document.getElementById("provider").textContent=[C.provider.name,C.provider.ico?"IČO "+C.provider.ico:"",C.provider.email].filter(Boolean).join(" · ");})();</script>
+<script src="qrcode.js"></script>
+<script>(function(){const C=window.FAQRAI_CFG,$=s=>document.querySelector(s),P=C.prispevky||{},iban=(C.account.iban||"").replace(/\s/g,""),zprava=P.zprava||"PRISPEVEK FAQRAI";
+$("#who").textContent=C.provider.name+(C.provider.ico?" (IČO "+C.provider.ico+")":"");$("#mail").href="mailto:"+C.provider.email;$("#mail").textContent=C.provider.email;
+const kc=n=>n.toLocaleString("cs-CZ").replace(/\s/g,"\u00a0")+"\u00a0Kč";let castka=0;
+$("#amounts").innerHTML=(P.castky||[200,500,1000]).map(n=>`<button type="button" class="btn" style="padding-left:6px;padding-right:6px" data-n="${n}" aria-pressed="false">${kc(n)}</button>`).join("");
+function kresli(){document.querySelectorAll("#amounts [data-n]").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.n===castka)));
+ if(!iban&&!C.account.number){$("#qr").innerHTML='<div class="notice">Platební údaje připravujeme. Zatím můžete napsat na <a href="mailto:'+C.provider.email+'">'+C.provider.email+'</a>.</div>';$("#acc").innerHTML="";return;}
+ let svg="";if(iban){try{const q=qrcode(0,"M");q.addData(`SPD*1.0*ACC:${iban}${castka>0?`*AM:${castka.toFixed(2)}`:""}*CC:CZK*MSG:${zprava}`);q.make();svg=q.createSvgTag({cellSize:4,margin:2,scalable:true});}catch{}}
+ $("#qr").innerHTML=svg?`<div style="width:190px;max-width:100%;background:#fff;padding:6px;border-radius:8px" role="img" aria-label="QR platba${castka?" "+kc(castka):""}">${svg}</div><p class="hint" style="margin:6px 0 0">Naskenujte v aplikaci své banky.${castka?"":" Částku zadáte v aplikaci."}</p>`:"";
+ $("#acc").innerHTML=[C.account.number&&["Číslo účtu",C.account.number],iban&&["IBAN",iban.replace(/(.{4})/g,"$1 ").trim()],["Zpráva pro příjemce",zprava],castka>0&&["Částka",kc(castka)]].filter(Boolean).map(([k,v])=>`<dt class="muted">${k}</dt><dd style="margin:0 0 6px;font-weight:600">${v}</dd>`).join("");}
+$("#amounts").addEventListener("click",e=>{const b=e.target.closest("[data-n]");if(!b)return;castka=+b.dataset.n;$("#amount").value="";kresli();});
+$("#amount").addEventListener("input",()=>{const n=parseInt($("#amount").value.replace(/\D/g,""),10);castka=n>0&&n<1e6?n:0;kresli();});
+kresli();})();</script>
+</body></html>

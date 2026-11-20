@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Beta testování – FaqrAi</title><meta name="description" content="Staňte se beta testerem FaqrAi nebo FaqrAi Simple: bezplatná licence na 6 měsíců výměnou za hlášení chyb a krátké měsíční hodnocení."><meta property="og:title" content="Beta testování – FaqrAi"><meta property="og:description" content="Staňte se beta testerem FaqrAi nebo FaqrAi Simple: bezplatná licence na 6 měsíců výměnou za hlášení chyb a krátké měsíční hodnocení."><meta property="og:image" content="img/og.jpg"><meta property="og:type" content="website"><link rel="icon" href="img/logo-faqrai.svg"><link rel="stylesheet" href="style.css"></head>
+<body>
+<a class="skip" href="#obsah">Přeskočit na obsah</a>
+<header class="top"><div class="wrap">
+  <a class="brand" href="./"><img src="img/logo-faqrai.svg" alt="">FaqrAi</a>
+  <nav class="main" aria-label="Hlavní nabídka"><a href="./#co-umi">Co umí</a><a href="./#programy">Programy</a><a href="./#cenik" class="keep">Ceník</a><a href="stahnout.html">Ke stažení</a><a href="napoveda.html">Nápověda</a><a class="btn primary" href="objednavka.html">Koupit licenci</a></nav>
+</div></header>
+
+<main id="obsah">
+<section><div class="wrap" style="max-width:860px">
+  <h1 style="font-size:36px">Beta testování</h1>
+  <p class="lead">Hledám podnikatele, kteří si FaqrAi nebo FaqrAi Simple vyzkouší v běžném provozu a řeknou, co nefunguje. Tester dostane bezplatnou licenci na šest měsíců.</p>
+
+  <div class="grid c2" style="margin:28px 0">
+    <div class="card">
+      <h2 style="font-size:20px;margin-top:0">Co dostanete</h2>
+      <ul>
+        <li>bezplatnou beta licenci na 6 měsíců se všemi funkcemi,</li>
+        <li>nové verze a opravy hned, jak vyjdou,</li>
+        <li>přímou linku k vývojáři: každé hlášení čtu sám.</li>
+      </ul>
+      <p class="small muted">Po skončení se licence nemění na placenou a nic neplatíte. Data zůstávají ve vašem počítači; když si pak licenci nekoupíte, můžete je dál prohlížet a tisknout.</p>
+    </div>
+    <div class="card">
+      <h2 style="font-size:20px;margin-top:0">Co od vás potřebuji</h2>
+      <ul>
+        <li>každou chybu nahlásit tlačítkem <b>Nahlásit chybu</b> v programu,</li>
+        <li>u daňových výpočtů uvést anonymizovaný příklad a výsledek, který čekáte,</li>
+        <li>jednou měsíčně vyplnit krátké hodnocení, které program nabídne.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="notice" role="note" style="margin-bottom:28px">
+    <b>Beta verze je testovací software ve vývoji, ne hotový účetní nebo daňový systém.</b> Daňové, odvodové a jiné výpočty jsou jen orientační: ověřte je podle aktuálních předpisů a nepoužívejte je jako jediný podklad pro přiznání, přehledy ani platby. Data si pravidelně zálohujte. Licence je nepřevoditelná a nesmí se dál šířit. Vše podrobně popisují <a href="beta-podminky.html">podmínky beta testování</a>, které program před prvním použitím zobrazí k odsouhlasení.
+  </div>
+
+  <h2 id="prihlaska" style="font-size:28px">Přihláška</h2>
+  <form id="bf" class="card" novalidate>
+    <div class="row">
+      <label class="f">Program<select id="product"></select></label>
+      <label class="f">Systém<select id="os"><option>Windows 11</option><option>Windows 10</option><option>macOS (Apple Silicon)</option><option>macOS (Intel)</option></select></label>
+      <label class="f span2">Jméno na licenci<input id="holder" autocomplete="name" required><span class="hint">Jméno nebo název firmy, jak ho zadáte v programu.</span></label>
+      <label class="f span2">E-mail<input id="email" type="email" autocomplete="email" required><span class="hint">Sem pošlu licenční klíč.</span></label>
+      <label class="f span2">Jak podnikáte<select id="kind"><option>OSVČ, neplátce DPH</option><option>OSVČ, plátce DPH</option><option>OSVČ s vedlejší činností</option><option>s.r.o. nebo jiná firma</option><option>účetní, vedu evidenci klientům</option></select></label>
+    </div>
+    <fieldset style="border:0;padding:0;margin:14px 0 0">
+      <legend style="margin-bottom:6px;font-size:14px;font-weight:600">Co chcete hlavně zkoušet <span class="hint">(nepovinné)</span></legend>
+      <div class="row" id="areas"></div>
+    </fieldset>
+    <label class="f" style="margin-top:14px"><span>Poznámka <span class="hint">(nepovinné – např. z jakého programu přecházíte)</span></span><textarea id="note" rows="3" maxlength="2000"></textarea></label>
+    <p class="small muted" style="margin:12px 0">Do přihlášky nepište údaje svých zákazníků ani jiné údaje z evidence. Kontakt použiji jen k vydání licence a komunikaci o testu (viz <a href="ochrana-udaju.html">ochrana údajů</a>).</p>
+    <label class="chk" style="display:flex;gap:8px;align-items:flex-start;font-size:14px"><input type="checkbox" id="terms"><span>Přečetl(a) jsem si <a href="beta-podminky.html" target="_blank">podmínky beta testování</a> a rozumím, že výpočty v beta verzi jsou jen orientační.</span></label>
+    <div id="err" role="alert"></div>
+    <button class="btn primary" type="submit" style="margin-top:14px">Odeslat přihlášku</button>
+    <div id="done" class="notice" style="margin-top:14px" hidden></div>
+  </form>
+  <p class="small muted">Licence posílám postupně, zpravidla do několika pracovních dnů. Počet míst v testu je omezený.</p>
+
+  <h2 style="margin-top:44px;font-size:28px">Chcete vývoj podpořit?</h2>
+  <p>Kdo chce, může vývoj podpořit <a href="prispevek.html">dobrovolným příspěvkem</a>. Pro beta licenci ani pro podporu to není potřeba.</p>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <div><b>FaqrAi</b><br><span id="provider"></span><br><span class="small">Výpočty v programech jsou pomůcka, ne daňové poradenství.</span></div>
+  <nav aria-label="Odkazy v patičce"><a href="stahnout.html">Ke stažení</a><a href="objednavka.html">Koupit licenci</a><a href="overeni.html">Ověření licence</a><a href="napoveda.html">Nápověda</a><a href="podpora.html">Podpora</a><a href="beta.html">Beta testování</a><a href="prispevek.html">Podpořit vývoj</a><a href="pro-koho.html">Pro koho</a><a href="ucetni.html">Pro účetní</a><a href="srovnani.html">Srovnání</a><a href="obchodni-podminky.html">Obchodní podmínky</a><a href="licencni-podminky.html">Licenční podmínky</a><a href="ochrana-udaju.html">Ochrana údajů</a></nav>
+</div></footer>
+<script src="config.js"></script>
+<script>(function(){const C=window.FAQRAI_CFG;document.getElementById("provider").textContent=[C.provider.name,C.provider.ico?"IČO "+C.provider.ico:"",C.provider.email].filter(Boolean).join(" · ");})();</script>
+<script>(function(){const C=window.FAQRAI_CFG,$=s=>document.querySelector(s);
+$("#product").innerHTML=C.products.filter(p=>p.available).map(p=>`<option>${p.name}</option>`).join("");
+const A=["faktury a platby","výdaje a doklady","daně a přehledy","DPH a kontrolní hlášení","banka a párování plateb","EET a platební terminál","balík pro účetní","více firem nebo zařízení"];
+$("#areas").innerHTML=A.map(a=>`<label class="chk" style="display:flex;gap:8px;font-size:14px"><input type="checkbox" value="${a}"><span>${a}</span></label>`).join("");
+const chyba=t=>{$("#err").innerHTML=t?`<div class="notice" style="margin:10px 0;background:#fdebe7;border-color:#f1b0a8">${t}</div>`:"";};
+$("#bf").addEventListener("submit",async e=>{e.preventDefault();const v=id=>$("#"+id).value.trim();
+ const chyby=[];if(!v("holder"))chyby.push("jméno na licenci");if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("email")))chyby.push("platný e-mail");
+ if(chyby.length){chyba("Vyplňte prosím "+chyby.join(" a ")+".");return;}
+ if(!$("#terms").checked){chyba("Potvrďte prosím, že jste si přečetli podmínky beta testování.");return;}chyba("");
+ const oblasti=[...document.querySelectorAll("#areas input:checked")].map(x=>x.value);
+ const text=`Přihláška do beta testování\n\nProgram: ${v("product")}\nSystém: ${v("os")}\nJméno na licenci: ${v("holder")}\nE-mail: ${v("email")}\nPodnikání: ${v("kind")}\nChce zkoušet: ${oblasti.join(", ")||"–"}\n\n${v("note")}\n\nPodmínky beta testování: přečteno (${new Date().toISOString().slice(0,10)})`;
+ let sent=false;const ep=(C.beta&&C.beta.endpoint)||C.support.endpoint;
+ if(ep){try{const r=await fetch(ep,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({typ:"beta",program:v("product"),system:v("os"),jmeno:v("holder"),email:v("email"),podnikani:v("kind"),oblasti,poznamka:v("note"),text,_subject:"Beta přihláška – "+v("product")})});sent=r.ok;}catch{}}
+ if(!sent)location.href="mailto:"+encodeURIComponent(C.provider.email)+"?subject="+encodeURIComponent("Beta testování – "+v("product"))+"&body="+encodeURIComponent(text);
+ $("#done").hidden=false;$("#done").textContent=sent?"Přihlášku jsem přijal. Licenci pošlu na "+v("email")+".":"Otevřel se e-mailový program s připravenou přihláškou – zprávu prosím odešlete. Pokud se neotevřel, napište na "+C.provider.email+".";});})();</script>
+</body></html>

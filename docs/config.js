@@ -10,7 +10,9 @@ window.FAQRAI_CFG = {
   },
   orderEmail: "pavel.vitek16@gmail.com",     // kam chodí objednávky (mailto, když není endpoint)
   orderEndpoint: "",                         // volitelné: URL formulářové služby (Formspree, Getform, vlastní API) – objednávka tam jde POSTem jako JSON
-  account: { number: "", iban: "" },         // bankovní účet; IBAN je potřeba pro QR platbu (např. "CZ6508000000192000145399")
+  account: { number: "", iban: "" },
+  prispevky: { castky: [200, 500, 1000], zprava: "PRISPEVEK FAQRAI" },   // stránka Podpořte vývoj: nabízené částky a zpráva pro příjemce (QR používá IBAN výše)
+  beta: { endpoint: "" },                    // volitelné: URL formulářové služby pro přihlášky do beta testu (jinak support.endpoint, jinak e-mail)         // bankovní účet; IBAN je potřeba pro QR platbu (např. "CZ6508000000192000145399")
   releases: "https://github.com/Vitepa/faqrai-releases/releases/latest",
   releasesApi: "https://api.github.com/repos/Vitepa/faqrai-releases/releases",   // pro stránku Ke stažení (seznam změn)
   sluzba: "https://faqrai-stahovani.faqrai.workers.dev",                          // služba ke stažení (cloudflare/stahovani): instalačky aktuální verze
