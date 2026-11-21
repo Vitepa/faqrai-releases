@@ -134,7 +134,7 @@
     "p1": 9662,
     "p2": 16745,
     "p3": 27139,
-    "poznamka": "od 1. 1. 2027 (NV 177/2026 Sb.): 100 + 1,15×5 281 (6 074) + 3 488; EET OFF: přirážka 1 400 Kč měsíčně v 1. pásmu při příjmech do 1 mil. Kč (zákon č. 180/2026 Sb., § 2b a § 38lk odst. 8 ZDP)",
+    "poznamka": "od 1. 1. 2027 podle NV č. 177/2026 Sb.; v 1. pásmu lze místo evidence tržeb platit přirážku 1 400 Kč měsíčně (EET OFF, příjmy do 1 mil. Kč)",
     "eetOff": {
      "prirazka": 1400,
      "limit": 1000000
@@ -160,7 +160,7 @@
    "minMzda": 22400
   }
  },
- "podpis": "5voEfM8P9RtDC82fsIMEECQbVFMaPLS+LUUmc/6qA3d2Gge+QnVwAyzG0HSb0c3Z/RQYGPoUZ+Tuao+20dh7DA==",
+ "podpis": "qmvrJPF5yQC5tEMInOtAQmycvlTgtB3D9eDwlSQJjPlP3zWH+p4xROZeSd+Dj2d9vpxIiGJqkIsYkCv/Ghg3AA==",
  "urok": {
   "prirazka": 8,
   "poznamka": "Zákonný úrok z prodlení = 2T repo sazba ČNB platná k 1. dni pololetí, v němž prodlení vzniklo, + 8 p. b. (NV 351/2013 Sb.)",
@@ -242,6 +242,138 @@
    "nizkoemisni": 0.5,
    "min": 1000,
    "poznamka": "§ 6 odst. 6 ZDP – 1 % vstupní ceny měsíčně, 0,5 % u nízkoemisních, nejméně 1 000 Kč"
+  }
+ },
+ "majetek": {
+  "limitDrobny": 80000,
+  "skupiny": {
+   "1": {
+    "roky": 3,
+    "rovnomerne": [
+     20,
+     40,
+     33.3
+    ],
+    "zrychlene": [
+     3,
+     4,
+     3
+    ],
+    "priklad": "počítače, kancelářské stroje, nářadí, kancelářský nábytek"
+   },
+   "2": {
+    "roky": 5,
+    "rovnomerne": [
+     11,
+     22.25,
+     20
+    ],
+    "zrychlene": [
+     5,
+     6,
+     5
+    ],
+    "priklad": "osobní auta, dodávky, stroje, nábytek, sportovní vybavení"
+   },
+   "3": {
+    "roky": 10,
+    "rovnomerne": [
+     5.5,
+     10.5,
+     10
+    ],
+    "zrychlene": [
+     10,
+     11,
+     10
+    ],
+    "priklad": "klimatizace, výtahy, kotle, stroje pro průmysl"
+   },
+   "4": {
+    "roky": 20,
+    "rovnomerne": [
+     2.15,
+     5.15,
+     5
+    ],
+    "zrychlene": [
+     20,
+     21,
+     20
+    ],
+    "priklad": "dřevěné a lehké stavby, rozvody, potrubí"
+   },
+   "5": {
+    "roky": 30,
+    "rovnomerne": [
+     1.4,
+     3.4,
+     3.4
+    ],
+    "zrychlene": [
+     30,
+     31,
+     30
+    ],
+    "priklad": "budovy a stavby, které nepatří do 4. ani 6. skupiny"
+   },
+   "6": {
+    "roky": 50,
+    "rovnomerne": [
+     1.02,
+     2.02,
+     2
+    ],
+    "zrychlene": [
+     50,
+     51,
+     50
+    ],
+    "priklad": "administrativní budovy, hotely, obchodní domy"
+   }
+  },
+  "zdroj": "§ 26–32 ZDP; sazby § 31, koeficienty § 32; hmotný majetek nad 80 000 Kč (§ 26 odst. 2)"
+ },
+ "cesty": {
+  "stravne": {
+   "2026": {
+    "min": [
+     155,
+     236,
+     370
+    ],
+    "max": [
+     185,
+     284,
+     442
+    ],
+    "zdroj": "vyhláška č. 573/2025 Sb., § 2 (nejméně) a § 3 (rozpětí pro § 176 ZP – horní hranice osvobozeného příjmu)"
+   },
+   "2027": {
+    "min": [
+     155,
+     236,
+     370
+    ],
+    "max": [
+     185,
+     284,
+     442
+    ],
+    "predbezne": true,
+    "zdroj": "do vydání vyhlášky pro rok 2027 hodnoty roku 2026"
+   }
+  },
+  "kraceniJidlo": [
+   0.7,
+   0.35,
+   0.25
+  ],
+  "zahranici": {
+   "plnaHodin": 18,
+   "dveTretinyHodin": 12,
+   "tretinaHodin": 1,
+   "kapesneMaxPct": 40
   }
  }
 }
