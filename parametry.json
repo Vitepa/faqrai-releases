@@ -160,7 +160,7 @@
    "minMzda": 22400
   }
  },
- "podpis": "AVk5ku64aDyR4ydXcAUK6PmYh0Pu9ojau+kOgiy166kHN8jOu9gZ/UUd2DQlUpAOW7/QHsaJ/9hVuaxiHIQsBw==",
+ "podpis": "5voEfM8P9RtDC82fsIMEECQbVFMaPLS+LUUmc/6qA3d2Gge+QnVwAyzG0HSb0c3Z/RQYGPoUZ+Tuao+20dh7DA==",
  "urok": {
   "prirazka": 8,
   "poznamka": "Zákonný úrok z prodlení = 2T repo sazba ČNB platná k 1. dni pololetí, v němž prodlení vzniklo, + 8 p. b. (NV 351/2013 Sb.)",
@@ -194,5 +194,54 @@
     "sazba": 3.75
    }
   ]
+ },
+ "auta": {
+  "pausal": 5000,
+  "pausalKraceny": 4000,
+  "pausalMaxVozidel": 3,
+  "odpisLimitM1": 2000000,
+  "odpisLimitOd": "2024-01-01",
+  "odpisSkupina2": {
+   "roky": 5,
+   "rovnomerne": [
+    11,
+    22.25
+   ],
+   "zrychlene": [
+    5,
+    6
+   ]
+  },
+  "dphLimitM1": {
+   "castka": 420000,
+   "od": "2024-01-01",
+   "do": "2026-12-31",
+   "poznamka": "§ 72 odst. 3 ZDPH; od 1. 1. 2027 limit zrušen (zákon č. 180/2026 Sb.)"
+  },
+  "nahrady": {
+   "2026": {
+    "sazbaKm": 5.9,
+    "benzin95": 41.8,
+    "benzin98": 39,
+    "nafta": 44.5,
+    "elektro": 7.2,
+    "zdroj": "vyhláška č. 573/2025 Sb. ve znění vyhlášek č. 78/2026 Sb. a 175/2026 Sb. (benzin 95 od 1. 10. 2026)"
+   },
+   "2027": {
+    "sazbaKm": 5.9,
+    "benzin95": 41.8,
+    "benzin98": 39,
+    "nafta": 44.5,
+    "elektro": 7.2,
+    "predbezne": true,
+    "zdroj": "do vydání vyhlášky pro rok 2027 hodnoty roku 2026"
+   }
+  },
+  "benefit": {
+   "procento": 1,
+   "nizkoemisni": 0.5,
+   "min": 1000,
+   "poznamka": "§ 6 odst. 6 ZDP – 1 % vstupní ceny měsíčně, 0,5 % u nízkoemisních, nejméně 1 000 Kč"
+  }
  }
 }
