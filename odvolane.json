@@ -1,5 +1,11 @@
 {
- "verze": "2026-11-15",
- "odvolane": [],
- "podpis": "sgXhQWS2pesIyfUZi9ucaAENRvsu23UDL8VHQRNHxPgVwafswOXpKlam3BJLHyjT8vs9TOhnjWH8fmGMxkKuBQ=="
+ "verze": "2026-11-21",
+ "odvolane": [
+  {
+   "id": "B5E8F86E",
+   "od": "2026-11-21",
+   "duvod": "Konec testu"
+  }
+ ],
+ "podpis": "iM4/aqyUxmRr9JIOdHGOB0ezw0K1dJKTLN0+LOvVjwTW0rp2Aws8FCtbop4a0XXYjOrolyWulmYhxSiCree5AA=="
 }
