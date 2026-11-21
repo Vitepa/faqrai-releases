@@ -9,7 +9,7 @@
 /* Paleta: stůl (šedozelený podklad), papír dokladu, inkoust, razítko; barvy produktů z programu. */
 :root{
   --desk:#E6EBE8; --paper:#FFFFFF; --ink:#16232C; --muted:#56646C; --rule:#C9D2CD; --rule-soft:#DDE3DF;
-  --stamp:#5B3EA8; --simple:#2741A0; --faqrai:#0F766E; --duo:#6D28D9; --server:#17465C;
+  --stamp:#5B3EA8; --simple:#2346B8; --faqrai:#1D6B52; --duo:#5A35A8; --server:#17465C; /* = barvy log v img/logo-*.svg */
   --ok:#1B6E43; --bad:#A8321F;
   --bg:var(--desk); --line:var(--rule-soft); --surface:var(--paper); --accent:var(--stamp);
   --r:6px;
