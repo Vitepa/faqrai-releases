@@ -1,8 +1,9 @@
 {
- "verze": "2026-11-19",
+ "verze": "2026-11-21",
  "popis": "Daňové parametry ČR pro FaqrAi a FaqrAi Simple. Hodnoty zveřejněné ve Sbírce zákonů a na webu Finanční správy, ČSSZ a MPSV.",
  "platiProRoky": [
-  2026
+  2026,
+  2027
  ],
  "dph": {
   "sazby": [
@@ -133,7 +134,11 @@
     "p1": 9662,
     "p2": 16745,
     "p3": 27139,
-    "poznamka": "od 1. 1. 2027 (NV 177/2026 Sb.): 100 + 1,15×5 281 (6 074) + 3 488"
+    "poznamka": "od 1. 1. 2027 (NV 177/2026 Sb.): 100 + 1,15×5 281 (6 074) + 3 488; EET OFF: přirážka 1 400 Kč měsíčně v 1. pásmu při příjmech do 1 mil. Kč (zákon č. 180/2026 Sb., § 2b a § 38lk odst. 8 ZDP)",
+    "eetOff": {
+     "prirazka": 1400,
+     "limit": 1000000
+    }
    },
    "zalohaDanMin": 30000,
    "zalohaDanMid": 150000,
@@ -141,7 +146,7 @@
    "eetSleva": 5000,
    "skolkovneMax": 24900,
    "podaniLimit": 100000,
-   "zdroj": "NV č. 177/2026 Sb. (průměrná mzda 51 663 Kč), sdělení MPSV (min. mzda 24 900 Kč), zákon č. 180/2026 Sb. o evidenci tržeb a o změně některých dalších zákonů (sleva na studenta § 35bc, školkovné § 35bd, sleva na evidenci tržeb § 35be, limit pro podání přiznání 100 000 Kč); dary: zvýšený limit 30 % podle zákona č. 24/2025 Sb. platí do roku 2026, od 2027 § 15 odst. 1 ZDP 15 %",
+   "zdroj": "NV č. 177/2026 Sb. (průměrná mzda 51 663 Kč), sdělení MPSV (min. mzda 24 900 Kč), zákon č. 180/2026 Sb. o evidenci tržeb a o změně některých dalších zákonů (sleva na studenta § 35bc, školkovné § 35bd, sleva na evidenci tržeb § 35be, limit pro podání přiznání 100 000 Kč); dary: zvýšený limit 30 % podle zákona č. 24/2025 Sb. platí do roku 2026, od 2027 § 15 odst. 1 ZDP 15 %; paušální daň 1. pásma 9 662 Kč a přirážka EET OFF 1 400 Kč",
    "ztpp": 16140,
    "bloodValue": 3000,
    "ltcMax": 48000,
@@ -155,7 +160,7 @@
    "minMzda": 22400
   }
  },
- "podpis": "Ww0q1Mj9SlR+oQ50p4GODrIWXwndi406cRndXhHjV+1OMANZMV8qKlTOjTRuTShY0nz4NK5a6jhXLT2ji5GYAg==",
+ "podpis": "AVk5ku64aDyR4ydXcAUK6PmYh0Pu9ojau+kOgiy166kHN8jOu9gZ/UUd2DQlUpAOW7/QHsaJ/9hVuaxiHIQsBw==",
  "urok": {
   "prirazka": 8,
   "poznamka": "Zákonný úrok z prodlení = 2T repo sazba ČNB platná k 1. dni pololetí, v němž prodlení vzniklo, + 8 p. b. (NV 351/2013 Sb.)",
