@@ -9,7 +9,7 @@ window.FAQRAI_CFG = {
     vatPayer: false                          // true = ceny níže jsou bez DPH a k objednávce se připočte 21 %
   },
   orderEmail: "pavel.vitek16@gmail.com",     // kam chodí objednávky (mailto, když není endpoint)
-  orderEndpoint: "",                         // volitelné: URL formulářové služby (Formspree, Getform, vlastní API) – objednávka tam jde POSTem jako JSON
+  orderEndpoint: "https://faqrai-stahovani.faqrai.workers.dev/objednavka",   // objednávky jdou do služby na Cloudflare (čtou se ve Správci); prázdné = e-mailem
   account: { number: "", iban: "" },
   prispevky: { castky: [200, 500, 1000], zprava: "PRISPEVEK FAQRAI" },   // stránka Podpořte vývoj: nabízené částky a zpráva pro příjemce (QR používá IBAN výše)
   beta: { endpoint: "https://faqrai-stahovani.faqrai.workers.dev/prihlaska" },   // přihlášky do beta testu: služba na Cloudflare (čtou se v generátoru licencí); prázdné = e-mailem         // bankovní účet; IBAN je potřeba pro QR platbu (např. "CZ6508000000192000145399")
@@ -37,11 +37,11 @@ window.FAQRAI_CFG = {
   products: [
     { id: "simple", byte: 1, name: "FaqrAi Simple", short: "Simple", color: "#2741A0", logo: "img/logo-simple.svg", available: true,
       desc: "OSVČ – faktury, výdaje, daně a přehledy", seats: false,
-      year: 1490, lifetime: 4490, maintenance: 990,
+      year: 1490, lifetime: 4490, maintenance: 990, month: 139,   // month = měsíční předplatné bez závazku (kartou přes Stripe)
       bullets: ["faktury plátce i neplátce DPH, QR platba, opravné doklady", "daňové přiznání a přehledy ČSSZ / ZP, vedlejší činnost", "další příjmy (§ 8–10), paušální daň, přenos ztráty", "OCR skenů, balík pro účetní, pokladna"] },
     { id: "faqrai", byte: 2, name: "FaqrAi", short: "FaqrAi", color: "#0F766E", logo: "img/logo-faqrai.svg", available: true,
       desc: "Malé firmy – faktury, DPH, zálohy, pokladna, sklad", seats: true, maxSeats: 50,
-      year: 3490, seatYear: 990, lifetime: 9990, seatLifetime: 2990,
+      year: 3490, seatYear: 990, lifetime: 9990, seatLifetime: 2990, month: 329, seatMonth: 89, firmMonth: 139,
       firmYear: 1490, firmLifetime: 3990, maxFirms: 50,
       maintenance: 2490, seatMaintenance: 590, firmMaintenance: 990,   // každá další firma (s.r.o.) v jednom programu; první je v ceně
       bullets: ["zálohové faktury, DDPP, vyúčtování, EUR", "DPH na vstupu i výstupu, kontrolní hlášení", "pokladna, sklad, role zařízení", "více firem (s.r.o.) v jednom programu", "export Pohoda XML a ISDOC"] },
@@ -58,6 +58,7 @@ window.FAQRAI_CFG = {
     { years: 1, label: "1 rok", discount: 0 },
     { years: 2, label: "2 roky", discount: 0.10 },
     { years: 3, label: "3 roky", discount: 0.15 },
+    { monthly: true, label: "Měsíčně – předplatné bez závazku" },   // jen u produktů s cenou month; platba kartou, zrušit lze kdykoli
     { lifetime: true, label: "Trvalá licence" }
   ],
 
