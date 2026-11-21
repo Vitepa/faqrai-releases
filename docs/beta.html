@@ -37,7 +37,7 @@
   </div>
 
   <h2 id="prihlaska" style="font-size:28px">Přihláška</h2>
-  <form id="bf" class="card" novalidate>
+  <form id="bf" class="card" novalidate style="position:relative">
     <div class="row">
       <label class="f">Program<select id="product"></select></label>
       <label class="f">Systém<select id="os"><option>Windows 11</option><option>Windows 10</option><option>macOS (Apple Silicon)</option><option>macOS (Intel)</option></select></label>
@@ -52,6 +52,7 @@
     <label class="f" style="margin-top:14px"><span>Poznámka <span class="hint">(nepovinné – např. z jakého programu přecházíte)</span></span><textarea id="note" rows="3" maxlength="2000"></textarea></label>
     <p class="small muted" style="margin:12px 0">Do přihlášky nepište údaje svých zákazníků ani jiné údaje z evidence. Kontakt použiji jen k vydání licence a komunikaci o testu (viz <a href="ochrana-udaju.html">ochrana údajů</a>).</p>
     <label class="chk" style="display:flex;gap:8px;align-items:flex-start;font-size:14px"><input type="checkbox" id="terms"><span>Přečetl(a) jsem si <a href="beta-podminky.html" target="_blank">podmínky beta testování</a> a rozumím, že výpočty v beta verzi jsou jen orientační.</span></label>
+    <div style="position:absolute;left:-9999px" aria-hidden="true"><label>Web<input id="web" tabindex="-1" autocomplete="off"></label></div>
     <div id="err" role="alert"></div>
     <button class="btn primary" type="submit" style="margin-top:14px">Odeslat přihlášku</button>
     <div id="done" class="notice" style="margin-top:14px" hidden></div>
@@ -80,8 +81,8 @@ $("#bf").addEventListener("submit",async e=>{e.preventDefault();const v=id=>$("#
  if(!$("#terms").checked){chyba("Potvrďte prosím, že jste si přečetli podmínky beta testování.");return;}chyba("");
  const oblasti=[...document.querySelectorAll("#areas input:checked")].map(x=>x.value);
  const text=`Přihláška do beta testování\n\nProgram: ${v("product")}\nSystém: ${v("os")}\nJméno na licenci: ${v("holder")}\nE-mail: ${v("email")}\nPodnikání: ${v("kind")}\nChce zkoušet: ${oblasti.join(", ")||"–"}\n\n${v("note")}\n\nPodmínky beta testování: přečteno (${new Date().toISOString().slice(0,10)})`;
- let sent=false;const ep=(C.beta&&C.beta.endpoint)||C.support.endpoint;
- if(ep){try{const r=await fetch(ep,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({typ:"beta",program:v("product"),system:v("os"),jmeno:v("holder"),email:v("email"),podnikani:v("kind"),oblasti,poznamka:v("note"),text,_subject:"Beta přihláška – "+v("product")})});sent=r.ok;}catch{}}
- if(!sent)location.href="mailto:"+encodeURIComponent(C.provider.email)+"?subject="+encodeURIComponent("Beta testování – "+v("product"))+"&body="+encodeURIComponent(text);
- $("#done").hidden=false;$("#done").textContent=sent?"Přihlášku jsem přijal. Licenci pošlu na "+v("email")+".":"Otevřel se e-mailový program s připravenou přihláškou – zprávu prosím odešlete. Pokud se neotevřel, napište na "+C.provider.email+".";});})();</script>
+ let sent=false;const ep=C.beta&&C.beta.endpoint;const btn=$("#bf button[type=submit]");btn.disabled=true;btn.textContent="Odesílám…";
+ if(ep){try{const r=await fetch(ep,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({program:v("product"),system:v("os"),jmeno:v("holder"),email:v("email"),podnikani:v("kind"),oblasti,poznamka:v("note"),souhlas:true,podminky:"1.2",web:$("#web").value})});sent=r.ok;}catch{}}
+ btn.disabled=false;btn.textContent="Odeslat přihlášku";if(sent){$("#bf").reset();}if(!sent)location.href="mailto:"+encodeURIComponent(C.provider.email)+"?subject="+encodeURIComponent("Beta testování – "+v("product"))+"&body="+encodeURIComponent(text);
+ $("#done").hidden=false;$("#done").textContent=sent?"Děkuji, přihláška je odeslaná. Licenci pošlu e-mailem.":"Otevřel se e-mailový program s připravenou přihláškou – zprávu prosím odešlete. Pokud se neotevřel, napište na "+C.provider.email+".";});})();</script>
 </body></html>
