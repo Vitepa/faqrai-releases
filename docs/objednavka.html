@@ -42,6 +42,7 @@
           <label class="f">Délka licence<select id="term"></select><span class="hint" id="termHint"></span></label>
           <label class="f" id="seatsField"><span id="seatsLabel">Počet zařízení</span><div class="stepper"><button type="button" data-step="-1">−</button><input id="seats" type="number" min="1" max="50" value="1"><button type="button" data-step="1">+</button></div><span class="hint" id="seatsHint">Počítače, na kterých poběží program současně. Lze kdykoli rozšířit.</span></label>
           <label class="f" id="firmsField"><span id="firmsLabel">Počet firem</span><div class="stepper"><button type="button" data-fstep="-1">−</button><input id="firms" type="number" min="1" max="50" value="1"><button type="button" data-fstep="1">+</button></div><span class="hint" id="firmsHint">Kolik firem (s.r.o.) povedete v jednom programu – každá má vlastní evidenci. První je v ceně.</span></label>
+          <label class="f span2" id="podporaRow" hidden style="flex-direction:row;align-items:flex-start;gap:10px"><input type="checkbox" id="mPodpora" checked style="margin-top:4px;width:auto"><span><b>Podpora e-mailem</b> <span id="mPodporaCena"></span><span class="hint" style="display:block">Pomoc s programem a dotazy e-mailem. Platí se spolu s předplatným a jde kdykoli přidat nebo zrušit. Nové verze programu jsou v předplatném vždy.</span></span></label>
           <label class="f span2">Jméno držitele licence<input id="holder" placeholder="jak bude uvedeno v klíči (obvykle název firmy nebo jméno)"><span class="hint">Zadává se v programu spolu s klíčem – přesně takto.</span></label>
         </div>
       </fieldset>
@@ -126,6 +127,7 @@
     if(ST.term >= terms.length) ST.term = 0;
     $("#term").innerHTML = terms.map((t, i) => `<option value="${i}" ${i === ST.term ? "selected" : ""}>${esc(t.label)}${t.discount ? ` (−${Math.round(t.discount * 100)} %)` : ""}${t.monthly ? ` – od ${kc(P.month)} / měsíc` : ""}${t.lifetime ? ` – ${kc(P.lifetime)}` : ""}</option>`).join("");
     $("#termHint").textContent = terms[ST.term] && terms[ST.term].monthly ? "Platíte kartou každý měsíc, bez závazku – zrušit můžete kdykoli v programu. Licenci si program po každé platbě prodlouží sám." : ST.mode === "maintenance" ? C.texts.maintenanceNote : terms[ST.term].lifetime ? "Platí navždy. Opravy (fixpacky), daňové parametry a povinné aktualizace dostáváte vždy, podporu e-mailem první rok; nové verze s novými funkcemi s roční údržbou." : "Aktualizace, daňové parametry i podpora e-mailem jsou v ceně po celou dobu licence.";
+    const mT = terms[ST.term] && terms[ST.term].monthly && P.monthSupport; $("#podporaRow").hidden = !mT; if(mT) $("#mPodporaCena").textContent = `+ ${kc(P.monthSupport)} / měsíc`;
     $("#seatsField").style.display = P.seats ? "" : "none"; $("#seats").max = P.maxSeats || 50; $("#seats").value = ST.seats;
     $("#seatsLabel").textContent = ST.mode === "extend" ? `Počet nových ${P.perUserLabel ? "uživatelů" : "zařízení"}` : `Počet ${P.perUserLabel ? "uživatelů" : "zařízení"}`;
     const F = !!P.firmYear; $("#firmsField").style.display = F ? "" : "none"; $("#firms").max = P.maxFirms || 50; $("#firms").min = ST.mode === "extend" ? 0 : 1; $("#firms").value = ST.firms; $("#seats").min = ST.mode === "extend" ? 0 : 1;
@@ -146,6 +148,7 @@
   function bind(){
     $$("input[name=product]").forEach(r => r.onchange = () => { ST.product = r.value; ST.addons = new Set([...ST.addons].filter(id => { const a = C.addons.find(x => x.id === id); return a && (!a.products || a.products.includes(ST.product)); })); renderChoices(); });
     $("#term").onchange = e => { ST.term = +e.target.value; renderChoices(); };
+    $("#mPodpora").onchange = () => renderSum();
     $("#seats").oninput = e => { ST.seats = clampSeats(e.target.value); renderSum(); };
     $$("[data-step]").forEach(b => b.onclick = () => { ST.seats = clampSeats(ST.seats + (+b.dataset.step)); $("#seats").value = ST.seats; renderSum(); });
     $("#firms").oninput = e => { ST.firms = clampFirms(e.target.value); renderSum(); };
@@ -167,8 +170,10 @@
       lines.push({ t: `${P.name} – předplatné na měsíc`, a: P.month });
       if(P.seats && seats > 1) lines.push({ t: `Další ${unit} ${seats - 1}× měsíčně`, a: (seats - 1) * (P.seatMonth || 0) });
       if(P.firmYear && firms > 1) lines.push({ t: `Další firma ${firms - 1}× měsíčně`, a: (firms - 1) * (P.firmMonth || 0) });
+      const licence = lines.reduce((x, l) => x + l.a, 0), podpora = !!(P.monthSupport && $("#mPodpora").checked);
+      if(podpora) lines.push({ t: "Podpora e-mailem – měsíčně", a: P.monthSupport });
       const subtotal = lines.reduce((x, l) => x + l.a, 0), vat = C.provider.vatPayer ? Math.round(subtotal * 0.21) : 0;
-      return { P, T, years: null, seats, firms, lines, subtotal, vat, total: subtotal + vat, monthly: true };
+      return { P, T, years: null, seats, firms, lines, subtotal, vat, total: subtotal + vat, monthly: true, podpora, licenceMesicne: licence, podporaMesicne: podpora ? P.monthSupport : 0 };
     }
     if(ST.mode === "maintenance"){
       lines.push({ t: `${P.name} – údržba trvalé licence na ${years} ${yearsWord(years)}`, a: (P.maintenance || 0) * years });
@@ -249,7 +254,7 @@
     $("#formErr").innerHTML = "";
     const no = "FQ" + new Date().toISOString().slice(2, 10).replace(/-/g, "") + String(Math.floor(Math.random() * 900) + 100);
     const modeLabel = { new: "nová licence", renew: "prodloužení", extend: "rozšíření o zařízení / firmy", upgrade: "přechod na " + s.P.name, maintenance: "údržba trvalé licence" }[ST.mode];
-    const order = { verze: 2, cislo: no, datum: new Date().toISOString(), typ: ST.mode, typPopis: modeLabel, produkt: s.P.id, produktNazev: s.P.name, produktByte: s.P.byte, licence: s.monthly ? "měsíční předplatné (bez závazku)" : ST.mode === "maintenance" ? `trvalá – údržba na ${s.years} ${yearsWord(s.years)}` : s.T.lifetime ? "trvalá" : s.years + " " + yearsWord(s.years), predplatne: !!s.monthly, mesicne: s.monthly ? s.total : null, souhlas: true, roky: s.years, neomezena: !s.monthly && (!!s.T.lifetime || ST.mode === "maintenance"), udrzbaRoky: ST.mode === "maintenance" ? s.years : null, zarizeni: s.P.seats ? s.seats : null, firmy: s.P.firmYear ? s.firms : null, doplnky: [...ST.addons], kupon: ST.coupon ? ST.coupon.code : "", stavajiciLicence: ST.mode !== "new" ? (ST.mode === "maintenance" ? { id: v("licId").toUpperCase(), podporaDo: v("licUntil") } : { id: v("licId").toUpperCase(), platiDo: v("licUntil") }) : null,
+    const order = { verze: 2, cislo: no, datum: new Date().toISOString(), typ: ST.mode, typPopis: modeLabel, produkt: s.P.id, produktNazev: s.P.name, produktByte: s.P.byte, licence: s.monthly ? "měsíční předplatné (bez závazku)" : ST.mode === "maintenance" ? `trvalá – údržba na ${s.years} ${yearsWord(s.years)}` : s.T.lifetime ? "trvalá" : s.years + " " + yearsWord(s.years), predplatne: !!s.monthly, mesicne: s.monthly ? s.licenceMesicne : null, podpora: s.monthly ? !!s.podpora : null, mesicnePodpora: s.monthly ? s.podporaMesicne : null, souhlas: true, roky: s.years, neomezena: !s.monthly && (!!s.T.lifetime || ST.mode === "maintenance"), udrzbaRoky: ST.mode === "maintenance" ? s.years : null, zarizeni: s.P.seats ? s.seats : null, firmy: s.P.firmYear ? s.firms : null, doplnky: [...ST.addons], kupon: ST.coupon ? ST.coupon.code : "", stavajiciLicence: ST.mode !== "new" ? (ST.mode === "maintenance" ? { id: v("licId").toUpperCase(), podporaDo: v("licUntil") } : { id: v("licId").toUpperCase(), platiDo: v("licUntil") }) : null,
       drzitel: v("holder"), polozky: s.lines, mezisoucet: s.subtotal, dph: s.vat, celkem: s.total, ico: v("ico"), dic: v("dic"), nazev: v("name"), ulice: v("street"), psc: v("zip"), mesto: v("city"), email: v("email"), telefon: v("phone"), poznamka: v("note") };
     const text = `OBJEDNÁVKA ${no} (${modeLabel})\n\nProdukt: ${order.produktNazev}\nLicence: ${order.licence}${order.zarizeni ? `, zařízení: ${order.zarizeni}` : ""}${order.firmy ? `, firmy: ${order.firmy}${ST.mode === "extend" ? " (přidat)" : ""}` : ""}${order.stavajiciLicence ? `\nStávající licence: ${order.stavajiciLicence.id}${order.stavajiciLicence.platiDo ? " (do " + order.stavajiciLicence.platiDo + ")" : ""}` : ""}\nDržitel licence: ${order.drzitel}\n\n${s.lines.map(l => `${l.t}: ${kc(l.a)}`).join("\n")}${s.vat ? `\nDPH 21 %: ${kc(s.vat)}` : ""}\nCelkem: ${kc(s.total)}${s.monthly ? " měsíčně (platba kartou, bez závazku)" : ""}\n\nFakturační údaje:\n${order.nazev}\nIČO ${order.ico}${order.dic ? ", DIČ " + order.dic : ""}\n${order.ulice}, ${order.psc} ${order.mesto}\nE-mail: ${order.email}${order.telefon ? "\nTelefon: " + order.telefon : ""}${order.poznamka ? "\n\nPoznámka: " + order.poznamka : ""}\n\nSouhlas s licenčními podmínkami: ano (${new Date().toLocaleString("cs-CZ")})\n\n--- strojově čitelná část (pro generátor licencí) ---\n${JSON.stringify(order)}`;
     $("#submitBtn").disabled = true; $("#submitBtn").textContent = "Odesílám…";
@@ -264,7 +269,7 @@
     let qr = ""; if(iban && o.celkem > 0){ try { const qq = qrcode(0, "M"); qq.addData(`SPD*1.0*ACC:${iban}*AM:${o.celkem.toFixed(2)}*CC:CZK*X-VS:${vs}*MSG:FAQRAI ${o.cislo}`); qq.make(); qr = qq.createSvgTag({ cellSize: 2, margin: 0, scalable: true }); } catch(_){} }
     if(o.predplatne){ d.innerHTML = `<h2>Děkujeme, objednávka ${esc(o.cislo)} je přijatá</h2>
       <p>${sent ? "Objednávku měsíčního předplatného jsme přijali." : "Otevřel se váš e-mailový program s předvyplněnou objednávkou – <b>zprávu prosím odešlete</b>."} Na <b>${esc(o.email)}</b> vám pošleme <b>odkaz k platbě kartou</b> a <b>aktivační kód</b>, který zadáte v programu (Nastavení → Licence → Měsíční předplatné).</p>
-      <p>Předplatné ${esc(kc(o.mesicne || o.celkem))} měsíčně je bez závazku: platba se strhává automaticky každý měsíc a zrušit ho můžete kdykoli přímo v programu. Program si po každé platbě licenci prodlouží sám.</p>
+      <p>Předplatné ${esc(kc(o.celkem))} měsíčně${o.podpora ? " (včetně podpory e-mailem)" : ""} je bez závazku: platba se strhává automaticky každý měsíc a zrušit ho můžete kdykoli přímo v programu. Program si po každé platbě licenci prodlouží sám.</p>
       <details style="margin-top:14px"><summary class="small">Text objednávky</summary><pre class="small" style="white-space:pre-wrap;font-family:var(--mono)">${esc(text)}</pre></details>
       <p style="margin-top:18px"><a class="btn" href="stahnout.html">Stáhnout program</a> <a class="btn" href="./">Zpět na úvod</a></p>`; window.scrollTo(0, 0); return; }
     d.innerHTML = `<h2>Děkujeme, objednávka ${esc(o.cislo)} je na cestě</h2>

@@ -37,11 +37,11 @@ window.FAQRAI_CFG = {
   products: [
     { id: "simple", byte: 1, name: "FaqrAi Simple", short: "Simple", color: "#2741A0", logo: "img/logo-simple.svg", available: true,
       desc: "OSVČ – faktury, výdaje, daně a přehledy", seats: false,
-      year: 1490, lifetime: 4490, maintenance: 990, month: 139,   // month = měsíční předplatné bez závazku (kartou přes Stripe)
+      year: 1490, lifetime: 4490, maintenance: 990, month: 139, monthSupport: 49,   // month = měsíční předplatné bez závazku (kartou přes Stripe); monthSupport = podpora e-mailem k předplatnému za měsíc
       bullets: ["faktury plátce i neplátce DPH, QR platba, opravné doklady", "daňové přiznání a přehledy ČSSZ / ZP, vedlejší činnost", "další příjmy (§ 8–10), paušální daň, přenos ztráty", "OCR skenů, balík pro účetní, pokladna"] },
     { id: "faqrai", byte: 2, name: "FaqrAi", short: "FaqrAi", color: "#0F766E", logo: "img/logo-faqrai.svg", available: true,
       desc: "Malé firmy – faktury, DPH, zálohy, pokladna, sklad", seats: true, maxSeats: 50,
-      year: 3490, seatYear: 990, lifetime: 9990, seatLifetime: 2990, month: 329, seatMonth: 89, firmMonth: 139,
+      year: 3490, seatYear: 990, lifetime: 9990, seatLifetime: 2990, month: 329, seatMonth: 89, firmMonth: 139, monthSupport: 99,
       firmYear: 1490, firmLifetime: 3990, maxFirms: 50,
       maintenance: 2490, seatMaintenance: 590, firmMaintenance: 990,   // každá další firma (s.r.o.) v jednom programu; první je v ceně
       bullets: ["zálohové faktury, DDPP, vyúčtování, EUR", "DPH na vstupu i výstupu, kontrolní hlášení", "pokladna, sklad, role zařízení", "více firem (s.r.o.) v jednom programu", "export Pohoda XML a ISDOC"] },
