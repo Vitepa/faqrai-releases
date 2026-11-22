@@ -20,4 +20,5 @@
 const arts=[...document.querySelectorAll(".art")];document.getElementById("tocList").innerHTML=arts.map(a=>`<a href="#${a.id}">${a.dataset.t}</a>`).join("");
 const norm=s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
 document.getElementById("q").addEventListener("input",e=>{const q=norm(e.target.value.trim());arts.forEach(a=>{a.classList.toggle("hid",q.length>1&&!norm(a.textContent).includes(q));});});})();</script>
+<script src="mobil.js"></script>
 </body></html>

@@ -85,4 +85,5 @@ $("#bf").addEventListener("submit",async e=>{e.preventDefault();const v=id=>$("#
  if(ep){try{const r=await fetch(ep,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({program:v("product"),system:v("os"),jmeno:v("holder"),email:v("email"),podnikani:v("kind"),oblasti,poznamka:v("note"),souhlas:true,podminky:"1.2",web:$("#web").value})});sent=r.ok;}catch{}}
  btn.disabled=false;btn.textContent="Odeslat přihlášku";if(sent){$("#bf").reset();}if(!sent)location.href="mailto:"+encodeURIComponent(C.provider.email)+"?subject="+encodeURIComponent("Beta testování – "+v("product"))+"&body="+encodeURIComponent(text);
  $("#done").hidden=false;$("#done").textContent=sent?"Děkuji, přihláška je odeslaná. Licenci pošlu e-mailem.":"Otevřel se e-mailový program s připravenou přihláškou – zprávu prosím odešlete. Pokud se neotevřel, napište na "+C.provider.email+".";});})();</script>
+<script src="mobil.js"></script>
 </body></html>

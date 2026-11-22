@@ -54,4 +54,5 @@ function kresli(){document.querySelectorAll("#amounts [data-n]").forEach(b=>b.se
 $("#amounts").addEventListener("click",e=>{const b=e.target.closest("[data-n]");if(!b)return;castka=+b.dataset.n;$("#amount").value="";kresli();});
 $("#amount").addEventListener("input",()=>{const n=parseInt($("#amount").value.replace(/\D/g,""),10);castka=n>0&&n<1e6?n:0;kresli();});
 kresli();})();</script>
+<script src="mobil.js"></script>
 </body></html>
