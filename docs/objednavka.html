@@ -19,10 +19,10 @@
 
   <div class="tabs" id="modeTabs" role="tablist">
     <button type="button" class="tab active" data-mode="new">Nová licence</button>
-    <button type="button" class="tab" data-mode="renew">Prodloužení</button>
-    <button type="button" class="tab" data-mode="extend">Další zařízení nebo firmy</button>
-    <button type="button" class="tab" data-mode="maintenance">Údržba trvalé licence</button>
-    <button type="button" class="tab" data-mode="upgrade">Přechod Simple → FaqrAi</button>
+    <button type="button" class="tab" data-mode="renew" hidden>Prodloužení</button>
+    <button type="button" class="tab" data-mode="extend" hidden>Další zařízení nebo firmy</button>
+    <button type="button" class="tab" data-mode="maintenance" hidden>Údržba trvalé licence</button>
+    <button type="button" class="tab" data-mode="upgrade" hidden>Přechod Simple → FaqrAi</button>
   </div>
 
   <form id="orderForm" class="order" novalidate>
@@ -109,6 +109,7 @@
   const prodRaw = id => C.products.find(p => p.id === id);
   /* ceny podle tarifu: hlavní ceny produktu = Plus, p.zaklad je přepíše pro Základ */
   const prodById = id => { const p = prodRaw(id); if(!p || !p.zaklad || !C.tiers) return p; return TARIF === "zaklad" ? { ...p, ...p.zaklad, name: p.name + " " + tierName("zaklad"), tarif: "zaklad" } : { ...p, name: p.name + " " + tierName("plus"), tarif: "plus" }; };
+  const INC = P => P.includedSeats || 1;   // počítačů v základní ceně
   const priceFor = (a, p) => typeof a.price === "object" ? (a.price[p.id] ?? 0) : a.price;
   const todayIso = () => new Date().toISOString().slice(0, 10);
   const yearsWord = n => n === 1 ? "rok" : n < 5 ? "roky" : "let";
@@ -116,8 +117,12 @@
   /* ---------- stav ---------- */
   const q = new URLSearchParams(location.search);
   const ST = { mode: ["new", "renew", "extend", "upgrade", "maintenance"].includes(q.get("m")) ? q.get("m") : "new", product: prodById(q.get("p")) && prodById(q.get("p")).available ? q.get("p") : "simple", term: 0, seats: 1, firms: 1, addons: new Set(), coupon: null };
+  // prodává se jen předplatné: prodloužení, přechod a rozšíření se objednávají jako nové předplatné; údržba jen pro dřívější trvalé licence
+  if(["renew", "upgrade", "extend"].includes(ST.mode)) ST.mode = "new";
+  { const tb = document.querySelector(`#modeTabs .tab[data-mode="${ST.mode}"]`); if(tb) tb.hidden = false; if(ST.mode === "new") document.getElementById("modeTabs").hidden = true; }
+  if(ST.product === "faqrai" || (prodRaw(ST.product) || {}).includedSeats) ST.seats = Math.max(ST.seats, (prodRaw(ST.product) || {}).includedSeats || 1);
   if(q.get("b")) applyBundle(q.get("b"));
-  if(q.get("typ") === "firmy"){ ST.mode = "extend"; ST.product = "faqrai"; ST.seats = 0; ST.firms = 1; }
+  if(q.get("typ") === "firmy"){ ST.product = "faqrai"; }
 
   /* ---------- statické texty ---------- */
   $("#afterOrderTop").textContent = C.texts.afterOrder; $("#afterOrderBottom").textContent = C.texts.afterOrder; $("#consentText").textContent = C.texts.consent;
@@ -132,7 +137,7 @@
     $("#tierChoice").hidden = !(PR && PR.zaklad && C.tiers);
     if(PR && PR.zaklad && C.tiers) $("#tierChoice").innerHTML = C.tiers.map(t => { const c = t.id === "zaklad" ? { ...PR, ...PR.zaklad } : PR; return `<label style="--c:${PR.color}"><input type="radio" name="tier" value="${t.id}" ${t.id === TARIF ? "checked" : ""}><b>${esc(t.name)}</b><span>${kc(c.year)} / rok · ${kc(c.month)} / měsíc</span><small>${esc(t.desc)}</small></label>`; }).join("");
     $$("input[name=tier]").forEach(x => x.onchange = () => { TARIF = x.value; renderChoices(); });
-    const terms = C.terms.filter(t => t.monthly || t.yearlySub ? ST.mode === "new" && (t.monthly ? P.month : P.yearSupport !== undefined) : ST.mode === "maintenance" ? !t.lifetime : (!t.lifetime || P.lifetime));
+    const terms = C.terms.filter(t => t.maintenanceOnly ? ST.mode === "maintenance" : t.monthly || t.yearlySub ? ST.mode === "new" && (t.monthly ? P.month : P.yearSupport !== undefined) : ST.mode === "maintenance" ? !t.lifetime : (!t.lifetime || P.lifetime));
     if(ST.term >= terms.length) ST.term = 0;
     $("#term").innerHTML = terms.map((t, i) => `<option value="${i}" ${i === ST.term ? "selected" : ""}>${esc(t.label)}${t.discount ? ` (−${Math.round(t.discount * 100)} %)` : ""}${t.monthly ? ` – od ${kc(P.month)} / měsíc` : ""}${t.yearlySub ? ` – ${kc(P.year)} / rok` : ""}${t.lifetime ? ` – ${kc(P.lifetime)}` : ""}</option>`).join("");
     $("#termHint").textContent = terms[ST.term] && terms[ST.term].monthly ? "Platíte kartou každý měsíc, bez závazku – zrušit můžete kdykoli v programu. Licenci si program po každé platbě prodlouží sám." : terms[ST.term] && terms[ST.term].yearlySub ? "Platíte kartou jednou ročně, podpora e-mailem a nové verze jsou v ceně; před každým prodloužením přijde upozornění. Zrušit můžete kdykoli v programu, licence pak platí do konce zaplaceného roku." : ST.mode === "maintenance" ? C.texts.maintenanceNote : terms[ST.term].lifetime ? "Platí navždy. Opravy (fixpacky), daňové parametry a povinné aktualizace dostáváte vždy, podporu e-mailem první rok; nové verze s novými funkcemi s roční údržbou." : "Aktualizace, daňové parametry i podpora e-mailem jsou v ceně po celou dobu licence.";
@@ -155,7 +160,7 @@
   }
   function applyBundle(id){ const b = C.bundles.find(x => x.id === id); if(!b) return; ST.product = b.product; ST.seats = b.seats || 1; ST.addons = new Set(b.addons || []); const terms = C.terms.filter(t => !t.lifetime || prodById(b.product).lifetime); ST.term = Math.max(0, terms.findIndex(t => b.term == null ? t.lifetime : t.years === b.term)); }
   function bind(){
-    $$("input[name=product]").forEach(r => r.onchange = () => { ST.product = r.value; ST.addons = new Set([...ST.addons].filter(id => { const a = C.addons.find(x => x.id === id); return a && (!a.products || a.products.includes(ST.product)); })); renderChoices(); });
+    $$("input[name=product]").forEach(r => r.onchange = () => { ST.product = r.value; ST.seats = INC(prodById(ST.product)); ST.addons = new Set([...ST.addons].filter(id => { const a = C.addons.find(x => x.id === id); return a && (!a.products || a.products.includes(ST.product)); })); renderChoices(); });
     $("#term").onchange = e => { ST.term = +e.target.value; renderChoices(); };
     $("#mPodpora").onchange = () => renderSum();
     $("#seats").oninput = e => { ST.seats = clampSeats(e.target.value); renderSum(); };
@@ -165,19 +170,19 @@
     $$("[data-addon]").forEach(c => c.onchange = () => { c.checked ? ST.addons.add(c.dataset.addon) : ST.addons.delete(c.dataset.addon); renderSum(); });
     $$("[data-bundle]").forEach(b => b.onclick = () => { applyBundle(b.dataset.bundle); renderChoices(); });
   }
-  function clampSeats(v){ const P = prodById(ST.product), min = ST.mode === "extend" ? 0 : 1, n = parseInt(v, 10); return Math.max(min, Math.min(P.maxSeats || 50, isNaN(n) ? min : n)); }
+  function clampSeats(v){ const P = prodById(ST.product), min = ST.mode === "extend" ? 0 : (ST.mode === "new" ? INC(P) : 1), n = parseInt(v, 10); return Math.max(min, Math.min(P.maxSeats || 50, isNaN(n) ? min : n)); }
   function clampFirms(v){ const P = prodById(ST.product), min = ST.mode === "extend" ? 0 : 1, n = parseInt(v, 10); return Math.max(min, Math.min(P.maxFirms || 50, isNaN(n) ? min : n)); }
   $$("#modeTabs .tab").forEach(t => t.onclick = () => { ST.mode = t.dataset.mode; if(ST.mode === "maintenance" && !prodById(ST.product).maintenance){ ST.product = C.products.find(p => p.maintenance && p.available).id; } if(ST.mode === "upgrade"){ ST.product = C.upgrade.to; } if(ST.mode === "extend" && !prodById(ST.product).seats){ ST.product = C.products.find(p => p.seats && p.available).id; } renderChoices(); });
 
   /* ---------- výpočet ---------- */
   function calc(){
-    const P = prodById(ST.product), terms = C.terms.filter(t => t.monthly || t.yearlySub ? ST.mode === "new" && (t.monthly ? P.month : P.yearSupport !== undefined) : ST.mode === "maintenance" ? !t.lifetime : (!t.lifetime || P.lifetime)), T = terms[ST.term] || terms[0];
+    const P = prodById(ST.product), terms = C.terms.filter(t => t.maintenanceOnly ? ST.mode === "maintenance" : t.monthly || t.yearlySub ? ST.mode === "new" && (t.monthly ? P.month : P.yearSupport !== undefined) : ST.mode === "maintenance" ? !t.lifetime : (!t.lifetime || P.lifetime)), T = terms[ST.term] || terms[0];
     const years = T.lifetime ? null : T.years, seats = P.seats ? ST.seats : 1, firms = P.firmYear ? ST.firms : 1, lines = [];
     const fw = n => n === 1 ? "firma" : n < 5 ? "firmy" : "firem";
     const unit = P.perUserLabel || "zařízení";
     if(T.yearlySub){
       lines.push({ t: `${P.name} – předplatné na rok`, a: P.year });
-      if(P.seats && seats > 1) lines.push({ t: `Další ${unit} ${seats - 1}× na rok`, a: (seats - 1) * (P.seatYear || 0) });
+      if(P.seats && seats > INC(P)) lines.push({ t: `Další ${unit} ${seats - INC(P)}× na rok`, a: (seats - INC(P)) * (P.seatYear || 0) });
       if(P.firmYear && firms > 1) lines.push({ t: `Další firma ${firms - 1}× na rok`, a: (firms - 1) * (P.firmYear || 0) });
       const licence = lines.reduce((x, l) => x + l.a, 0), podpora = P.yearSupport > 0 ? $("#mPodpora").checked : true;
       if(podpora && P.yearSupport > 0) lines.push({ t: "Podpora e-mailem – na rok", a: P.yearSupport });
@@ -186,7 +191,7 @@
     }
     if(T.monthly){
       lines.push({ t: `${P.name} – předplatné na měsíc`, a: P.month });
-      if(P.seats && seats > 1) lines.push({ t: `Další ${unit} ${seats - 1}× měsíčně`, a: (seats - 1) * (P.seatMonth || 0) });
+      if(P.seats && seats > INC(P)) lines.push({ t: `Další ${unit} ${seats - INC(P)}× měsíčně`, a: (seats - INC(P)) * (P.seatMonth || 0) });
       if(P.firmYear && firms > 1) lines.push({ t: `Další firma ${firms - 1}× měsíčně`, a: (firms - 1) * (P.firmMonth || 0) });
       const licence = lines.reduce((x, l) => x + l.a, 0), podpora = !!(P.monthSupport && $("#mPodpora").checked);
       if(podpora) lines.push({ t: "Podpora e-mailem – měsíčně", a: P.monthSupport });
@@ -203,8 +208,8 @@
       if(T.lifetime && seats === 0) lines.pop();
       if(P.firmYear && firms) lines.push(T.lifetime ? { t: `${P.name} – ${firms}× další firma (neomezeně)`, a: firms * (P.firmLifetime || 0) } : { t: `${P.name} – ${firms}× další firma na ${years} ${yearsWord(years)}`, a: firms * P.firmYear * years });
     } else {
-      if(T.lifetime){ lines.push({ t: `${P.name} – neomezená licence`, a: P.lifetime }); if(P.seats && seats > 1) lines.push({ t: `Další ${unit} ${seats - 1}× (neomezeně)`, a: (seats - 1) * (P.seatLifetime || 0) }); }
-      else { lines.push({ t: `${P.name} – licence na ${years} ${yearsWord(years)}`, a: P.year * years }); if(P.seats && seats > 1) lines.push({ t: `Další ${unit} ${seats - 1}× na ${years} ${yearsWord(years)}`, a: (seats - 1) * (P.seatYear || 0) * years }); }
+      if(T.lifetime){ lines.push({ t: `${P.name} – neomezená licence`, a: P.lifetime }); if(P.seats && seats > INC(P)) lines.push({ t: `Další ${unit} ${seats - INC(P)}× (neomezeně)`, a: (seats - 1) * (P.seatLifetime || 0) }); }
+      else { lines.push({ t: `${P.name} – licence na ${years} ${yearsWord(years)}`, a: P.year * years }); if(P.seats && seats > INC(P)) lines.push({ t: `Další ${unit} ${seats - INC(P)}× na ${years} ${yearsWord(years)}`, a: (seats - INC(P)) * (P.seatYear || 0) * years }); }
     }
     if(ST.mode !== "extend" && ST.mode !== "maintenance" && P.firmYear && firms > 1) lines.push(T.lifetime ? { t: `Další firma ${firms - 1}× (neomezeně)`, a: (firms - 1) * (P.firmLifetime || 0) } : { t: `Další firma ${firms - 1}× na ${years} ${yearsWord(years)}`, a: (firms - 1) * P.firmYear * years });
     const licBase = lines.reduce((s, l) => s + l.a, 0);

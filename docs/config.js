@@ -38,14 +38,15 @@ window.FAQRAI_CFG = {
     { id: "simple", byte: 1, name: "FaqrAi Simple", short: "Simple", color: "#2741A0", logo: "img/logo-simple.svg", available: true,
       desc: "OSVČ – faktury, výdaje, daně a přehledy", seats: false,
       // tarify: hlavní ceny = Plus (všechno včetně automatiky), zaklad = přepíše ceny pro tarif Základ
-      year: 1990, lifetime: 5490, maintenance: 1290, month: 199, monthSupport: 49, yearSupport: 0,
-      zaklad: { year: 990, lifetime: 2990, maintenance: 690, month: 99 },   // 0 = podpora v ceně ročního předplatného (jako u roční licence)   // month = měsíční předplatné bez závazku (kartou přes Stripe); monthSupport = podpora e-mailem k předplatnému za měsíc
+      year: 1990, lifetime: null, maintenance: 1290, month: 199, monthSupport: 49, yearSupport: 0,
+      zaklad: { year: 990, maintenance: 690, month: 99 },   // 0 = podpora v ceně ročního předplatného (jako u roční licence)   // month = měsíční předplatné bez závazku (kartou přes Stripe); monthSupport = podpora e-mailem k předplatnému za měsíc
       bullets: ["faktury plátce i neplátce DPH, QR platba, opravné doklady", "daňové přiznání a přehledy ČSSZ / ZP, vedlejší činnost", "další příjmy (§ 8–10), paušální daň, přenos ztráty", "OCR skenů, balík pro účetní, pokladna"] },
     { id: "faqrai", byte: 2, name: "FaqrAi", short: "FaqrAi", color: "#0F766E", logo: "img/logo-faqrai.svg", available: true,
       desc: "Malé firmy – faktury, DPH, zálohy, pokladna, sklad", seats: true, maxSeats: 50,
-      year: 3990, seatYear: 890, lifetime: 10990, seatLifetime: 2690, month: 379, seatMonth: 79, firmMonth: 139, monthSupport: 99, yearSupport: 0,
-      zaklad: { year: 2490, seatYear: 690, lifetime: 6990, seatLifetime: 1990, month: 239, seatMonth: 69, maintenance: 1790, seatMaintenance: 490 },
-      firmYear: 1490, firmLifetime: 3990, maxFirms: 50,
+      includedSeats: 5,   // počítačů v základní ceně
+      year: 3990, seatYear: 890, lifetime: null, month: 379, seatMonth: 79, firmMonth: 139, monthSupport: 99, yearSupport: 0,
+      zaklad: { year: 2490, seatYear: 690, month: 239, seatMonth: 69, maintenance: 1790, seatMaintenance: 490 },
+      firmYear: 1490, maxFirms: 50,
       maintenance: 2690, seatMaintenance: 590, firmMaintenance: 990,   // každá další firma (s.r.o.) v jednom programu; první je v ceně
       bullets: ["zálohové faktury, DDPP, vyúčtování, EUR", "DPH na vstupu i výstupu, kontrolní hlášení", "pokladna, sklad, role zařízení", "více firem (s.r.o.) v jednom programu", "export Pohoda XML a ISDOC"] },
     { id: "duo", byte: 3, name: "FaqrAi Duo", short: "Duo", color: "#6D28D9", logo: "img/logo-duo.svg", available: false, eta: "2027",
@@ -64,12 +65,10 @@ window.FAQRAI_CFG = {
 
   /* ---- Délky licence a slevy za platbu předem ---- */
   terms: [
-    { years: 1, label: "1 rok", discount: 0 },
-    { years: 2, label: "2 roky", discount: 0.10 },
-    { years: 3, label: "3 roky", discount: 0.15 },
-    { yearlySub: true, label: "Ročně – předplatné s automatickým prodlužováním" },   // jako roční licence, ale kartou a prodlužuje se sama; zrušit lze kdykoli
-    { monthly: true, label: "Měsíčně – předplatné bez závazku" },   // jen u produktů s cenou month; platba kartou, zrušit lze kdykoli
-    { lifetime: true, label: "Trvalá licence" }
+    // prodává se jen předplatné (dřívější licence na roky a trvalé licence se už nenabízejí; údržba trvalých licencí zůstává přes ?m=maintenance)
+    { yearlySub: true, label: "Ročně – předplatné s automatickým prodlužováním" },   // kartou, prodlužuje se samo; zrušit lze kdykoli
+    { monthly: true, label: "Měsíčně – předplatné bez závazku" },   // kartou, zrušit lze kdykoli
+    { years: 1, label: "1 rok", maintenanceOnly: true }, { years: 2, label: "2 roky", maintenanceOnly: true, discount: 0.10 }   // jen údržba dříve prodaných trvalých licencí
   ],
 
   /* ---- Doplňky ---------------------------------------------------------------
@@ -79,12 +78,7 @@ window.FAQRAI_CFG = {
   addons: [],   // doplňkové služby (zaškolení, převod dat…) se neprodávají – jen licence
 
   /* ---- Balíčky (předvolby jedním kliknutím) ---- */
-  bundles: [
-    { id: "start",  name: "OSVČ na rok",     product: "simple", term: 1, addons: [], note: "1 490 Kč" },
-    { id: "klid",   name: "OSVČ na 3 roky",  product: "simple", term: 3, addons: [], note: "−15 %" },
-    { id: "firma",  name: "Firma, 3 počítače", product: "faqrai", term: 1, seats: 3, addons: [], note: "na rok" },
-    { id: "navzdy", name: "Firma – trvalá licence", product: "faqrai", term: null, seats: 1, addons: [], note: "rok aktualizací v ceně" }
-  ],
+  bundles: [],   // rychlé předvolby (při prodeji jen předplatného nejsou potřeba),
 
   /* ---- Slevové kódy ----------------------------------------------------------
      percent nebo amount; validUntil (RRRR-MM-DD); products (jen pro některé); minTotal
