@@ -1,5 +1,5 @@
 {
- "verze": "2026-11-21",
+ "verze": "2026-11-23",
  "popis": "Daňové parametry ČR pro FaqrAi a FaqrAi Simple. Hodnoty zveřejněné ve Sbírce zákonů a na webu Finanční správy, ČSSZ a MPSV.",
  "platiProRoky": [
   2026,
@@ -78,7 +78,7 @@
    "ztpp": 16140,
    "bloodValue": 3000,
    "ltcMax": 48000,
-   "unionsMax": 3000,
+   "unionsMax": 0,
    "unionsPct": 0.015
   },
   "2027": {
@@ -150,7 +150,7 @@
    "ztpp": 16140,
    "bloodValue": 3000,
    "ltcMax": 48000,
-   "unionsMax": 3000,
+   "unionsMax": 0,
    "unionsPct": 0.015
   }
  },
@@ -160,7 +160,7 @@
    "minMzda": 22400
   }
  },
- "podpis": "qmvrJPF5yQC5tEMInOtAQmycvlTgtB3D9eDwlSQJjPlP3zWH+p4xROZeSd+Dj2d9vpxIiGJqkIsYkCv/Ghg3AA==",
+ "podpis": "9Vts+1X9UtEjEr6S7lS7Bgto8PNA48pB9iUC+nfwNjwjRWSTh4UewywpW22mzAX+H2yqyD7GSrQuCwq9keslDA==",
  "urok": {
   "prirazka": 8,
   "poznamka": "Zákonný úrok z prodlení = 2T repo sazba ČNB platná k 1. dni pololetí, v němž prodlení vzniklo, + 8 p. b. (NV 351/2013 Sb.)",
@@ -192,6 +192,10 @@
    {
     "od": "2026-06-19",
     "sazba": 3.75
+   },
+   {
+    "od": "2026-11-06",
+    "sazba": 4
    }
   ]
  },
@@ -221,11 +225,21 @@
   "nahrady": {
    "2026": {
     "sazbaKm": 5.9,
-    "benzin95": 41.8,
+    "benzin95": 34.7,
     "benzin98": 39,
-    "nafta": 44.5,
+    "nafta": 34.1,
     "elektro": 7.2,
-    "zdroj": "vyhláška č. 573/2025 Sb. ve znění vyhlášek č. 78/2026 Sb. a 175/2026 Sb. (benzin 95 od 1. 10. 2026)"
+    "zdroj": "vyhláška č. 573/2025 Sb.; nafta od 1. 6. 2026 44,50 Kč (vyhl. č. 78/2026 Sb.), benzin 95 od 1. 10. 2026 41,80 Kč (vyhl. č. 175/2026 Sb.) – náhrada se počítá podle data jízdy",
+    "zmeny": [
+     {
+      "od": "2026-06-01",
+      "nafta": 44.5
+     },
+     {
+      "od": "2026-10-01",
+      "benzin95": 41.8
+     }
+    ]
    },
    "2027": {
     "sazbaKm": 5.9,
@@ -234,7 +248,7 @@
     "nafta": 44.5,
     "elektro": 7.2,
     "predbezne": true,
-    "zdroj": "do vydání vyhlášky pro rok 2027 hodnoty roku 2026"
+    "zdroj": "do vydání vyhlášky pro rok 2027 poslední platné hodnoty roku 2026"
    }
   },
   "benefit": {
