@@ -214,7 +214,7 @@ input[type=checkbox],input[type=radio]{width:20px;height:20px;flex:none}
   .menu-btn[aria-expanded=true] span:first-child{transform:translateY(7px) rotate(45deg)}.menu-btn[aria-expanded=true] span:last-child{transform:translateY(-7px) rotate(-45deg)}
   .menu-panel:not([hidden]){display:flex;flex-direction:column;padding:6px 24px 16px;border-top:1px solid var(--rule)}
   .menu-panel a{padding:13px 0;font-size:18px;font-weight:600;text-decoration:none;border-bottom:1px solid var(--rule)}.menu-panel a:last-child{border-bottom:0}
-  header.top .wrap{gap:10px}nav.main a.btn{margin-left:0;padding:10px 14px}
+  header.top .wrap{gap:10px}nav.main{flex-wrap:nowrap}nav.main a.btn{margin-left:0;padding:10px 14px;white-space:nowrap}
 }
 @media (max-width:420px){nav.main a.keep{display:none}.brand{font-size:20px}}
 @media (max-width:700px){
