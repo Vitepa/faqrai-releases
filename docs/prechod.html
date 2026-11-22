@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Přechod z Fakturoidu, iDokladu nebo Pohody – FaqrAi</title><meta name="description" content="Jak převzít odběratele, vydané faktury a výdaje z Fakturoidu, iDokladu nebo Pohody do FaqrAi."><meta property="og:title" content="Přechod z Fakturoidu, iDokladu nebo Pohody – FaqrAi"><meta property="og:description" content="Férové srovnání FaqrAi s on-line fakturačními službami a účetními programy podle způsobu práce, dat a ceny."><meta property="og:image" content="img/og.jpg"><link rel="icon" href="img/favicon.svg?v=3" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png?v=3" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3"><link rel="stylesheet" href="style.css">
+<style>.legal{max-width:820px}.legal h2{font-size:20px;margin-top:28px}.legal p,.legal li{font-size:15px;color:#2a3542}.legal ol{padding-left:22px}</style></head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="./"><img src="img/logo-faqrai.svg" alt="">FaqrAi</a>
+  <nav class="main" aria-label="Hlavní nabídka"><a href="./#co-umi">Co umí</a><a href="./#programy">Programy</a><a href="./#cenik" class="keep">Ceník</a><a href="stahnout.html">Ke stažení</a><a href="napoveda.html">Nápověda</a><a class="btn primary" href="objednavka.html">Koupit licenci</a></nav>
+</div></header>
+
+<section><div class="wrap legal">
+<h1 style="font-size:36px">Přecházíte z Fakturoidu, iDokladu nebo Pohody?</h1>
+<p class="muted">Odběratele, vydané faktury i výdaje převezmete do FaqrAi z exportu, který váš dosavadní program umí vytvořit. Nic se nepřepisuje ručně a nic se nezdvojí.</p>
+
+<h2>1. Stáhněte si export</h2>
+<div class="grid c3">
+<div class="card"><h3>Fakturoid</h3><p class="small muted">V přehledu faktur, nákladů a kontaktů použijte export do <b>CSV</b>. Stačí jeden soubor pro každý seznam.</p></div>
+<div class="card"><h3>iDoklad</h3><p class="small muted">U seznamu faktur, výdajů a kontaktů zvolte export ve formátu <b>CSV</b>.</p></div>
+<div class="card"><h3>Pohoda</h3><p class="small muted">Přes datovou komunikaci vyexportujte faktury vydané, přijaté a adresář do <b>XML</b>.</p></div>
+</div>
+<p class="small muted">FaqrAi pozná sloupce podle názvů (číslo, odběratel, IČO, DIČ, data, částky, DPH, úhrada) v češtině i angličtině, takže na pořadí sloupců nezáleží.</p>
+
+<h2>2. Otevřete ho ve FaqrAi</h2>
+<p>V programu jděte do <b>Nastavení → Data → Přechod z jiného programu</b> a vyberte soubor. Při prvním spuštění vám to nabídne i průvodce. Program ukáže, kolik faktur, výdajů a kontaktů našel, a teprve po potvrzení je převezme.</p>
+
+<h2>3. Co se převezme</h2>
+<ol>
+<li><b>Odběratelé</b> – název, IČO, DIČ, adresa, e-mail a telefon. Existující (stejné IČO) se přeskočí.</li>
+<li><b>Vydané faktury</b> – číslo, data, splatnost, odběratel, základ, DPH, celkem, měna a datum úhrady. Faktura se převezme jednou souhrnnou položkou se správnou sazbou DPH, takže sedí přehledy, daně i DPH.</li>
+<li><b>Výdaje</b> – dodavatel, číslo dokladu, data, částka a DPH.</li>
+</ol>
+<p>Doklady se stejným číslem, které už ve FaqrAi máte, se přeskočí – import můžete klidně spustit znovu.</p>
+
+<h2>Na co myslet</h2>
+<ul>
+<li>Číselnou řadu faktur nastavte ve FaqrAi tak, aby navazovala na poslední číslo z dosavadního programu.</li>
+<li>PDF starých faktur zůstávají ve vašem archivu; FaqrAi z převzatých údajů umí vystavit nové PDF, ale nemusí vypadat stejně jako originál.</li>
+<li>Když si nebudete jistí, napište nám na <span data-email></span> – s převodem pomůžeme.</li>
+</ul>
+<p style="margin-top:22px"><a class="btn primary" href="stahnout.html">Stáhnout FaqrAi</a> <a class="btn" href="srovnani.html#ceny">Srovnání cen</a></p>
+</div></section>
+<footer><div class="wrap">
+  <div><b>FaqrAi</b><br><span id="provider"></span><br><span class="small">Výpočty v programech jsou pomůcka, ne daňové poradenství.</span></div>
+  <nav aria-label="Odkazy v patičce"><a href="stahnout.html">Ke stažení</a><a href="objednavka.html">Koupit licenci</a><a href="overeni.html">Ověření licence</a><a href="napoveda.html">Nápověda</a><a href="podpora.html">Podpora</a><a href="beta.html">Beta testování</a><a href="prispevek.html">Podpořit vývoj</a><a href="pro-koho.html">Pro koho</a><a href="prechod.html">Přechod odjinud</a><a href="ucetni.html">Pro účetní</a><a href="srovnani.html">Srovnání</a><a href="obchodni-podminky.html">Obchodní podmínky</a><a href="licencni-podminky.html">Licenční podmínky</a><a href="ochrana-udaju.html">Ochrana údajů</a></nav>
+</div></footer>
+<script src="config.js"></script>
+<script>(function(){const C=window.FAQRAI_CFG;const t=[C.provider.name,C.provider.ico?"IČO "+C.provider.ico:"",C.provider.email].filter(Boolean).join(" · ");document.getElementById("provider").textContent=t;document.querySelectorAll("[data-provider]").forEach(e=>e.textContent=C.provider.name+(C.provider.ico?", IČO "+C.provider.ico:" (IČO bude doplněno)")+(C.provider.address?", "+C.provider.address:"")+", e-mail "+C.provider.email);document.querySelectorAll("[data-email]").forEach(e=>e.textContent=C.provider.email);})();</script>
+</body></html>
