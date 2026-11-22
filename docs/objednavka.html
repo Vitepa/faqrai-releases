@@ -287,6 +287,7 @@
     showDone(order, text, sent);
   });
   function showDone(o, text, sent){
+    try { localStorage.setItem("faqrai-stazeni", JSON.stringify({ ico: o.ico || "", nazev: o.nazev || "", zdroj: "objednavka", cislo: o.cislo, kdy: Date.now() })); } catch(_){} // po objednávce je stažení bez formuláře
     $("#orderForm").hidden = true; $("#modeTabs").hidden = true; const d = $("#done"); d.hidden = false;
     const vs = o.cislo.replace(/\D/g, ""), iban = (C.account.iban || "").replace(/\s/g, "");
     let qr = ""; if(iban && o.celkem > 0){ try { const qq = qrcode(0, "M"); qq.addData(`SPD*1.0*ACC:${iban}*AM:${o.celkem.toFixed(2)}*CC:CZK*X-VS:${vs}*MSG:FAQRAI ${o.cislo}`); qq.make(); qr = qq.createSvgTag({ cellSize: 2, margin: 0, scalable: true }); } catch(_){} }

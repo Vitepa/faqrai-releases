@@ -8,7 +8,21 @@
 <section><div class="wrap">
   <h1 style="font-size:36px">Ke stažení</h1>
   <p class="muted">Zkušební verze na <span id="trial"></span> dní, plná, bez omezení. Máte licenci? Zadejte ji v instalátoru – nainstaluje se verze, ke které licence patří. Po zadání licence data zůstanou a program se dál aktualizuje sám podle licence.</p>
-  <div class="grid c2" style="margin-top:22px" id="dlCards"><div class="dl-card">Načítám seznam verzí…</div></div>
+  <form class="card" id="dlForm" hidden style="margin-top:22px;max-width:640px" novalidate>
+    <h2 style="margin:0 0 6px;font-size:22px">Údaje o firmě</h2>
+    <p class="small muted" style="margin:0 0 12px">Programy jsou pro podnikatele a firmy. Vyplňte IČO a e-mail – stažení se pak hned odemkne. Kdo si licenci objednal, stahuje bez formuláře.</p>
+    <div class="grid c2" style="gap:10px 14px">
+      <label class="f">IČO<input id="dfIco" inputmode="numeric" maxlength="8" autocomplete="off" required><small class="hint" id="dfIcoMsg">8 číslic, ověříme v ARES.</small></label>
+      <label class="f">Název firmy nebo jméno<input id="dfNazev" autocomplete="organization"><small class="hint">Doplní se z ARES.</small></label>
+      <label class="f">E-mail<input id="dfEmail" type="email" autocomplete="email" required></label>
+      <label class="f">Program<select id="dfProdukt"><option>FaqrAi Simple</option><option>FaqrAi</option><option>Oba</option></select></label>
+    </div>
+    <input id="dfWeb" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+    <label class="chk" style="margin-top:10px;display:flex;gap:8px;align-items:flex-start"><input type="checkbox" id="dfSouhlas"><span class="small">Souhlasím se zpracováním údajů podle <a href="ochrana-udaju.html">zásad ochrany údajů</a> (kvůli přehledu o tom, kdo program používá; nic dalšího vám posílat nebudeme).</span></label>
+    <div id="dfErr" class="small" style="color:#a1271b;margin-top:8px" role="alert"></div>
+    <button class="btn primary" type="submit" style="margin-top:12px">Zobrazit odkazy ke stažení</button>
+  </form>
+  <div class="grid c2" style="margin-top:22px" id="dlCards" hidden><div class="dl-card">Načítám seznam verzí…</div></div>
   <div class="grid c2" style="margin-top:22px">
     <div class="card"><h3>Windows</h3><p class="small muted">Stáhněte malý instalátor (<span class="mono">…-Setup.exe</span>, asi 0,5 MB). Zeptá se na licenci (u dřívější instalace ji převezme sám), podle ní vybere verzi – bez licence nejnovější zkušební –, stáhne ji, ověří kontrolní součet a nainstaluje. Plná instalačka se hodí pro počítač bez internetu. Instalačka zatím není podepsaná certifikátem, Windows SmartScreen proto ukáže varování: klikněte na <b>Další informace → Přesto spustit</b>. Kdyby malý instalátor zablokoval antivirus, stáhněte plnou instalačku – licenci pak zadáte v programu a ten si sám stáhne verzi, ke které patří. Při spuštění nad existující instalací nabídne Aktualizovat / Opravit / Odstranit. Data uživatele se při odinstalaci nikdy nemažou.</p></div>
     <div class="card"><h3>macOS</h3><p class="small muted">Stáhněte ZIP pro svůj procesor (<b>Apple Silicon</b> = M1 a novější, <b>Intel</b> = starší Macy), rozbalte a přetáhněte aplikaci do složky Aplikace. Při prvním spuštění klikněte pravým tlačítkem → <b>Otevřít</b> → Otevřít. Hlásí-li macOS, že je aplikace poškozená, spusťte v Terminálu: <span class="mono">xattr -cr "/Applications/FaqrAi.app"</span> (resp. „FaqrAi Simple.app“).</p></div>
@@ -33,6 +47,36 @@
   const mb = n => { const v = n / 1048576; return (v < 10 ? v.toFixed(1).replace(".", ",") : v.toFixed(0)) + " MB"; };
   const kinds = [["Windows", /-Setup\.exe$/, "win"], ["Windows – plná instalačka (bez internetu)", /Windows-x64\.exe$/, "winfull"], ["macOS Apple Silicon", /macOS-arm64\.zip$/, "mac"], ["macOS Intel", /macOS-x64\.zip$/, "mac"]];
   const groups = [["FaqrAi Simple", "FaqrAi-Simple", "img/logo-simple.svg", "simple"], ["FaqrAi", "FaqrAi", "img/logo-faqrai.svg", "faqrai"]];
+  /* stažení za formulářem firmy (po objednávce nebo po vyplnění se odemkne v tomto prohlížeči) */
+  const icoValid = ico => { if(!/^\d{8}$/.test(ico)) return false; let s = 0; for(let i = 0; i < 7; i++) s += +ico[i] * (8 - i); return (11 - (s % 11)) % 10 === +ico[7]; };
+  let odemceno = null; try { odemceno = JSON.parse(localStorage.getItem("faqrai-stazeni") || "null"); } catch(_){}
+  const ukaz = () => { $("#dlForm").hidden = true; $("#dlCards").hidden = false; };
+  if(odemceno && odemceno.ico) ukaz(); else $("#dlForm").hidden = false;
+  $("#dfIco").addEventListener("input", async () => {
+    const ico = $("#dfIco").value.replace(/\D/g, ""); $("#dfIco").value = ico; const m = $("#dfIcoMsg");
+    if(ico.length < 8){ m.textContent = "8 číslic, ověříme v ARES."; return; }
+    if(!icoValid(ico)){ m.textContent = "IČO nemá platný kontrolní součet – zkontrolujte ho."; return; }
+    m.textContent = "Hledám v ARES…";
+    try { const r = await fetch("https://ares.gov.cz/ekonomicke-subjekty-v-be/rest/ekonomicke-subjekty/" + ico, { headers: { Accept: "application/json" } });
+      if(r.status === 404){ m.textContent = "Subjekt s tímto IČO v ARES není."; return; }
+      const j = await r.json(); if(j.obchodniJmeno){ $("#dfNazev").value = j.obchodniJmeno; m.textContent = "Nalezeno v ARES ✓"; } } catch(_){ m.textContent = "ARES teď neodpovídá – ověříme při odeslání."; }
+  });
+  $("#dlForm").addEventListener("submit", async e => {
+    e.preventDefault(); const err = $("#dfErr"); err.textContent = "";
+    const ico = $("#dfIco").value.replace(/\D/g, ""), email = $("#dfEmail").value.trim();
+    if(!icoValid(ico)){ err.textContent = "Zadejte platné IČO."; return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ err.textContent = "Zadejte platný e-mail."; return; }
+    if(!$("#dfSouhlas").checked){ err.textContent = "Potvrďte prosím souhlas se zpracováním údajů."; return; }
+    const btn = $("#dlForm button[type=submit]"); btn.disabled = true;
+    try {
+      const r = await fetch(C.sluzba + "/stazeni", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ico, nazev: $("#dfNazev").value, email, produkt: $("#dfProdukt").value, system: isWin ? "Windows" : isMac ? "macOS" : "jiný", souhlas: true, web: $("#dfWeb").value, zdroj: "web" }) });
+      const j = await r.json().catch(() => ({}));
+      if(!r.ok){ err.textContent = j.chyba || "Odeslání se nepovedlo, zkuste to prosím znovu."; return; }
+      try { localStorage.setItem("faqrai-stazeni", JSON.stringify({ ico, nazev: j.nazev || $("#dfNazev").value, zdroj: "formular", kdy: Date.now() })); } catch(_){}
+      ukaz();
+    } catch(_){ err.textContent = "Služba teď neodpovídá. Zkuste to prosím za chvíli."; }
+    finally { btn.disabled = false; }
+  });
   fetch(C.sluzba + "/linie.json", { cache: "no-store" }).then(r => { if(!r.ok) throw 0; return r.json(); }).then(L => {
     const v = Object.values(L.verze || {}).sort((a, b) => { const x = a.split(".").map(Number), y = b.split(".").map(Number); return x[0] - y[0] || x[1] - y[1] || x[2] - y[2]; }).pop(); if(!v) throw 0;
     const files = art => [["Windows", `${art}-Setup.exe`, "win", "malý instalátor, zeptá se na licenci"], ["Windows – plná instalačka (bez internetu)", `${art}-${v}-Windows-x64.exe`, "winfull", "zkušební verze"], ["macOS Apple Silicon", `${art}-${v}-macOS-arm64.zip`, "mac", ""], ["macOS Intel", `${art}-${v}-macOS-x64.zip`, "mac", ""]];
