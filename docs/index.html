@@ -159,7 +159,7 @@
   /* ceník z config.js */
   const tier = id => (C.tiers || []).find(t => t.id === id) || { name: "" };
   const prods = ["simple", "faqrai"].map(P).filter(p => p && p.available).flatMap(p => p.zaklad && C.tiers ? [{ ...p, ...p.zaklad, name: p.name + " " + tier("zaklad").name, tarifId: "zaklad" }, { ...p, name: p.name + " " + tier("plus").name, tarifId: "plus" }] : [p]);
-  const terms = C.terms;
+  const terms = C.terms.filter(t => !t.maintenanceOnly);
   const head = `<thead><tr><th scope="col"><span>Licence</span></th>${prods.map(p => `<th scope="col" style="color:${p.color}">${p.name}<span>${p.seats ? `${p.includedSeats || 1} počítačů a 1 firma` : "osobní licence"}</span></th>`).join("")}</tr></thead>`;
   const obsah = C.tiers ? `<tr><th scope="row">Co obsahuje</th>${prods.map(p => `<td><small>${p.tarifId === "plus" ? "Základ + automatika: banka, upomínky, platby kartou, faktura online, mobil, předpověď, čas, API" : "faktury, výdaje, daně, DPH, přehledy, export pro EPO"}</small></td>`).join("")}</tr>` : "";
   const rows = obsah + terms.map(t => {
