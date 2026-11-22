@@ -38,6 +38,7 @@
 
       <fieldset><legend>1. Produkt a licence</legend>
         <div class="choice" id="productChoice"></div>
+        <div class="choice" id="tierChoice" style="margin-top:10px"></div>
         <div class="row" style="margin-top:14px">
           <label class="f">Délka licence<select id="term"></select><span class="hint" id="termHint"></span></label>
           <label class="f" id="seatsField"><span id="seatsLabel">Počet zařízení</span><div class="stepper"><button type="button" data-step="-1">−</button><input id="seats" type="number" min="1" max="50" value="1"><button type="button" data-step="1">+</button></div><span class="hint" id="seatsHint">Počítače, na kterých poběží program současně. Lze kdykoli rozšířit.</span></label>
@@ -103,7 +104,11 @@
   const C = window.FAQRAI_CFG, $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
   const kc = n => new Intl.NumberFormat("cs-CZ").format(Math.round(n)) + " Kč";
   const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-  const prodById = id => C.products.find(p => p.id === id);
+  let TARIF = new URLSearchParams(location.search).get("t") === "zaklad" ? "zaklad" : "plus";
+  const tierName = id => ((C.tiers || []).find(t => t.id === id) || {}).name || "";
+  const prodRaw = id => C.products.find(p => p.id === id);
+  /* ceny podle tarifu: hlavní ceny produktu = Plus, p.zaklad je přepíše pro Základ */
+  const prodById = id => { const p = prodRaw(id); if(!p || !p.zaklad || !C.tiers) return p; return TARIF === "zaklad" ? { ...p, ...p.zaklad, name: p.name + " " + tierName("zaklad"), tarif: "zaklad" } : { ...p, name: p.name + " " + tierName("plus"), tarif: "plus" }; };
   const priceFor = (a, p) => typeof a.price === "object" ? (a.price[p.id] ?? 0) : a.price;
   const todayIso = () => new Date().toISOString().slice(0, 10);
   const yearsWord = n => n === 1 ? "rok" : n < 5 ? "roky" : "let";
@@ -123,6 +128,10 @@
   function renderChoices(){
     const P = prodById(ST.product);
     $("#productChoice").innerHTML = C.products.filter(p => p.available).map(p => `<label class="${p.available ? "" : "soon"}" style="--c:${p.color}"><input type="radio" name="product" value="${p.id}" ${p.id === ST.product ? "checked" : ""} ${p.available ? "" : "disabled"}><img src="${p.logo}" alt="" class="mini"><b>${esc(p.name)}</b>${p.available ? "" : ` <span class="pill open">připravujeme${p.eta ? " " + p.eta : ""}</span>`}<br><span class="small muted">${esc(p.desc)}</span><br><span class="small"><b>${kc(p.year)}</b> / rok${p.seats ? " · další " + (p.perUserLabel || "zařízení") + " " + kc(p.seatYear) : ""}</span></label>`).join("");
+    const PR = prodRaw(ST.product);
+    $("#tierChoice").hidden = !(PR && PR.zaklad && C.tiers);
+    if(PR && PR.zaklad && C.tiers) $("#tierChoice").innerHTML = C.tiers.map(t => { const c = t.id === "zaklad" ? { ...PR, ...PR.zaklad } : PR; return `<label style="--c:${PR.color}"><input type="radio" name="tier" value="${t.id}" ${t.id === TARIF ? "checked" : ""}><b>${esc(t.name)}</b><span>${kc(c.year)} / rok · ${kc(c.month)} / měsíc</span><small>${esc(t.desc)}</small></label>`; }).join("");
+    $$("input[name=tier]").forEach(x => x.onchange = () => { TARIF = x.value; renderChoices(); });
     const terms = C.terms.filter(t => t.monthly || t.yearlySub ? ST.mode === "new" && (t.monthly ? P.month : P.yearSupport !== undefined) : ST.mode === "maintenance" ? !t.lifetime : (!t.lifetime || P.lifetime));
     if(ST.term >= terms.length) ST.term = 0;
     $("#term").innerHTML = terms.map((t, i) => `<option value="${i}" ${i === ST.term ? "selected" : ""}>${esc(t.label)}${t.discount ? ` (−${Math.round(t.discount * 100)} %)` : ""}${t.monthly ? ` – od ${kc(P.month)} / měsíc` : ""}${t.yearlySub ? ` – ${kc(P.year)} / rok` : ""}${t.lifetime ? ` – ${kc(P.lifetime)}` : ""}</option>`).join("");
@@ -263,7 +272,7 @@
     $("#formErr").innerHTML = "";
     const no = "FQ" + new Date().toISOString().slice(2, 10).replace(/-/g, "") + String(Math.floor(Math.random() * 900) + 100);
     const modeLabel = { new: "nová licence", renew: "prodloužení", extend: "rozšíření o zařízení / firmy", upgrade: "přechod na " + s.P.name, maintenance: "údržba trvalé licence" }[ST.mode];
-    const order = { verze: 2, cislo: no, datum: new Date().toISOString(), typ: ST.mode, typPopis: modeLabel, produkt: s.P.id, produktNazev: s.P.name, produktByte: s.P.byte, licence: s.rocne ? "roční předplatné (automatické prodlužování)" : s.monthly ? "měsíční předplatné (bez závazku)" : ST.mode === "maintenance" ? `trvalá – údržba na ${s.years} ${yearsWord(s.years)}` : s.T.lifetime ? "trvalá" : s.years + " " + yearsWord(s.years), predplatne: !!s.monthly, interval: s.rocne ? "year" : s.monthly ? "month" : null, mesicne: s.monthly ? s.licenceMesicne : null, podpora: s.monthly ? !!s.podpora : null, mesicnePodpora: s.monthly ? s.podporaMesicne : null, souhlas: true, roky: s.years, neomezena: !s.monthly && (!!s.T.lifetime || ST.mode === "maintenance"), udrzbaRoky: ST.mode === "maintenance" ? s.years : null, zarizeni: s.P.seats ? s.seats : null, firmy: s.P.firmYear ? s.firms : null, doplnky: [...ST.addons], kupon: ST.coupon ? ST.coupon.code : "", stavajiciLicence: ST.mode !== "new" ? (ST.mode === "maintenance" ? { id: v("licId").toUpperCase(), podporaDo: v("licUntil") } : { id: v("licId").toUpperCase(), platiDo: v("licUntil") }) : null,
+    const order = { verze: 2, cislo: no, datum: new Date().toISOString(), typ: ST.mode, typPopis: modeLabel, produkt: s.P.id, produktNazev: s.P.name, produktByte: s.P.byte, tarif: s.P.tarif || null, licence: s.rocne ? "roční předplatné (automatické prodlužování)" : s.monthly ? "měsíční předplatné (bez závazku)" : ST.mode === "maintenance" ? `trvalá – údržba na ${s.years} ${yearsWord(s.years)}` : s.T.lifetime ? "trvalá" : s.years + " " + yearsWord(s.years), predplatne: !!s.monthly, interval: s.rocne ? "year" : s.monthly ? "month" : null, mesicne: s.monthly ? s.licenceMesicne : null, podpora: s.monthly ? !!s.podpora : null, mesicnePodpora: s.monthly ? s.podporaMesicne : null, souhlas: true, roky: s.years, neomezena: !s.monthly && (!!s.T.lifetime || ST.mode === "maintenance"), udrzbaRoky: ST.mode === "maintenance" ? s.years : null, zarizeni: s.P.seats ? s.seats : null, firmy: s.P.firmYear ? s.firms : null, doplnky: [...ST.addons], kupon: ST.coupon ? ST.coupon.code : "", stavajiciLicence: ST.mode !== "new" ? (ST.mode === "maintenance" ? { id: v("licId").toUpperCase(), podporaDo: v("licUntil") } : { id: v("licId").toUpperCase(), platiDo: v("licUntil") }) : null,
       drzitel: v("holder"), polozky: s.lines, mezisoucet: s.subtotal, dph: s.vat, celkem: s.total, ico: v("ico"), dic: v("dic"), nazev: v("name"), ulice: v("street"), psc: v("zip"), mesto: v("city"), email: v("email"), telefon: v("phone"), poznamka: v("note") };
     const text = `OBJEDNÁVKA ${no} (${modeLabel})\n\nProdukt: ${order.produktNazev}\nLicence: ${order.licence}${order.zarizeni ? `, zařízení: ${order.zarizeni}` : ""}${order.firmy ? `, firmy: ${order.firmy}${ST.mode === "extend" ? " (přidat)" : ""}` : ""}${order.stavajiciLicence ? `\nStávající licence: ${order.stavajiciLicence.id}${order.stavajiciLicence.platiDo ? " (do " + order.stavajiciLicence.platiDo + ")" : ""}` : ""}\nDržitel licence: ${order.drzitel}\n\n${s.lines.map(l => `${l.t}: ${kc(l.a)}`).join("\n")}${s.vat ? `\nDPH 21 %: ${kc(s.vat)}` : ""}\nCelkem: ${kc(s.total)}${s.rocne ? " ročně (předplatné kartou, prodlužuje se samo)" : s.monthly ? " měsíčně (platba kartou, bez závazku)" : ""}\n\nFakturační údaje:\n${order.nazev}\nIČO ${order.ico}${order.dic ? ", DIČ " + order.dic : ""}\n${order.ulice}, ${order.psc} ${order.mesto}\nE-mail: ${order.email}${order.telefon ? "\nTelefon: " + order.telefon : ""}${order.poznamka ? "\n\nPoznámka: " + order.poznamka : ""}\n\nSouhlas s licenčními podmínkami: ano (${new Date().toLocaleString("cs-CZ")})\n\n--- strojově čitelná část (pro generátor licencí) ---\n${JSON.stringify(order)}`;
     $("#submitBtn").disabled = true; $("#submitBtn").textContent = "Odesílám…";
