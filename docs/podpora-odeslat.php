@@ -1,5 +1,5 @@
 <?php
-/* Formulář Podpora (podpora.html) → e-mail na podpora@faqrai.cz (hosting Zoner, PHP mail()).
+/* Formulář Podpora (podpora.html) → e-mail na podpora@faqrai.cz přes SMTP schránky (Zoner: smtp.zoner.com:587).
    Odpověď jde přímo zákazníkovi (Reply-To). Ochrana: jen POST z formuláře, past na roboty, nejvýš 10 dotazů za den z jedné adresy.
    Dotaz se zároveň ukládá do služby na Cloudflare (záloha, Správce → Dotazy z podpory) – to dělá stránka sama. */
 declare(strict_types=1);
@@ -48,11 +48,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'GET' && isset($_GET['diag'])) {
     $f = rtrim(sys_get_temp_dir(), '/\\') . '/faqrai-podpora-test-' . date('Y-m-d');
     $n = is_file($f) ? (int)@file_get_contents($f) : 0; if ($n >= 3) odpoved(429, ['chyba' => 'Dnes už byly 3 zkoušky.']);
     @file_put_contents($f, (string)($n + 1));
-    $h = "From: FaqrAi web <" . OD . ">\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8";
-    $s1 = @mail(KOMU, 'Test formulare podpory (s -f) ' . date('H:i:s'), "Zkusebni zprava z faqrai.cz, varianta s parametrem -f.", $h, '-f' . OD); $e1 = error_get_last();
-    $s2 = @mail(KOMU, 'Test formulare podpory (bez -f) ' . date('H:i:s'), "Zkusebni zprava z faqrai.cz, varianta bez parametru -f.", $h); $e2 = error_get_last();
     $smtpChyba = null; $s3 = smtpOdesli('Test formulare podpory (SMTP) ' . date('H:i:s'), "Zkusebni zprava z faqrai.cz pres SMTP.", "From: FaqrAi web <" . OD . ">\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8", $smtpChyba);
-    odpoved(200, ['smtp' => $s3, 'smtpChyba' => $smtpChyba, 'sF' => $s1, 'bezF' => $s2, 'chyba' => $e2['message'] ?? ($e1['message'] ?? null)]);
+    odpoved(200, ['smtp' => $s3, 'smtpChyba' => $smtpChyba]);
   }
   odpoved(200, ['php' => PHP_VERSION, 'mail' => function_exists('mail') && !in_array('mail', $zakazane, true), 'sendmail' => (string)ini_get('sendmail_path') !== '', 'smtp' => smtpNastaveni() !== null]);
 }
@@ -105,8 +102,6 @@ $hlavicky = implode("\r\n", [
 ]);
 $predmetMime = '=?UTF-8?B?' . base64_encode($predmet) . '?=';
 
-$ok = smtpOdesli($predmetMime, $telo, $hlavicky);
-if (!$ok) $ok = @mail(KOMU, $predmetMime, $telo, $hlavicky, '-f' . OD);
-if (!$ok) $ok = @mail(KOMU, $predmetMime, $telo, $hlavicky); // hosting může zakazovat parametr -f
+$ok = smtpOdesli($predmetMime, $telo, $hlavicky); // Zoner blokuje PHP mail(), odesílá se přes SMTP schránky
 if (!$ok) odpoved(502, ['chyba' => 'E-mail se nepodařilo odeslat. Napište prosím přímo na ' . KOMU . '.']);
 odpoved(200, ['ok' => true]);
