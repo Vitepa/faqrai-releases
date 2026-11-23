@@ -5,7 +5,7 @@
 window.FAQRAI_CFG = {
   provider: {
     name: "Pavel Vítek", ico: "30286573",
-    email: "info@faqrai.cz", address: "", zapis: "fyzická osoba podnikající, zapsaná v živnostenském rejstříku",                 // obecný kontakt (patičky, podmínky, ochrana údajů)
+    email: "info@faqrai.cz", address: "S. K. Neumanna 609/8, 702 00 Ostrava", zapis: "fyzická osoba podnikající, zapsaná v živnostenském rejstříku",                 // obecný kontakt (patičky, podmínky, ochrana údajů)
     vatPayer: false                          // true = ceny níže jsou bez DPH a k objednávce se připočte 21 %
   },
   orderEmail: "fakturace@faqrai.cz",         // objednávky, faktury a platby (mailto, když není endpoint)
