@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Beta testování – FaqrAi</title><meta name="description" content="Staňte se beta testerem FaqrAi nebo FaqrAi Simple: bezplatná licence na 6 měsíců výměnou za hlášení chyb a krátké měsíční hodnocení."><meta property="og:title" content="Beta testování – FaqrAi"><meta property="og:description" content="Staňte se beta testerem FaqrAi nebo FaqrAi Simple: bezplatná licence na 6 měsíců výměnou za hlášení chyb a krátké měsíční hodnocení."><meta property="og:image" content="img/og.jpg"><meta property="og:type" content="website"><link rel="icon" href="img/favicon.svg?v=3" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png?v=3" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3"><link rel="stylesheet" href="style.css?v=202611232153"><link rel="canonical" href="https://faqrai.cz/beta.html">
+<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Beta testování – FaqrAi</title><meta name="description" content="Staňte se beta testerem FaqrAi nebo FaqrAi Simple: bezplatná licence na 6 měsíců výměnou za hlášení chyb a krátké měsíční hodnocení."><meta property="og:title" content="Beta testování – FaqrAi"><meta property="og:description" content="Staňte se beta testerem FaqrAi nebo FaqrAi Simple: bezplatná licence na 6 měsíců výměnou za hlášení chyb a krátké měsíční hodnocení."><meta property="og:image" content="img/og.jpg"><meta property="og:type" content="website"><link rel="icon" href="img/favicon.svg?v=3" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png?v=3" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3"><link rel="stylesheet" href="style.css?v=202611232232"><link rel="canonical" href="https://faqrai.cz/beta.html">
 </head>
 <body>
 <a class="skip" href="#obsah">Přeskočit na obsah</a>
@@ -69,7 +69,7 @@
   <div><b>FaqrAi</b><br><span id="provider"></span><br><span class="small">Výpočty v programech jsou pomůcka, ne daňové poradenství.</span></div>
   <nav aria-label="Odkazy v patičce"><a href="stahnout.html">Ke stažení</a><a href="objednavka.html">Koupit licenci</a><a href="overeni.html">Ověření licence</a><a href="napoveda.html">Nápověda</a><a href="podpora.html">Podpora</a><a href="beta.html">Beta testování</a><a href="prispevek.html">Podpořit vývoj</a><a href="o-mne.html">O mně</a><a href="pro-koho.html">Pro koho</a><a href="prechod.html">Přechod odjinud</a><a href="ucetni.html">Pro účetní</a><a href="srovnani.html">Srovnání</a><a href="obchodni-podminky.html">Obchodní podmínky</a><a href="licencni-podminky.html">Licenční podmínky</a><a href="ochrana-udaju.html">Ochrana údajů</a></nav>
 </div></footer>
-<script src="config.js?v=202611232153"></script>
+<script src="config.js?v=202611232232"></script>
 <script>(function(){const C=window.FAQRAI_CFG;document.getElementById("provider").textContent=[C.provider.name,C.provider.ico?"IČO "+C.provider.ico:"",C.provider.address,C.provider.email].filter(Boolean).join(" · ");})();</script>
 <script>(function(){const C=window.FAQRAI_CFG,$=s=>document.querySelector(s);
 $("#product").innerHTML=C.products.filter(p=>p.available).map(p=>`<option>${p.name}</option>`).join("");
@@ -86,5 +86,5 @@ $("#bf").addEventListener("submit",async e=>{e.preventDefault();const v=id=>$("#
  if(ep){try{const r=await fetch(ep,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({program:v("product"),system:v("os"),jmeno:v("holder"),email:v("email"),podnikani:v("kind"),oblasti,poznamka:v("note"),souhlas:true,podminky:"1.2",web:$("#web").value})});sent=r.ok;}catch{}}
  btn.disabled=false;btn.textContent="Odeslat přihlášku";if(sent){$("#bf").reset();}if(!sent)location.href="mailto:"+encodeURIComponent(C.provider.email)+"?subject="+encodeURIComponent("Beta testování – "+v("product"))+"&body="+encodeURIComponent(text);
  $("#done").hidden=false;$("#done").textContent=sent?"Děkuji, přihláška je odeslaná. Licenci pošlu e-mailem.":"Otevřel se e-mailový program s připravenou přihláškou – zprávu prosím odešlete. Pokud se neotevřel, napište na "+C.provider.email+".";});})();</script>
-<script src="mobil.js?v=202611232153"></script>
+<script src="mobil.js?v=202611232232"></script>
 </body></html>

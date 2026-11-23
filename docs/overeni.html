@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ověření licence – FaqrAi</title><link rel="icon" href="img/favicon.svg?v=3" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png?v=3" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3"><link rel="stylesheet" href="style.css?v=202611232153"><link rel="canonical" href="https://faqrai.cz/overeni.html">
+<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ověření licence – FaqrAi</title><link rel="icon" href="img/favicon.svg?v=3" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png?v=3" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3"><link rel="stylesheet" href="style.css?v=202611232232"><link rel="canonical" href="https://faqrai.cz/overeni.html">
 </head>
 <body>
 <header class="top"><div class="wrap">
@@ -8,11 +8,11 @@
 </div></header>
 <section><div class="wrap" style="max-width:820px">
   <h1 style="font-size:36px">Ověření licenčního klíče</h1>
-  <p class="muted">Zadejte jméno držitele a klíč přesně tak, jak jste je dostali. Ověření probíhá <b>jen ve vašem prohlížeči</b> pomocí veřejného klíče vydavatele – nic se nikam neodesílá. Hodí se, když si nejste jistí, na koho licence zní, do kdy platí nebo pro kolik zařízení.</p>
+  <p class="muted">Zadejte jméno držitele a klíč přesně tak, jak jste je dostali. Licenční klíč se ověřuje <b>jen ve vašem prohlížeči</b> pomocí veřejného klíče vydavatele – nic se nikam neodesílá. U předplatného zadejte <b>aktivační kód</b> (FQP-…): stránka si s ním vyžádá aktuální klíč ze služby předplatného, rozšifruje ho až u vás a ověří stejně. Hodí se, když si nejste jistí, na koho licence zní, do kdy platí nebo pro kolik zařízení.</p>
   <form id="f" class="card" style="margin-top:20px" novalidate>
     <div class="row">
-      <label class="f span2">Jméno držitele (přesně jako v licenci)<input id="name" autocomplete="off"></label>
-      <label class="f span2">Licenční klíč<textarea id="key" rows="3" class="mono" placeholder="FS3-… nebo FQ3-…"></textarea></label>
+      <label class="f span2">Jméno držitele (přesně jako v licenci; u předplatného nepovinné)<input id="name" autocomplete="off"></label>
+      <label class="f span2">Licenční klíč nebo aktivační kód předplatného<textarea id="key" rows="3" class="mono" placeholder="FS3-…, FQ3-… nebo FQP-…"></textarea></label>
     </div>
     <div style="margin-top:14px"><button class="btn primary" type="submit">Ověřit</button></div>
     <div id="out" style="margin-top:16px"></div>
@@ -23,7 +23,7 @@
   <div><b>FaqrAi</b><br><span id="provider"></span><br><span class="small">Výpočty v programech jsou pomůcka, ne daňové poradenství.</span></div>
   <nav aria-label="Odkazy v patičce"><a href="stahnout.html">Ke stažení</a><a href="objednavka.html">Koupit licenci</a><a href="overeni.html">Ověření licence</a><a href="napoveda.html">Nápověda</a><a href="podpora.html">Podpora</a><a href="beta.html">Beta testování</a><a href="prispevek.html">Podpořit vývoj</a><a href="o-mne.html">O mně</a><a href="pro-koho.html">Pro koho</a><a href="prechod.html">Přechod odjinud</a><a href="ucetni.html">Pro účetní</a><a href="srovnani.html">Srovnání</a><a href="obchodni-podminky.html">Obchodní podmínky</a><a href="licencni-podminky.html">Licenční podmínky</a><a href="ochrana-udaju.html">Ochrana údajů</a></nav>
 </div></footer>
-<script src="config.js?v=202611232153"></script>
+<script src="config.js?v=202611232232"></script>
 <script src="nacl-fast.min.js"></script>
 <script>
 (function(){
@@ -55,19 +55,48 @@
     if(!hash.every((b, i) => b === payload[10 + i])) throw new Error("Klíč je pravý, ale nepatří k zadanému jménu. Zadejte jméno přesně tak, jak je uvedeno v licenci.");
     const dv = new DataView(payload.buffer, payload.byteOffset, payload.byteLength);
     const exp = dv.getUint16(7), sup = ver >= 2 ? dv.getUint16(18) : 0, seats = ver >= 3 ? payload[20] : 0, firmsB = ver >= 3 ? payload[21] : 0;
-    return { id: dv.getUint32(1).toString(16).toUpperCase().padStart(8, "0"), product: ver >= 3 ? payload[9] : 1, issued: dayToIso(dv.getUint16(5)), expires: exp === UNLIMITED ? null : dayToIso(exp), support: sup === 0 ? null : sup === UNLIMITED ? "neomezená" : dayToIso(sup), seats: seats || null, firms: firmsB === 255 ? null : Math.max(1, firmsB), ver };
+    return { id: dv.getUint32(1).toString(16).toUpperCase().padStart(8, "0"), product: ver >= 3 ? payload[9] & 0x3f : 1, beta: ver >= 3 && !!(payload[9] & 0x80), zaklad: ver >= 3 && !!(payload[9] & 0x40), issued: dayToIso(dv.getUint16(5)), expires: exp === UNLIMITED ? null : dayToIso(exp), support: sup === 0 ? null : sup === UNLIMITED ? "neomezená" : dayToIso(sup), seats: seats || null, firms: firmsB === 255 ? null : Math.max(1, firmsB), ver };
   }
+  /* předplatné: aktivační kód FQP-<licence>-<token>; klíč je ve službě zašifrovaný AES-256-GCM klíčem z HKDF(token) – rozšifruje se jen tady */
+  const parseKod = s => { const m = String(s || "").trim().toUpperCase().replace(/\s+/g, "").match(/^FQP-([0-9A-F]{8})-([0-9A-Z]{20,64})$/); return m ? { licence: m[1], token: m[2] } : null; };
+  async function predplatne(kod){
+    let r, j = {};
+    try { r = await fetch(C.sluzba + "/predplatne/klic", { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(kod) }); j = await r.json().catch(() => ({})); }
+    catch(e){ throw new Error("Službu předplatného se nepodařilo kontaktovat – zkontrolujte připojení k internetu."); }
+    if(!r.ok) throw new Error(j.chyba || "Služba předplatného odpověděla chybou " + r.status + ".");
+    let klic = null;
+    if(j.klic){
+      try {
+        const zaklad = await crypto.subtle.importKey("raw", enc(kod.token), "HKDF", false, ["deriveKey"]);
+        const aes = await crypto.subtle.deriveKey({ name: "HKDF", hash: "SHA-256", salt: enc("FQ-PREDPLATNE1"), info: enc(kod.licence) }, zaklad, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+        const b = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+        klic = new TextDecoder().decode(await crypto.subtle.decrypt({ name: "AES-GCM", iv: b(j.klic.iv) }, aes, b(j.klic.data)));
+      } catch(e){ throw new Error("Licenční klíč předplatného se nepodařilo rozšifrovat – zkontrolujte aktivační kód."); }
+    }
+    return { ...j, klicText: klic };
+  }
+  const STAV = { aktivni: "aktivní, obnovuje se automaticky", konci: "zrušené – skončí na konci zaplaceného období", zruseno: "zrušené", platba_selhala: "poslední platba se nezdařila", ceka: "čeká na první platbu" };
   $("#f").addEventListener("submit", async e => {
     e.preventDefault(); const out = $("#out");
     try {
-      const r = await verify($("#name").value, $("#key").value); const today = new Date().toISOString().slice(0, 10);
+      const kod = parseKod($("#key").value); let pr = null, jmeno = $("#name").value;
+      if(kod){
+        out.innerHTML = `<p class="muted">Ověřuji předplatné…</p>`;
+        pr = await predplatne(kod);
+        if(!normName(jmeno) && pr.jmeno) { jmeno = pr.jmeno; $("#name").value = pr.jmeno; }
+        if(!pr.klicText){
+          out.innerHTML = `<div class="notice" style="background:#fdebe7;border-color:#f1b0a8"><b>Aktivační kód patří k předplatnému licence ${esc(pr.licence)}, ale zatím není zaplacené.</b></div>${pr.zaplatit ? `<p style="margin-top:12px"><a class="btn primary" href="${esc(C.sluzba + pr.zaplatit)}">Zaplatit předplatné</a></p>` : ""}`;
+          return;
+        }
+      }
+      const r = await verify(jmeno, pr ? pr.klicText : $("#key").value); const today = new Date().toISOString().slice(0, 10);
       const valid = !r.expires || r.expires >= today;
       out.innerHTML = `<div class="notice" style="background:${valid ? "#e4f5ea" : "#fdebe7"};border-color:${valid ? "#b7e1c3" : "#f1b0a8"}"><b>${valid ? "Licence je platná." : "Licence vypršela " + fmt(r.expires) + "."}</b></div>
-        <dl class="kv" style="margin-top:14px"><dt>Číslo licence</dt><dd class="mono">${esc(r.id)}</dd><dt>Produkt</dt><dd>${esc(PRODUCTS[r.product] || "neznámý (" + r.product + ")")}</dd><dt>Držitel</dt><dd>${esc($("#name").value.trim())}</dd><dt>Vydána</dt><dd>${fmt(r.issued)}</dd><dt>Platnost</dt><dd>${r.expires ? "do " + fmt(r.expires) : "neomezená"}</dd><dt>Podpora</dt><dd>${r.support ? (r.support === "neomezená" ? r.support : "do " + fmt(r.support)) : "není součástí"}</dd><dt>Zařízení</dt><dd>${r.seats ? r.seats : "bez omezení počtu (osobní licence)"}</dd>${r.product === 2 ? `<dt>Firmy</dt><dd>${r.firms == null ? "bez omezení" : r.firms} <a class="small" href="objednavka.html?typ=firmy">přidat další</a></dd>` : ""}</dl>
-        ${!valid ? `<p style="margin-top:12px"><a class="btn primary" href="objednavka.html?m=renew&p=${r.product === 2 ? "faqrai" : "simple"}">Prodloužit licenci</a></p>` : r.expires && (new Date(r.expires) - new Date(today)) / 86400000 < 60 ? `<p class="small muted" style="margin-top:10px">Platnost končí za ${Math.round((new Date(r.expires) - new Date(today)) / 86400000)} dní – <a href="objednavka.html?m=renew&p=${r.product === 2 ? "faqrai" : "simple"}">prodloužit se slevou</a>.</p>` : ""}`;
+        <dl class="kv" style="margin-top:14px"><dt>Číslo licence</dt><dd class="mono">${esc(r.id)}</dd><dt>Produkt</dt><dd>${esc(PRODUCTS[r.product] || "neznámý (" + r.product + ")")}</dd>${r.beta ? `<dt>Druh</dt><dd>beta licence (bezplatná, jen pro testování)</dd>` : ""}${r.zaklad ? `<dt>Tarif</dt><dd>Základ</dd>` : ""}<dt>Držitel</dt><dd>${esc(jmeno.trim())}</dd>${pr ? `<dt>Předplatné</dt><dd>${esc((pr.interval === "year" ? "roční, " : "měsíční, ") + (STAV[pr.stav] || pr.stav))}${pr.zaplacenoDo ? ", zaplaceno do " + fmt(pr.zaplacenoDo) : ""}</dd>` : ""}<dt>Vydána</dt><dd>${fmt(r.issued)}</dd><dt>Platnost</dt><dd>${r.expires ? "do " + fmt(r.expires) : "neomezená"}</dd><dt>Podpora</dt><dd>${r.support ? (r.support === "neomezená" ? r.support : "do " + fmt(r.support)) : "není součástí"}</dd><dt>Zařízení</dt><dd>${r.seats ? r.seats : "bez omezení počtu (osobní licence)"}</dd>${r.product === 2 ? `<dt>Firmy</dt><dd>${r.firms == null ? "bez omezení" : r.firms} <a class="small" href="objednavka.html?typ=firmy">přidat další</a></dd>` : ""}</dl>
+        ${pr ? `<p class="small muted" style="margin-top:10px">${pr.stav === "platba_selhala" ? "Platbu kartou opravíte v programu: Nastavení → Licence → Spravovat předplatné." : "U předplatného platí klíč vždy na zaplacené období; po další platbě si program stáhne nový klíč sám."}</p>` : !valid ? `<p style="margin-top:12px"><a class="btn primary" href="objednavka.html?m=renew&p=${r.product === 2 ? "faqrai" : "simple"}">Prodloužit licenci</a></p>` : r.expires && (new Date(r.expires) - new Date(today)) / 86400000 < 60 ? `<p class="small muted" style="margin-top:10px">Platnost končí za ${Math.round((new Date(r.expires) - new Date(today)) / 86400000)} dní – <a href="objednavka.html?m=renew&p=${r.product === 2 ? "faqrai" : "simple"}">prodloužit se slevou</a>.</p>` : ""}`;
     } catch(err){ out.innerHTML = `<div class="notice" style="background:#fdebe7;border-color:#f1b0a8">${esc(err.message)}</div>`; }
   });
 })();
 </script>
-<script src="mobil.js?v=202611232153"></script>
+<script src="mobil.js?v=202611232232"></script>
 </body></html>
