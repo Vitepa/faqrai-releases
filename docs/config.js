@@ -5,10 +5,11 @@
 window.FAQRAI_CFG = {
   provider: {
     name: "Pavel Vítek", ico: "30286573",
-    email: "pavel.vitek16@gmail.com", address: "",
+    email: "info@faqrai.cz", address: "",                 // obecný kontakt (patičky, podmínky, ochrana údajů)
     vatPayer: false                          // true = ceny níže jsou bez DPH a k objednávce se připočte 21 %
   },
-  orderEmail: "pavel.vitek16@gmail.com",     // kam chodí objednávky (mailto, když není endpoint)
+  orderEmail: "fakturace@faqrai.cz",         // objednávky, faktury a platby (mailto, když není endpoint)
+  supportEmail: "podpora@faqrai.cz",         // technická podpora (stránka Podpora, převod dat, reklamace)
   orderEndpoint: "https://faqrai-stahovani.faqrai.workers.dev/objednavka",   // objednávky jdou do služby na Cloudflare (čtou se ve Správci); prázdné = e-mailem
   account: { number: "", iban: "" },
   prispevky: { castky: [200, 500, 1000], zprava: "PRISPEVEK FAQRAI" },   // stránka Podpořte vývoj: nabízené částky a zpráva pro příjemce (QR používá IBAN výše)

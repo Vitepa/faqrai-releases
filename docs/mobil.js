@@ -20,4 +20,7 @@
   };
   const vse = () => document.querySelectorAll("table.prices, table.compare").forEach(popisky);
   vse(); document.querySelectorAll("table.prices").forEach(t => new MutationObserver(() => { if (!t.classList.contains("karty") || t.querySelector("tbody td:not([data-l])")) popisky(t); }).observe(t, { childList: true }));
+  // kontaktní e-maily z config.js (podpora, fakturace)
+  const C = window.FAQRAI_CFG || {};
+  for (const [atr, mail] of [["data-email-podpora", C.supportEmail], ["data-email-fakturace", C.orderEmail]]) document.querySelectorAll("[" + atr + "]").forEach(e => { if (!mail) return; e.textContent = mail; if (e.tagName === "A") e.href = "mailto:" + mail; });
 })();
