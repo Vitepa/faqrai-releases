@@ -13,8 +13,49 @@ const KOMU = 'podpora@faqrai.cz';
 const OD = 'podpora@faqrai.cz';
 const DENNI_LIMIT = 10;
 
+/* odeslání přes SMTP schránky podpora@faqrai.cz; údaje v podpora-smtp.php (vytvoří ho nahrávání webu z GitHub secretů, v gitu není) */
+function smtpNastaveni(): ?array {
+  foreach ([__DIR__ . '/podpora-smtp.php', __DIR__ . '/../podpora-smtp.php'] as $f) if (is_file($f)) { $c = include $f; if (is_array($c) && !empty($c['heslo'])) return $c + ['server' => 'smtp.zoner.com', 'port' => 587, 'uzivatel' => OD]; } // Zoner: smtp.zoner.com:587 STARTTLS
+  return null;
+}
+function smtpOdesli(string $predmet, string $telo, string $hlavicky, ?string &$chyba = null): bool {
+  $c = smtpNastaveni(); if (!$c) { $chyba = 'SMTP není nastavené'; return false; }
+  $port = (int)($c['port'] ?? 587); $uziv = $c['uzivatel'] ?? OD;
+  $sock = @stream_socket_client(($port === 465 ? 'ssl://' : 'tcp://') . $c['server'] . ':' . $port, $en, $es, 20, STREAM_CLIENT_CONNECT, stream_context_create(['ssl' => ($c['tlsOverit'] ?? true) ? ['peer_name' => $c['server']] : ['verify_peer' => false, 'verify_peer_name' => false]]));
+  if (!$sock) { $chyba = "spojení: $es"; return false; }
+  stream_set_timeout($sock, 20);
+  $cti = function () use ($sock): string { $r = ''; while (($l = fgets($sock, 1024)) !== false) { $r .= $l; if (strlen($l) < 4 || $l[3] === ' ') break; } return $r; };
+  $prikaz = function (string $p, array $ok) use ($sock, $cti): string { if ($p !== '') fwrite($sock, $p . "\r\n"); $r = $cti(); if (!in_array((int)substr($r, 0, 3), $ok, true)) throw new RuntimeException(trim($r)); return $r; };
+  try {
+    $prikaz('', [220]); $host = 'faqrai.cz';
+    $prikaz("EHLO $host", [250]);
+    if ($port !== 465) { $prikaz('STARTTLS', [220]); if (!stream_socket_enable_crypto($sock, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) throw new RuntimeException('STARTTLS selhal'); $prikaz("EHLO $host", [250]); }
+    $prikaz('AUTH LOGIN', [334]); $prikaz(base64_encode($uziv), [334]); $prikaz(base64_encode($c['heslo']), [235]);
+    $prikaz('MAIL FROM:<' . OD . '>', [250]); $prikaz('RCPT TO:<' . KOMU . '>', [250, 251]); $prikaz('DATA', [354]);
+    $zprava = "To: <" . KOMU . ">\r\nSubject: $predmet\r\nDate: " . date('r') . "\r\nMessage-ID: <" . bin2hex(random_bytes(12)) . "@faqrai.cz>\r\n" . $hlavicky . "\r\n\r\n" . str_replace("\n", "\r\n", str_replace("\r\n", "\n", $telo));
+    $zprava = preg_replace('/^\./m', '..', $zprava);
+    $prikaz($zprava . "\r\n.", [250]); $prikaz('QUIT', [221]);
+    return true;
+  } catch (Throwable $e) { $chyba = $e->getMessage(); return false; } finally { @fclose($sock); }
+}
 function odpoved(int $kod, array $data): void { http_response_code($kod); echo json_encode($data, JSON_UNESCAPED_UNICODE); exit; }
 
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'GET' && isset($_GET['diag'])) {
+  // diagnostika bez citlivých údajů: běží PHP a smí odesílat e-maily?
+  $zakazane = array_map('trim', explode(',', (string)ini_get('disable_functions')));
+  if (isset($_GET['test'])) {
+    // zkušební e-mail (nejvýš 3× denně): vrátí, jak dopadlo odeslání s parametrem -f a bez něj
+    $f = rtrim(sys_get_temp_dir(), '/\\') . '/faqrai-podpora-test-' . date('Y-m-d');
+    $n = is_file($f) ? (int)@file_get_contents($f) : 0; if ($n >= 3) odpoved(429, ['chyba' => 'Dnes už byly 3 zkoušky.']);
+    @file_put_contents($f, (string)($n + 1));
+    $h = "From: FaqrAi web <" . OD . ">\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8";
+    $s1 = @mail(KOMU, 'Test formulare podpory (s -f) ' . date('H:i:s'), "Zkusebni zprava z faqrai.cz, varianta s parametrem -f.", $h, '-f' . OD); $e1 = error_get_last();
+    $s2 = @mail(KOMU, 'Test formulare podpory (bez -f) ' . date('H:i:s'), "Zkusebni zprava z faqrai.cz, varianta bez parametru -f.", $h); $e2 = error_get_last();
+    $smtpChyba = null; $s3 = smtpOdesli('Test formulare podpory (SMTP) ' . date('H:i:s'), "Zkusebni zprava z faqrai.cz pres SMTP.", "From: FaqrAi web <" . OD . ">\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8", $smtpChyba);
+    odpoved(200, ['smtp' => $s3, 'smtpChyba' => $smtpChyba, 'sF' => $s1, 'bezF' => $s2, 'chyba' => $e2['message'] ?? ($e1['message'] ?? null)]);
+  }
+  odpoved(200, ['php' => PHP_VERSION, 'mail' => function_exists('mail') && !in_array('mail', $zakazane, true), 'sendmail' => (string)ini_get('sendmail_path') !== '', 'smtp' => smtpNastaveni() !== null]);
+}
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') odpoved(405, ['chyba' => 'Jen POST.']);
 $surova = file_get_contents('php://input', false, null, 0, 20000);
 if ($surova === false || strlen($surova) >= 20000) odpoved(413, ['chyba' => 'Příliš dlouhá zpráva.']);
@@ -64,7 +105,8 @@ $hlavicky = implode("\r\n", [
 ]);
 $predmetMime = '=?UTF-8?B?' . base64_encode($predmet) . '?=';
 
-$ok = @mail(KOMU, $predmetMime, $telo, $hlavicky, '-f' . OD);
+$ok = smtpOdesli($predmetMime, $telo, $hlavicky);
+if (!$ok) $ok = @mail(KOMU, $predmetMime, $telo, $hlavicky, '-f' . OD);
 if (!$ok) $ok = @mail(KOMU, $predmetMime, $telo, $hlavicky); // hosting může zakazovat parametr -f
 if (!$ok) odpoved(502, ['chyba' => 'E-mail se nepodařilo odeslat. Napište prosím přímo na ' . KOMU . '.']);
 odpoved(200, ['ok' => true]);
