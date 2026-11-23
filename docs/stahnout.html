@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ke stažení – FaqrAi</title><link rel="icon" href="img/favicon.svg?v=3" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png?v=3" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3"><link rel="stylesheet" href="style.css?v=202611232110"><link rel="canonical" href="https://faqrai.cz/stahnout.html">
+<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ke stažení – FaqrAi</title><link rel="icon" href="img/favicon.svg?v=3" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png?v=3" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3"><link rel="stylesheet" href="style.css?v=202611232147"><link rel="canonical" href="https://faqrai.cz/stahnout.html">
 </head>
 <body>
 <header class="top"><div class="wrap">
@@ -36,14 +36,14 @@
   <div><b>FaqrAi</b><br><span id="provider"></span><br><span class="small">Výpočty v programech jsou pomůcka, ne daňové poradenství.</span></div>
   <nav aria-label="Odkazy v patičce"><a href="stahnout.html">Ke stažení</a><a href="objednavka.html">Koupit licenci</a><a href="overeni.html">Ověření licence</a><a href="napoveda.html">Nápověda</a><a href="podpora.html">Podpora</a><a href="beta.html">Beta testování</a><a href="prispevek.html">Podpořit vývoj</a><a href="o-mne.html">O mně</a><a href="pro-koho.html">Pro koho</a><a href="prechod.html">Přechod odjinud</a><a href="ucetni.html">Pro účetní</a><a href="srovnani.html">Srovnání</a><a href="obchodni-podminky.html">Obchodní podmínky</a><a href="licencni-podminky.html">Licenční podmínky</a><a href="ochrana-udaju.html">Ochrana údajů</a></nav>
 </div></footer>
-<script src="config.js"></script>
+<script src="config.js?v=202611232147"></script>
 <script>
 (function(){
   const C = window.FAQRAI_CFG, $ = s => document.querySelector(s);
   const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   $("#trial").textContent = C.trialDays;
   const verZ = v => { const p = String(v || "").replace(/^v/, "").split(".").map(n => parseInt(n, 10) || 0); return `${p[0]}.${String(p[1] || 0).padStart(2, "0")}.${String(p[2] || 0).padStart(3, "0")}`; };
-  $("#provider").textContent = [C.provider.name, C.provider.ico ? "IČO " + C.provider.ico : "", C.provider.email].filter(Boolean).join(" · ");
+  $("#provider").textContent = [C.provider.name, C.provider.ico ? "IČO " + C.provider.ico : "", C.provider.address, C.provider.email].filter(Boolean).join(" · ");
   const ua = navigator.userAgent, isMac = /Mac/.test(ua), isWin = /Windows/.test(ua);
   const mb = n => { const v = n / 1048576; return (v < 10 ? v.toFixed(1).replace(".", ",") : v.toFixed(0)) + " MB"; };
   const kinds = [["Windows", /-Setup\.exe$/, "win"], ["Windows – plná instalačka (bez internetu)", /Windows-x64\.exe$/, "winfull"], ["macOS Apple Silicon", /macOS-arm64\.zip$/, "mac"], ["macOS Intel", /macOS-x64\.zip$/, "mac"]];
@@ -73,7 +73,7 @@
       const r = await fetch(C.sluzba + "/stazeni", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ico, nazev: $("#dfNazev").value, email, produkt: $("#dfProdukt").value, system: isWin ? "Windows" : isMac ? "macOS" : "jiný", souhlas: true, web: $("#dfWeb").value, zdroj: "web" }) });
       const j = await r.json().catch(() => ({}));
       if(!r.ok){ err.textContent = j.chyba || "Odeslání se nepovedlo, zkuste to prosím znovu."; return; }
-      try { localStorage.setItem("faqrai-stazeni", JSON.stringify({ ico, nazev: j.nazev || $("#dfNazev").value, zdroj: "formular", kdy: Date.now() })); } catch(_){}
+      try { if (window.faqraiPreferencni && faqraiPreferencni()) localStorage.setItem("faqrai-stazeni", JSON.stringify({ ico, nazev: j.nazev || $("#dfNazev").value, zdroj: "formular", kdy: Date.now() })); } catch(_){}
       ukaz();
     } catch(_){ err.textContent = "Služba teď neodpovídá. Zkuste to prosím za chvíli."; }
     finally { btn.disabled = false; }
@@ -90,5 +90,5 @@
   }).catch(() => { $("#changelog").innerHTML = `<p class="muted">Seznam změn se nepodařilo načíst.</p>`; });
 })();
 </script>
-<script src="mobil.js?v=202611232110"></script>
+<script src="mobil.js?v=202611232147"></script>
 </body></html>

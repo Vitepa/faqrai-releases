@@ -234,3 +234,9 @@ input[type=checkbox],input[type=radio]{width:20px;height:20px;flex:none}
   table.prices.karty td[data-l]::before{display:block;max-width:none;margin-bottom:1px}
   table.prices.karty tr>:first-child{font-size:18px}
 }
+
+/* ---- předvolby cookies ---- */
+.cookies-lista{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--paper,#fff);border-top:1px solid var(--rule);box-shadow:0 -10px 30px -18px rgba(22,35,44,.4);padding:14px 0;font-size:14px}
+.cookies-lista .wrap{display:flex;flex-direction:column;gap:10px}.cookies-lista p{margin:0;max-width:72ch}
+.cookies-lista .cl-b{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.cookies-lista .cl-b .btn{padding:9px 14px}
+.cookies-lista .cl-r{display:flex;gap:10px;align-items:flex-start;max-width:72ch}.cookies-lista .cl-r input{margin-top:2px}

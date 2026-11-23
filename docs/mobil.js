@@ -40,4 +40,27 @@
       m.innerHTML = `<section><div class="wrap" style="max-width:720px;padding:48px 24px"><h1 style="font-size:clamp(34px,6vw,52px)">Prodej začne <span style="white-space:nowrap">${den}</span></h1><p>Licence FaqrAi a FaqrAi Simple půjde koupit od ${den}. Do té doby se můžete zapojit do beta testu – licenci dostanete zdarma a vaše data zůstanou i po koupi.</p><p><span style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn primary" href="beta.html">Přihlásit se do beta testu</a><a class="btn" href="stahnout.html">Stáhnout na zkoušku</a></span></p></div></section>`;
     }
   }
+  // předvolby cookies: lišta při první návštěvě a odkaz „Nastavení cookies“ v patičce
+  const ulozVolbu = pref => { try { localStorage.setItem("faqrai-cookies", JSON.stringify({ v: 1, preferencni: pref, kdy: new Date().toISOString() })); if (!pref) localStorage.removeItem("faqrai-stazeni"); } catch (e) {} };
+  const lista = document.createElement("div"); lista.className = "cookies-lista"; lista.setAttribute("role", "region"); lista.setAttribute("aria-label", "Cookies");
+  const vykresli = nastaveni => {
+    const pref = window.faqraiPreferencni && faqraiPreferencni();
+    lista.innerHTML = nastaveni ? `<div class="wrap"><b>Nastavení cookies a úložiště prohlížeče</b>
+        <label class="cl-r"><input type="checkbox" checked disabled> <span><b>Nezbytné</b> – jen záznam této volby. Bez nich web nefunguje, proto je nelze vypnout.</span></label>
+        <label class="cl-r"><input type="checkbox" id="clPref" ${pref ? "checked" : ""}> <span><b>Preferenční</b> – web si zapamatuje IČO a název z formuláře před stažením, abyste ho nemuseli vyplňovat znovu.</span></label>
+        <label class="cl-r"><input type="checkbox" disabled> <span><b>Analytické a reklamní</b> – nepoužíváme.</span></label>
+        <div class="cl-b"><button class="btn primary" id="clUloz" type="button">Uložit volbu</button><a href="ochrana-udaju.html#cookies">Podrobnosti</a></div></div>`
+      : `<div class="wrap"><p>Nepoužíváme sledovací ani reklamní cookies. Se souhlasem si web zapamatuje údaje z formuláře před stažením, abyste je nemuseli vyplňovat znovu. <a href="ochrana-udaju.html#cookies">Podrobnosti</a></p>
+        <div class="cl-b"><button class="btn" id="clAno" type="button">Povolit</button><button class="btn" id="clNe" type="button">Jen nezbytné</button><button class="btn" id="clNast" type="button">Nastavení</button></div></div>`;
+    const zavri = () => lista.remove();
+    const q = id => lista.querySelector("#" + id);
+    if (q("clAno")) q("clAno").onclick = () => { ulozVolbu(true); zavri(); };
+    if (q("clNe")) q("clNe").onclick = () => { ulozVolbu(false); zavri(); };
+    if (q("clNast")) q("clNast").onclick = () => vykresli(true);
+    if (q("clUloz")) q("clUloz").onclick = () => { ulozVolbu(q("clPref").checked); zavri(); };
+    if (!lista.isConnected) document.body.appendChild(lista);
+  };
+  if (!window.faqraiSouhlas || !faqraiSouhlas()) vykresli(false);
+  const pata = document.querySelector("footer nav");
+  if (pata && !pata.querySelector("[data-cookies]")) { const a = document.createElement("a"); a.href = "#"; a.textContent = "Nastavení cookies"; a.setAttribute("data-cookies", "1"); a.onclick = e => { e.preventDefault(); vykresli(true); }; pata.appendChild(a); }
 })();

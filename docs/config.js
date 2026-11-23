@@ -5,7 +5,7 @@
 window.FAQRAI_CFG = {
   provider: {
     name: "Pavel Vítek", ico: "30286573",
-    email: "info@faqrai.cz", address: "",                 // obecný kontakt (patičky, podmínky, ochrana údajů)
+    email: "info@faqrai.cz", address: "", zapis: "fyzická osoba podnikající, zapsaná v živnostenském rejstříku",                 // obecný kontakt (patičky, podmínky, ochrana údajů)
     vatPayer: false                          // true = ceny níže jsou bez DPH a k objednávce se připočte 21 %
   },
   orderEmail: "fakturace@faqrai.cz",         // objednávky, faktury a platby (mailto, když není endpoint)
@@ -106,3 +106,8 @@ window.FAQRAI_CFG = {
     consent: "Souhlasím s obchodními a licenčními podmínkami a beru na vědomí informace o zpracování osobních údajů. Jako podnikatel objednávám na IČO; právo spotřebitele na odstoupení od smlouvy se neuplatní."
   }
 };
+
+/* Souhlas s ukládáním v prohlížeči (cookies a localStorage). Nezbytné: jen záznam této volby.
+   Preferenční (se souhlasem): zapamatování vyplněného formuláře před stažením („faqrai-stazeni“). Analytické a reklamní nepoužíváme. */
+window.faqraiSouhlas = function () { try { return JSON.parse(localStorage.getItem("faqrai-cookies") || "null"); } catch (e) { return null; } };
+window.faqraiPreferencni = function () { const s = window.faqraiSouhlas(); return !!(s && s.preferencni); };

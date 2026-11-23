@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Objednávka licence – FaqrAi</title>
 <link rel="icon" href="img/favicon.svg?v=3" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png?v=3" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3">
-<link rel="stylesheet" href="style.css?v=202611232110">
+<link rel="stylesheet" href="style.css?v=202611232147">
 <link rel="canonical" href="https://faqrai.cz/objednavka.html">
 </head>
 <body>
@@ -99,7 +99,7 @@
   <nav aria-label="Odkazy v patičce"><a href="stahnout.html">Ke stažení</a><a href="objednavka.html">Koupit licenci</a><a href="overeni.html">Ověření licence</a><a href="napoveda.html">Nápověda</a><a href="podpora.html">Podpora</a><a href="beta.html">Beta testování</a><a href="prispevek.html">Podpořit vývoj</a><a href="o-mne.html">O mně</a><a href="pro-koho.html">Pro koho</a><a href="prechod.html">Přechod odjinud</a><a href="ucetni.html">Pro účetní</a><a href="srovnani.html">Srovnání</a><a href="obchodni-podminky.html">Obchodní podmínky</a><a href="licencni-podminky.html">Licenční podmínky</a><a href="ochrana-udaju.html">Ochrana údajů</a></nav>
 </div></footer>
 
-<script src="config.js"></script>
+<script src="config.js?v=202611232147"></script>
 <script src="qrcode.js"></script>
 <script>
 (function(){
@@ -129,7 +129,7 @@
   /* ---------- statické texty ---------- */
   $("#afterOrderTop").textContent = C.texts.afterOrder; $("#afterOrderBottom").textContent = C.texts.afterOrder; $("#consentText").textContent = C.texts.consent;
   $("#vatNote").textContent = C.provider.vatPayer ? "Ceny bez DPH 21 %; DPH bude na faktuře." : "Nejsme plátci DPH – ceny jsou konečné.";
-  $("#provider").textContent = [C.provider.name, C.provider.ico ? "IČO " + C.provider.ico : "", C.provider.email].filter(Boolean).join(" · ");
+  $("#provider").textContent = [C.provider.name, C.provider.ico ? "IČO " + C.provider.ico : "", C.provider.address, C.provider.email].filter(Boolean).join(" · ");
 
   /* ---------- vykreslení voleb ---------- */
   function renderChoices(){
@@ -289,7 +289,7 @@
     showDone(order, text, sent);
   });
   function showDone(o, text, sent){
-    try { localStorage.setItem("faqrai-stazeni", JSON.stringify({ ico: o.ico || "", nazev: o.nazev || "", zdroj: "objednavka", cislo: o.cislo, kdy: Date.now() })); } catch(_){} // po objednávce je stažení bez formuláře
+    try { if (window.faqraiPreferencni && faqraiPreferencni()) localStorage.setItem("faqrai-stazeni", JSON.stringify({ ico: o.ico || "", nazev: o.nazev || "", zdroj: "objednavka", cislo: o.cislo, kdy: Date.now() })); } catch(_){} // po objednávce je stažení bez formuláře
     $("#orderForm").hidden = true; $("#modeTabs").hidden = true; const d = $("#done"); d.hidden = false;
     const vs = o.cislo.replace(/\D/g, ""), iban = (C.account.iban || "").replace(/\s/g, "");
     let qr = ""; if(iban && o.celkem > 0){ try { const qq = qrcode(0, "M"); qq.addData(`SPD*1.0*ACC:${iban}*AM:${o.celkem.toFixed(2)}*CC:CZK*X-VS:${vs}*MSG:FAQRAI ${o.cislo}`); qq.make(); qr = qq.createSvgTag({ cellSize: 2, margin: 0, scalable: true }); } catch(_){} }
@@ -311,6 +311,6 @@
   renderChoices();
 })();
 </script>
-<script src="mobil.js?v=202611232110"></script>
+<script src="mobil.js?v=202611232147"></script>
 </body>
 </html>
