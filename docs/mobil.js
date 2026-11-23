@@ -23,4 +23,21 @@
   // kontaktní e-maily z config.js (podpora, fakturace)
   const C = window.FAQRAI_CFG || {};
   for (const [atr, mail] of [["data-email-podpora", C.supportEmail], ["data-email-fakturace", C.orderEmail]]) document.querySelectorAll("[" + atr + "]").forEach(e => { if (!mail) return; e.textContent = mail; if (e.tagName === "A") e.href = "mailto:" + mail; });
+  // do zahájení prodeje (C.prodejOd) jen beta test: odkazy na objednávku vedou na beta.html, stránka objednávky nabídne beta test
+  if (C.prodejOd && Date.now() < Date.parse(C.prodejOd)) {
+    const den = new Date(C.prodejOd).toLocaleDateString("cs-CZ", { day: "numeric", month: "numeric", year: "numeric" });
+    const prepis = () => document.querySelectorAll('a[href^="objednavka.html"]:not([data-beta])').forEach(a => {
+      a.setAttribute("data-beta", "1");
+      const inline = !a.classList.contains("btn") && !a.closest("nav, footer");
+      if (inline) { a.replaceWith(document.createTextNode(a.textContent.replace(/^(koupit|prodloužit|přidat).*/i, "beta test"))); return; }
+      a.href = "beta.html"; a.textContent = a.closest("footer") ? "Beta test" : "Beta test zdarma";
+    });
+    prepis(); new MutationObserver(prepis).observe(document.body, { childList: true, subtree: true });
+    const ceny = document.getElementById("prices");
+    if (ceny && !document.getElementById("betaCeny")) ceny.closest("div, section").insertAdjacentHTML("beforebegin", `<div class="notice" id="betaCeny" style="margin:0 0 16px">Prodej licencí začne <b>${den}</b>. Do té doby si program vyzkoušejte v <a href="beta.html">beta testu</a> – licence je zdarma.</div>`);
+    if (/objednavka\.html$/.test(location.pathname)) {
+      const m = document.querySelector("main") || document.querySelector("section .wrap") || document.body;
+      m.innerHTML = `<section><div class="wrap" style="max-width:720px;padding:48px 24px"><h1 style="font-size:clamp(34px,6vw,52px)">Prodej začne <span style="white-space:nowrap">${den}</span></h1><p>Licence FaqrAi a FaqrAi Simple půjde koupit od ${den}. Do té doby se můžete zapojit do beta testu – licenci dostanete zdarma a vaše data zůstanou i po koupi.</p><p><span style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn primary" href="beta.html">Přihlásit se do beta testu</a><a class="btn" href="stahnout.html">Stáhnout na zkoušku</a></span></p></div></section>`;
+    }
+  }
 })();

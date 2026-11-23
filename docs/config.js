@@ -9,6 +9,7 @@ window.FAQRAI_CFG = {
     vatPayer: false                          // true = ceny níže jsou bez DPH a k objednávce se připočte 21 %
   },
   orderEmail: "fakturace@faqrai.cz",         // objednávky, faktury a platby (mailto, když není endpoint)
+  prodejOd: "2026-12-01T00:00:00+01:00",      // do tohoto okamžiku web nenabízí koupi licence, jen beta test zdarma (mobil.js)
   supportEmail: "podpora@faqrai.cz",         // technická podpora (stránka Podpora, převod dat, reklamace)
   orderEndpoint: "https://faqrai-stahovani.faqrai.workers.dev/objednavka",   // objednávky jdou do služby na Cloudflare (čtou se ve Správci); prázdné = e-mailem
   account: { number: "", iban: "" },
@@ -95,7 +96,7 @@ window.FAQRAI_CFG = {
 
   /* ---- Newsletter a podpora ---- */
   newsletter: { endpoint: "", provider: "", note: "Čtvrtletně: změny sazeb a limitů, termíny, novinky v programech. Žádný spam, odhlášení jedním kliknutím." }, // endpoint = URL formulářové služby (Buttondown/Mailchimp/Formspree). Prázdné = odběr e-mailem na orderEmail.
-  support: { endpoint: "", hours: "v pracovní dny, zpravidla do 2 pracovních dnů" },
+  support: { endpoint: "https://faqrai-stahovani.faqrai.workers.dev/podpora", hours: "v pracovní dny, zpravidla do 2 pracovních dnů" },
   siteUrl: "https://faqrai.cz/",   // veřejná adresa webu (pro sdílení a sitemap)
 
   /* ---- Texty ---- */

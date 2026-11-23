@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Podpořte vývoj – FaqrAi</title><meta name="description" content="Dobrovolný příspěvek na vývoj programů FaqrAi a FaqrAi Simple převodem nebo QR platbou."><meta property="og:title" content="Podpořte vývoj – FaqrAi"><meta property="og:description" content="Dobrovolný příspěvek na vývoj programů FaqrAi a FaqrAi Simple převodem nebo QR platbou."><meta property="og:image" content="img/og.jpg"><meta property="og:type" content="website"><link rel="icon" href="img/favicon.svg?v=3" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png?v=3" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3"><link rel="stylesheet" href="style.css?v=202611232054"><link rel="canonical" href="https://faqrai.cz/prispevek.html">
+<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Podpořte vývoj – FaqrAi</title><meta name="description" content="Dobrovolný příspěvek na vývoj programů FaqrAi a FaqrAi Simple převodem nebo QR platbou."><meta property="og:title" content="Podpořte vývoj – FaqrAi"><meta property="og:description" content="Dobrovolný příspěvek na vývoj programů FaqrAi a FaqrAi Simple převodem nebo QR platbou."><meta property="og:image" content="img/og.jpg"><meta property="og:type" content="website"><link rel="icon" href="img/favicon.svg?v=3" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png?v=3" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3"><link rel="stylesheet" href="style.css?v=202611232100"><link rel="canonical" href="https://faqrai.cz/prispevek.html">
 </head>
 <body>
 <a class="skip" href="#obsah">Přeskočit na obsah</a>
@@ -55,5 +55,5 @@ function kresli(){document.querySelectorAll("#amounts [data-n]").forEach(b=>b.se
 $("#amounts").addEventListener("click",e=>{const b=e.target.closest("[data-n]");if(!b)return;castka=+b.dataset.n;$("#amount").value="";kresli();});
 $("#amount").addEventListener("input",()=>{const n=parseInt($("#amount").value.replace(/\D/g,""),10);castka=n>0&&n<1e6?n:0;kresli();});
 kresli();})();</script>
-<script src="mobil.js?v=202611232054"></script>
+<script src="mobil.js?v=202611232100"></script>
 </body></html>
