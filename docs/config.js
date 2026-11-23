@@ -96,7 +96,7 @@ window.FAQRAI_CFG = {
 
   /* ---- Newsletter a podpora ---- */
   newsletter: { endpoint: "", provider: "", note: "Čtvrtletně: změny sazeb a limitů, termíny, novinky v programech. Žádný spam, odhlášení jedním kliknutím." }, // endpoint = URL formulářové služby (Buttondown/Mailchimp/Formspree). Prázdné = odběr e-mailem na orderEmail.
-  support: { endpoint: "https://faqrai-stahovani.faqrai.workers.dev/podpora", hours: "v pracovní dny, zpravidla do 2 pracovních dnů" },
+  support: { mailEndpoint: "https://faqrai.cz/podpora-odeslat.php", endpoint: "https://faqrai-stahovani.faqrai.workers.dev/podpora", hours: "v pracovní dny, zpravidla do 2 pracovních dnů" },
   siteUrl: "https://faqrai.cz/",   // veřejná adresa webu (pro sdílení a sitemap)
 
   /* ---- Texty ---- */
