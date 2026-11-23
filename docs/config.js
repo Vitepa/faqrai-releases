@@ -96,7 +96,7 @@ window.FAQRAI_CFG = {
   /* ---- Newsletter a podpora ---- */
   newsletter: { endpoint: "", provider: "", note: "Čtvrtletně: změny sazeb a limitů, termíny, novinky v programech. Žádný spam, odhlášení jedním kliknutím." }, // endpoint = URL formulářové služby (Buttondown/Mailchimp/Formspree). Prázdné = odběr e-mailem na orderEmail.
   support: { endpoint: "", hours: "v pracovní dny, zpravidla do 2 pracovních dnů" },
-  siteUrl: "https://vitepa.github.io/faqrai-releases/",   // veřejná adresa webu (pro sdílení a sitemap)
+  siteUrl: "https://faqrai.cz/",   // veřejná adresa webu (pro sdílení a sitemap)
 
   /* ---- Texty ---- */
   texts: {
