@@ -392,3 +392,26 @@ body.uvod main{overflow-x:clip}
 .changelog .posledni .body{white-space:normal;font-size:15px;color:var(--ink)}
 .changelog .posledni h3{font-size:17px;margin:18px 0 6px}
 .changelog .posledni ul{margin:0;padding-left:20px}.changelog .posledni li{margin:3px 0;color:var(--muted)}
+/* mobil: přepínač tarifů v ceníku, zkrácený výčet funkcí, větší otázky, souhrn změn po oblastech */
+.tarify{display:none}
+.u-dalsi{display:none}
+.faq details summary{padding:6px 0;min-height:44px;align-items:center}
+.changelog .posledni details{border:0;border-top:1px solid var(--line);border-radius:0;margin:0;padding:0;background:none}
+.changelog .posledni summary{font-size:17px;font-weight:700;padding:12px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px}
+.changelog .posledni summary::-webkit-details-marker{display:none}
+.changelog .posledni summary::after{content:"+";color:var(--stamp);font-size:22px;line-height:1;transition:transform .2s}
+.changelog .posledni details[open] summary::after{transform:rotate(45deg)}
+.changelog .posledni details ul{margin-bottom:12px}
+@media (max-width:700px){
+  .tarify{display:flex;position:relative;gap:6px;overflow-x:auto;margin:0 0 12px;padding-bottom:2px}
+  .tarify button{flex:0 0 auto;border:1.5px solid var(--ink);background:var(--paper);color:var(--ink);border-radius:999px;padding:10px 14px;font:inherit;font-weight:700;font-size:14px;min-height:44px;cursor:pointer}
+  .tarify button[aria-pressed="true"]{background:var(--ink);color:#fff}
+  table.karty.vyber .mimo{display:none!important}
+  table.karty.vyber td[data-l]::before{display:none}
+  table.karty.vyber td:not(:first-child){justify-content:flex-start;text-align:left!important}
+  table.karty.vyber tr>:first-child{padding-bottom:2px!important}
+  .u-ukoly .u-ukol:nth-of-type(n+6){display:none}
+  .u-ukoly.vse .u-ukol{display:grid}
+  .u-dalsi{display:inline-flex;margin-top:18px;background:transparent;color:#fff;border-color:#BDB4DD}
+  .u-zalozky button{padding:10px 12px;font-size:15px}
+}

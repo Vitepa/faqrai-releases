@@ -1,5 +1,5 @@
 rada: 2.38
-Přehled všeho, co přibylo od první veřejné verze 2.1 (15. 11. 2026).
+Přehled všeho, co přibylo od první veřejné verze.
 
 ### Faktury a doklady
 - Faktury s QR platbou (v eurech SEPA QR), v cizích měnách s kurzem ČNB, česky, anglicky i německy; zálohové faktury, dobropisy, opakované faktury a duplikáty.

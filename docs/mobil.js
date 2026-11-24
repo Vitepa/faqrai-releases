@@ -18,8 +18,23 @@
     t.querySelectorAll("tbody tr, tfoot tr").forEach(tr => [...tr.children].forEach((c, i) => { if (i > 0 && h[i]) c.setAttribute("data-l", h[i]); }));
     t.classList.add("karty");
   };
-  const vse = () => document.querySelectorAll("table.prices, table.compare").forEach(popisky);
-  vse(); document.querySelectorAll("table.prices").forEach(t => new MutationObserver(() => { if (!t.classList.contains("karty") || t.querySelector("tbody td:not([data-l])")) popisky(t); }).observe(t, { childList: true }));
+  /* ceník na telefonu: místo všech tarifů pod sebou přepínač – ukáže se jen vybraný sloupec */
+  const prepinac = t => {
+    if (!t.classList.contains("prices")) return;
+    const hl = [...t.querySelectorAll("thead th")].slice(1).map(th => (th.childNodes[0] && th.childNodes[0].nodeType === 3 ? th.childNodes[0].textContent : th.textContent).trim());
+    if (hl.length < 2) return;
+    let p = t.previousElementSibling && t.previousElementSibling.classList.contains("tarify") ? t.previousElementSibling : null;
+    if (!p) { p = document.createElement("div"); p.className = "tarify"; p.setAttribute("role", "group"); p.setAttribute("aria-label", "Vyberte tarif"); (t.parentNode.classList.contains("tab-obal") ? t.parentNode : t).insertAdjacentElement("beforebegin", p); }
+    const vyber = Math.min(+(t.dataset.vyber || 1), hl.length);
+    p.innerHTML = hl.map((h, i) => `<button type="button" aria-pressed="${i + 1 === vyber}" data-i="${i + 1}">${h}</button>`).join("");
+    t.querySelectorAll("tr").forEach(tr => [...tr.children].forEach((c, i) => c.classList.toggle("mimo", i > 0 && i !== vyber)));
+    t.classList.add("vyber");
+    const sel = p.querySelector("[aria-pressed=true]"); if (sel) p.scrollLeft = Math.max(0, sel.offsetLeft - 8);
+    p.onclick = e => { const x = e.target.closest("button[data-i]"); if (!x) return; t.dataset.vyber = x.dataset.i; prepinac(t); };
+  };
+  window.faqraiTarif = i => document.querySelectorAll("table.prices").forEach(t => { t.dataset.vyber = i; prepinac(t); });
+  const vse = () => document.querySelectorAll("table.prices, table.compare").forEach(t => { popisky(t); prepinac(t); });
+  vse(); document.querySelectorAll("table.prices").forEach(t => new MutationObserver(() => { if (!t.classList.contains("karty") || t.querySelector("tbody td:not([data-l])")) { popisky(t); prepinac(t); } }).observe(t, { childList: true }));
   // kontaktní e-maily z config.js (podpora, fakturace)
   const C = window.FAQRAI_CFG || {};
   for (const [atr, mail] of [["data-email-podpora", C.supportEmail], ["data-email-fakturace", C.orderEmail]]) document.querySelectorAll("[" + atr + "]").forEach(e => { if (!mail) return; e.textContent = mail; if (e.tagName === "A") e.href = "mailto:" + mail; });

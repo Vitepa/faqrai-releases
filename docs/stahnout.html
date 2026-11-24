@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ke stažení – FaqrAi</title><link rel="icon" href="img/favicon.svg?v=3" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png?v=3" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3"><link rel="stylesheet" href="style.css?v=202611241751"><link rel="canonical" href="https://faqrai.cz/stahnout.html">
+<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ke stažení – FaqrAi</title><link rel="icon" href="img/favicon.svg?v=3" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png?v=3" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3"><link rel="stylesheet" href="style.css?v=202611241759"><link rel="canonical" href="https://faqrai.cz/stahnout.html">
 </head>
 <body>
 <header class="top"><div class="wrap">
@@ -25,7 +25,7 @@
   </form>
   <div class="grid c2" style="margin-top:22px" id="dlCards" hidden><div class="dl-card">Načítám seznam verzí…</div></div>
   <div class="grid c2" style="margin-top:22px">
-    <div class="card"><h3>Windows</h3><p class="small muted">Stáhněte malý instalátor (<span class="mono">…-Setup.exe</span>, asi 0,5 MB). Zeptá se na licenci (u dřívější instalace ji převezme sám), podle ní vybere verzi – bez licence nejnovější zkušební –, stáhne ji, ověří kontrolní součet a nainstaluje. Plná instalačka se hodí pro počítač bez internetu. Instalačka zatím není podepsaná certifikátem, Windows SmartScreen proto ukáže varování: klikněte na <b>Další informace → Přesto spustit</b>. Kdyby malý instalátor zablokoval antivirus, stáhněte plnou instalačku – licenci pak zadáte v programu a ten si sám stáhne verzi, ke které patří. Při spuštění nad existující instalací nabídne Aktualizovat / Opravit / Odstranit. Data uživatele se při odinstalaci nikdy nemažou.</p></div>
+    <div class="card"><h3>Windows</h3><p class="small muted">Stáhněte malý instalátor (<span class="mono">…-Setup.exe</span>, asi 0,5 MB). Zeptá se na licenci (u dřívější instalace ji převezme sám), podle ní vybere verzi – bez licence nejnovější zkušební –, stáhne ji, ověří kontrolní součet a nainstaluje. Plná instalačka se hodí pro počítač bez internetu. Instalačky jsou podepsané certifikátem vydavatele <b>Pavel Vítek</b>. Protože je certifikát nový, může Windows SmartScreen ze začátku ještě zobrazit upozornění – klikněte na <b>Další informace → Přesto spustit</b>; s přibývajícími instalacemi zmizí. Při spuštění nad existující instalací nabídne Aktualizovat / Opravit / Odstranit. Data uživatele se při odinstalaci nikdy nemažou.</p></div>
     <div class="card"><h3>macOS</h3><p class="small muted">Stáhněte ZIP pro svůj procesor (<b>Apple Silicon</b> = M1 a novější, <b>Intel</b> = starší Macy), rozbalte a přetáhněte aplikaci do složky Aplikace. Při prvním spuštění klikněte pravým tlačítkem → <b>Otevřít</b> → Otevřít. Hlásí-li macOS, že je aplikace poškozená, spusťte v Terminálu: <span class="mono">xattr -cr "/Applications/FaqrAi.app"</span> (resp. „FaqrAi Simple.app“).</p></div>
   </div>
   <h2 style="margin-top:40px">Co je nového</h2>
@@ -36,7 +36,7 @@
   <div><b>FaqrAi</b><br><span id="provider"></span><br><span class="small">Výpočty v programech jsou pomůcka, ne daňové poradenství.</span></div>
   <nav aria-label="Odkazy v patičce"><a href="stahnout.html">Ke stažení</a><a href="objednavka.html">Koupit licenci</a><a href="overeni.html">Ověření licence</a><a href="napoveda.html">Nápověda</a><a href="podpora.html">Podpora</a><a href="beta.html">Beta testování</a><a href="prispevek.html">Podpořit vývoj</a><a href="o-mne.html">O mně</a><a href="pro-koho.html">Pro koho</a><a href="prechod.html">Přechod odjinud</a><a href="ucetni.html">Pro účetní</a><a href="srovnani.html">Srovnání</a><a href="obchodni-podminky.html">Obchodní podmínky</a><a href="licencni-podminky.html">Licenční podmínky</a><a href="ochrana-udaju.html">Ochrana údajů</a></nav>
 </div></footer>
-<script src="config.js?v=202611241751"></script>
+<script src="config.js?v=202611241759"></script>
 <script>
 (function(){
   const C = window.FAQRAI_CFG, $ = s => document.querySelector(s);
@@ -88,11 +88,11 @@
   /* Seznam změn: jen poslední vydání. Pod ním změny celé jeho řady (týdenní upgrade + fixpacky za ním);
      pro řadu uvedenou v souhrn-verze.md (rada: X.Y) se místo nich ukáže tento souhrn. */
   const md = t => esc(t).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/`([^`]+)`/g, "<code>$1</code>");
-  const vykresli = text => { let h = "", v = 0; const zavri = n => { while (v > n) { h += "</ul>"; v--; } };
+  const vykresli = text => { let h = "", v = 0, sekce = 0; const zavri = n => { while (v > n) { h += "</ul>"; v--; } };
     for (const r of text.split("\n")) { const m = r.match(/^(\s*)- (.*)$/);
       if (m) { const u = m[1].length >= 2 ? 2 : 1; while (v < u) { h += "<ul>"; v++; } zavri(u); h += `<li>${md(m[2])}</li>`; continue; }
-      zavri(0); if (/^#{2,4} /.test(r)) h += `<h3>${md(r.replace(/^#+ /, ""))}</h3>`; else if (r.trim() && !/^Instalačky pro Windows/.test(r) && !/^<!--/.test(r)) h += `<p>${md(r)}</p>`; }
-    zavri(0); return h; };
+      zavri(0); if (/^#{2,4} /.test(r)) { h += `${sekce ? "</details>" : ""}<details${sekce ? "" : " open"}><summary>${md(r.replace(/^#+ /, ""))}</summary>`; sekce++; } else if (r.trim() && !/^Instalačky pro Windows/.test(r) && !/^<!--/.test(r)) h += `<p>${md(r)}</p>`; }
+    zavri(0); return h + (sekce ? "</details>" : ""); };
   const rada = t => verZ(t).split(".").slice(0, 2).join(".");
   Promise.all([
     fetch(C.releasesApi + "?per_page=30", { headers: { Accept: "application/vnd.github+json" } }).then(r => r.ok ? r.json() : []),
@@ -105,5 +105,5 @@
   }).catch(() => { $("#changelog").innerHTML = `<p class="muted">Seznam změn se nepodařilo načíst.</p>`; });
 })();
 </script>
-<script src="mobil.js?v=202611241751"></script>
+<script src="mobil.js?v=202611241759"></script>
 </body></html>

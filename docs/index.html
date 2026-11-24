@@ -9,7 +9,7 @@
 <meta property="og:description" content="Předplatné ročně nebo měsíčně bez závazku. Data zůstávají u vás.">
 <meta property="og:image" content="img/og.jpg">
 <link rel="icon" href="img/favicon.svg?v=3" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png?v=3" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3">
-<link rel="stylesheet" href="style.css?v=202611241751">
+<link rel="stylesheet" href="style.css?v=202611241759">
 <script>document.documentElement.classList.add("js")</script>
 <link rel="canonical" href="https://faqrai.cz/">
 </head>
@@ -40,7 +40,7 @@
 
 <div class="u-pas" aria-hidden="true"><div id="uPas"></div></div>
 
-<section class="u-tma" id="co-umi"><div class="wrap">
+<section class="u-tma" id="co-umi"><div class="wrap u-ukoly">
   <div class="sec-head"><h2>Co za vás program udělá</h2><p>Od vystavení faktury po podklady pro finanční úřad. Každý řádek je hotová práce, kterou nemusíte dělat ručně.</p></div>
   <div class="u-ukol"><h3>Vystavit a poslat fakturu</h3><p>Faktura s QR platbou za minutu, i v eurech, angličtině nebo němčině. Odejde e-mailem přímo z programu v jazyce odběratele, s PDF a elektronickou fakturou v příloze.</p></div>
   <div class="u-ukol"><h3>Poznat, kdo zaplatil</h3><p>Fio, MONETA a Raiffeisenbank napojíte přímo, ostatní banky přes výpis nebo hlídanou složku. Platby se spárují podle variabilního symbolu a faktury se označí jako uhrazené.</p></div>
@@ -52,12 +52,13 @@
   <div class="u-ukol"><h3>Předat podklady účetní</h3><p>Balík za měsíc nebo rok: PDF faktur, ISDOC, přehledy a přílohy přijatých dokladů. Program ho může poslat sám, vždy po skončení měsíce.</p></div>
   <div class="u-ukol"><h3>Vést pokladnu, sklad a víc firem</h3><p>Pokladní doklady a kniha, jednoduchý sklad, víc počítačů s rolemi a víc firem v jednom programu.<br><span class="where">FaqrAi</span></p></div>
   <div class="u-ukol"><h3>Hlídat zálohy a termíny</h3><p>Denní zálohy i šifrovaná kopie, kterou program sám zkontroluje. Upozorní na splatnosti, zálohy na daň a přiznání.</p></div>
+  <button type="button" class="btn u-dalsi" aria-expanded="false">Zobrazit dalších 6</button>
 </div></section>
 
 <section class="u-faktura"><div class="wrap">
   <div class="txt">
     <h2>Faktura za minutu</h2>
-    <p>Napravo vidíte, co program udělá sám: doplní odběratele z ARES, spočítá DPH, přidá QR platbu a pošle doklad e-mailem i s elektronickou fakturou. Vy jen zkontrolujete.</p>
+    <p>Podívejte se, co program udělá sám: doplní odběratele z ARES, spočítá DPH, přidá QR platbu a pošle doklad e-mailem i s elektronickou fakturou. Vy jen zkontrolujete.</p>
     <p class="mono" style="font-size:15px;color:var(--stamp)">Opakované faktury, dobropisy, zálohové faktury, cizí měny</p>
   </div>
   <div class="u-fk" aria-hidden="true">
@@ -197,7 +198,7 @@
   <nav aria-label="Odkazy v patičce"><a href="stahnout.html">Ke stažení</a><a href="objednavka.html">Koupit licenci</a><a href="overeni.html">Ověření licence</a><a href="napoveda.html">Nápověda</a><a href="podpora.html">Podpora</a><a href="beta.html">Beta testování</a><a href="prispevek.html">Podpořit vývoj</a><a href="o-mne.html">O mně</a><a href="pro-koho.html">Pro koho</a><a href="prechod.html">Přechod odjinud</a><a href="ucetni.html">Pro účetní</a><a href="srovnani.html">Srovnání</a><a href="obchodni-podminky.html">Obchodní podmínky</a><a href="licencni-podminky.html">Licenční podmínky</a><a href="ochrana-udaju.html">Ochrana údajů</a></nav>
 </div></footer>
 
-<script src="config.js?v=202611241751"></script>
+<script src="config.js?v=202611241759"></script>
 <script src="qrcode.js"></script>
 <script>
 (function(){
@@ -247,6 +248,8 @@
     document.querySelectorAll(".u-prepinac button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.kdo === kdo)));
   };
   document.querySelectorAll(".u-prepinac button").forEach(b => b.addEventListener("click", () => zvol(b.dataset.kdo)));
+  document.querySelectorAll(".u-prepinac button").forEach(b => b.addEventListener("click", () => { if (window.faqraiTarif) faqraiTarif(b.dataset.kdo === "firma" ? 3 : 1); }));
+  const dalsi = document.querySelector(".u-dalsi"); if (dalsi) dalsi.addEventListener("click", () => { const o = document.querySelector(".u-ukoly").classList.toggle("vse"); dalsi.setAttribute("aria-expanded", String(o)); dalsi.textContent = o ? "Zobrazit méně" : "Zobrazit dalších 6"; });
   zvol("osvc");
 
 
@@ -294,6 +297,6 @@
   document.getElementById("uPozn").textContent = `Termíny roku ${R} posunuté na pracovní den. DPH a kontrolní hlášení pro plátce s měsíčním obdobím; program počítá podle vašeho nastavení.`;
 })();
 </script>
-<script src="mobil.js?v=202611241751"></script>
+<script src="mobil.js?v=202611241759"></script>
 </body>
 </html>
