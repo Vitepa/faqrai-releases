@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ke stažení – FaqrAi</title><link rel="icon" href="img/favicon.svg?v=3" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png?v=3" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3"><link rel="stylesheet" href="style.css?v=202611241014"><link rel="canonical" href="https://faqrai.cz/stahnout.html">
+<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ke stažení – FaqrAi</title><link rel="icon" href="img/favicon.svg?v=3" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png?v=3" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3"><link rel="stylesheet" href="style.css?v=202611241751"><link rel="canonical" href="https://faqrai.cz/stahnout.html">
 </head>
 <body>
 <header class="top"><div class="wrap">
@@ -36,7 +36,7 @@
   <div><b>FaqrAi</b><br><span id="provider"></span><br><span class="small">Výpočty v programech jsou pomůcka, ne daňové poradenství.</span></div>
   <nav aria-label="Odkazy v patičce"><a href="stahnout.html">Ke stažení</a><a href="objednavka.html">Koupit licenci</a><a href="overeni.html">Ověření licence</a><a href="napoveda.html">Nápověda</a><a href="podpora.html">Podpora</a><a href="beta.html">Beta testování</a><a href="prispevek.html">Podpořit vývoj</a><a href="o-mne.html">O mně</a><a href="pro-koho.html">Pro koho</a><a href="prechod.html">Přechod odjinud</a><a href="ucetni.html">Pro účetní</a><a href="srovnani.html">Srovnání</a><a href="obchodni-podminky.html">Obchodní podmínky</a><a href="licencni-podminky.html">Licenční podmínky</a><a href="ochrana-udaju.html">Ochrana údajů</a></nav>
 </div></footer>
-<script src="config.js?v=202611241014"></script>
+<script src="config.js?v=202611241751"></script>
 <script>
 (function(){
   const C = window.FAQRAI_CFG, $ = s => document.querySelector(s);
@@ -85,10 +85,25 @@
       const rows = files(art).map(([lab, f, os, note]) => { const rec = (os === "win" && isWin) || (os === "mac" && isMac); return `<a href="${C.sluzba}/latest/${f}"${rec ? ' style="font-weight:800"' : ""}><span>${lab}${rec ? ' <span class="pill ok">pro váš systém</span>' : ""}</span><span class="size">${note}</span></a>`; }).join("");
       return `<div class="dl-card"><img src="${logo}" alt="" style="width:48px;height:48px;border-radius:12px"><div class="big">${esc(name)} <span class="muted" style="font-size:15px;font-weight:600">${esc(verZ(v))}</span></div><div class="assets" style="margin-top:10px">${rows}</div><p style="margin-top:12px"><a class="btn" href="objednavka.html?p=${id}">Koupit licenci</a></p></div>`; }).join("");
   }).catch(() => { $("#dlCards").innerHTML = `<div class="dl-card">Seznam verzí se nepodařilo načíst. Zkuste to prosím za chvíli znovu, případně napište na podporu.</div>`; });
-  fetch(C.releasesApi + "?per_page=10", { headers: { Accept: "application/vnd.github+json" } }).then(r => r.ok ? r.json() : []).then(rels => {
-    $("#changelog").innerHTML = rels.filter(r => !r.draft).slice(0, 8).map((r, i) => `<details ${i === 0 ? "open" : ""}><summary>FaqrAi ${esc(verZ(r.tag_name))} <span class="muted small">· ${new Date(r.published_at).toLocaleDateString("cs-CZ")}</span></summary><div class="body">${esc(r.body || "Bez popisu.")}</div></details>`).join("") || `<p class="muted">Seznam změn se nepodařilo načíst.</p>`;
+  /* Seznam změn: jen poslední vydání. Pod ním změny celé jeho řady (týdenní upgrade + fixpacky za ním);
+     pro řadu uvedenou v souhrn-verze.md (rada: X.Y) se místo nich ukáže tento souhrn. */
+  const md = t => esc(t).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/`([^`]+)`/g, "<code>$1</code>");
+  const vykresli = text => { let h = "", v = 0; const zavri = n => { while (v > n) { h += "</ul>"; v--; } };
+    for (const r of text.split("\n")) { const m = r.match(/^(\s*)- (.*)$/);
+      if (m) { const u = m[1].length >= 2 ? 2 : 1; while (v < u) { h += "<ul>"; v++; } zavri(u); h += `<li>${md(m[2])}</li>`; continue; }
+      zavri(0); if (/^#{2,4} /.test(r)) h += `<h3>${md(r.replace(/^#+ /, ""))}</h3>`; else if (r.trim() && !/^Instalačky pro Windows/.test(r) && !/^<!--/.test(r)) h += `<p>${md(r)}</p>`; }
+    zavri(0); return h; };
+  const rada = t => verZ(t).split(".").slice(0, 2).join(".");
+  Promise.all([
+    fetch(C.releasesApi + "?per_page=30", { headers: { Accept: "application/vnd.github+json" } }).then(r => r.ok ? r.json() : []),
+    fetch("souhrn-verze.md", { cache: "no-cache" }).then(r => r.ok ? r.text() : "").catch(() => "")
+  ]).then(([rels, souhrn]) => {
+    rels = rels.filter(r => !r.draft && !r.prerelease); const p = rels[0]; if (!p) throw 0;
+    const sr = (souhrn.match(/^rada:\s*(\S+)/) || [])[1];
+    const text = sr === rada(p.tag_name) ? souhrn.replace(/^rada:.*\n/, "") : rels.filter(r => rada(r.tag_name) === rada(p.tag_name)).map(r => r.body || "").join("\n");
+    $("#changelog").innerHTML = `<div class="posledni"><div class="hlava"><b>FaqrAi ${esc(verZ(p.tag_name))}</b> <span class="muted small">vydáno ${new Date(p.published_at).toLocaleDateString("cs-CZ")}</span></div><div class="body">${vykresli(text) || "<p>Opravy a vylepšení.</p>"}</div></div>`;
   }).catch(() => { $("#changelog").innerHTML = `<p class="muted">Seznam změn se nepodařilo načíst.</p>`; });
 })();
 </script>
-<script src="mobil.js?v=202611241014"></script>
+<script src="mobil.js?v=202611241751"></script>
 </body></html>

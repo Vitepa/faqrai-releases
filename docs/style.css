@@ -387,3 +387,8 @@ body.uvod main{overflow-x:clip}
 .u-obrazovka a.on{opacity:1;visibility:visible}
 .u-obrazovka img{width:100%;height:auto;display:block;border-radius:6px}
 .u-popisek{margin:14px 0 0;text-align:center}
+.changelog .posledni{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px 22px}
+.changelog .posledni .hlava{font-size:20px;margin-bottom:6px}
+.changelog .posledni .body{white-space:normal;font-size:15px;color:var(--ink)}
+.changelog .posledni h3{font-size:17px;margin:18px 0 6px}
+.changelog .posledni ul{margin:0;padding-left:20px}.changelog .posledni li{margin:3px 0;color:var(--muted)}
