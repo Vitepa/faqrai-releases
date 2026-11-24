@@ -9,7 +9,7 @@
 <meta property="og:description" content="Předplatné ročně nebo měsíčně bez závazku. Data zůstávají u vás.">
 <meta property="og:image" content="img/og.jpg">
 <link rel="icon" href="img/favicon.svg?v=3" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png?v=3" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3">
-<link rel="stylesheet" href="style.css?v=202611240955">
+<link rel="stylesheet" href="style.css?v=202611241014">
 <script>document.documentElement.classList.add("js")</script>
 <link rel="canonical" href="https://faqrai.cz/">
 </head>
@@ -74,11 +74,25 @@
 </div></section>
 
 <section id="ukazka" style="padding-top:24px"><div class="wrap">
-  <div class="sec-head"><h2>Jak program vypadá</h2><p>Skutečné obrazovky s ukázkovými daty. Najeďte na výtisk, narovná se.</p></div>
-  <div class="u-vytisky">
-    <figure><img src="img/shot-faqrai-faktury.jpg" alt="FaqrAi – přehled vydaných faktur a termínů" loading="lazy" width="1200" height="760"><figcaption>FaqrAi – vydané faktury a termíny</figcaption></figure>
-    <figure><img src="img/shot-simple-dane.jpg" alt="FaqrAi Simple – daň a pojistné" loading="lazy" width="1200" height="760"><figcaption>Simple – daň, sociální a zdravotní pojištění</figcaption></figure>
-    <figure><img src="img/shot-faqrai-dph.jpg" alt="FaqrAi – DPH a obrat" loading="lazy" width="1200" height="760"><figcaption>DPH a obrat – podklady ke kontrolnímu hlášení</figcaption></figure>
+  <div class="sec-head"><h2>Jak program vypadá</h2><p>Skutečné obrazovky aktuální verze s ukázkovými daty. Kliknutím na snímek ho otevřete v plné velikosti.</p></div>
+  <div class="u-galerie">
+    <div class="u-zalozky" role="tablist" aria-label="Obrazovky programu">
+      <button type="button" role="tab" aria-selected="true" data-i="0">Přehled<small>FaqrAi</small><span></span></button>
+      <button type="button" role="tab" aria-selected="false" data-i="1">Vydané faktury<small>FaqrAi</small><span></span></button>
+      <button type="button" role="tab" aria-selected="false" data-i="2">Nová faktura<small>Simple</small><span></span></button>
+      <button type="button" role="tab" aria-selected="false" data-i="3">Daně OSVČ<small>Simple</small><span></span></button>
+      <button type="button" role="tab" aria-selected="false" data-i="4">DPH a obrat<small>FaqrAi</small><span></span></button>
+      <button type="button" role="tab" aria-selected="false" data-i="5">Balík pro účetní<small>FaqrAi</small><span></span></button>
+    </div>
+    <div class="u-obrazovka">
+      <a href="img/app-prehled.jpg" target="_blank" rel="noopener" class="on"><img src="img/app-prehled.jpg" alt="FaqrAi – přehled tržeb, úhrad a odběratelů" width="2000" height="1250"></a>
+      <a href="img/app-faktury.jpg" target="_blank" rel="noopener"><img src="img/app-faktury.jpg" alt="FaqrAi – vydané faktury, upomínky a nejbližší termíny" width="2000" height="1250" loading="lazy"></a>
+      <a href="img/app-nova-faktura.jpg" target="_blank" rel="noopener"><img src="img/app-nova-faktura.jpg" alt="FaqrAi Simple – nová faktura s náhledem dokladu" width="2000" height="1250" loading="lazy"></a>
+      <a href="img/app-dane-osvc.jpg" target="_blank" rel="noopener"><img src="img/app-dane-osvc.jpg" alt="FaqrAi Simple – daň z příjmů, sociální a zdravotní pojištění" width="2000" height="1250" loading="lazy"></a>
+      <a href="img/app-dph.jpg" target="_blank" rel="noopener"><img src="img/app-dph.jpg" alt="FaqrAi – DPH a obrat po čtvrtletích" width="2000" height="1250" loading="lazy"></a>
+      <a href="img/app-balik.jpg" target="_blank" rel="noopener"><img src="img/app-balik.jpg" alt="FaqrAi – balík pro účetní s kontrolou před odesláním" width="2000" height="1250" loading="lazy"></a>
+    </div>
+    <p class="small muted u-popisek" id="uPopisek">Tržby po měsících, co čeká na úhradu a největší odběratelé.</p>
   </div>
 </div></section>
 
@@ -183,7 +197,7 @@
   <nav aria-label="Odkazy v patičce"><a href="stahnout.html">Ke stažení</a><a href="objednavka.html">Koupit licenci</a><a href="overeni.html">Ověření licence</a><a href="napoveda.html">Nápověda</a><a href="podpora.html">Podpora</a><a href="beta.html">Beta testování</a><a href="prispevek.html">Podpořit vývoj</a><a href="o-mne.html">O mně</a><a href="pro-koho.html">Pro koho</a><a href="prechod.html">Přechod odjinud</a><a href="ucetni.html">Pro účetní</a><a href="srovnani.html">Srovnání</a><a href="obchodni-podminky.html">Obchodní podmínky</a><a href="licencni-podminky.html">Licenční podmínky</a><a href="ochrana-udaju.html">Ochrana údajů</a></nav>
 </div></footer>
 
-<script src="config.js?v=202611240955"></script>
+<script src="config.js?v=202611241014"></script>
 <script src="qrcode.js"></script>
 <script>
 (function(){
@@ -235,6 +249,14 @@
   document.querySelectorAll(".u-prepinac button").forEach(b => b.addEventListener("click", () => zvol(b.dataset.kdo)));
   zvol("osvc");
 
+
+  /* galerie obrazovek: samy se střídají, dokud uživatel nevybere */
+  const POP = ["Tržby po měsících, co čeká na úhradu a největší odběratelé.", "Faktury, upomínky k odeslání a nejbližší termíny na jedné obrazovce.", "Faktura s náhledem dokladu – odběratele doplní podle IČO z ARES.", "Daň z příjmů, sociální a zdravotní pojištění a srovnání s paušální daní.", "Obrat a DPH po čtvrtletích nebo měsících, podklady ke kontrolnímu hlášení.", "Kontrola před odesláním a obsah balíku pro účetní."];
+  const zal = [...document.querySelectorAll(".u-zalozky button")], obr = [...document.querySelectorAll(".u-obrazovka a")];
+  let akt = 0, auto = !matchMedia("(prefers-reduced-motion: reduce)").matches, tik;
+  const ukazObr = i => { akt = i; zal.forEach((b, k) => b.setAttribute("aria-selected", String(k === i))); obr.forEach((a, k) => a.classList.toggle("on", k === i)); document.getElementById("uPopisek").textContent = POP[i]; };
+  zal.forEach(b => b.addEventListener("click", () => { auto = false; clearInterval(tik); document.querySelector(".u-galerie").classList.add("rucne"); ukazObr(+b.dataset.i); }));
+  if (auto) tik = setInterval(() => { if (auto && document.visibilityState === "visible") ukazObr((akt + 1) % obr.length); }, 6000);
   /* běžící pás funkcí */
   const F = ["QR platba", "ISDOC", "Kontrolní hlášení", "Přehled pro ČSSZ", "Upomínky", "Párování plateb z banky", "OCR účtenek", "Shoptet a WooCommerce", "Pokladna", "Balík pro účetní"];
   document.getElementById("uPas").innerHTML = [...F, ...F].map(f => `<span>${f}</span>`).join("");
@@ -272,6 +294,6 @@
   document.getElementById("uPozn").textContent = `Termíny roku ${R} posunuté na pracovní den. DPH a kontrolní hlášení pro plátce s měsíčním obdobím; program počítá podle vašeho nastavení.`;
 })();
 </script>
-<script src="mobil.js?v=202611240955"></script>
+<script src="mobil.js?v=202611241014"></script>
 </body>
 </html>

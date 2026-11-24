@@ -372,3 +372,18 @@ section.u-cenik{background:#D3DCD6}
 .u-konec .btn{background:#E6EBE8;color:var(--ink);border-color:#E6EBE8}
 @media (prefers-reduced-motion:reduce){.u-pas>div{animation:none}}
 body.uvod main{overflow-x:clip}
+/* galerie obrazovek programu */
+.u-galerie{margin-top:8px}
+.u-zalozky{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;margin-bottom:18px}
+.u-zalozky button{flex:1 0 auto;position:relative;text-align:left;background:var(--paper);border:1.5px solid var(--rule);border-radius:8px;padding:10px 14px 12px;font:inherit;font-weight:700;font-size:16px;color:var(--ink);cursor:pointer;overflow:hidden}
+.u-zalozky small{display:block;font-family:var(--mono);font-size:12px;font-weight:400;color:var(--muted)}
+.u-zalozky button[aria-selected="true"]{border-color:var(--ink);background:var(--ink);color:#fff}
+.u-zalozky button[aria-selected="true"] small{color:#9EE0C2}
+.u-zalozky span{position:absolute;left:0;bottom:0;height:3px;width:0;background:#9EE0C2}
+.u-galerie:not(.rucne) .u-zalozky button[aria-selected="true"] span{animation:u-postup 6s linear both}
+@keyframes u-postup{to{width:100%}}
+.u-obrazovka{display:grid;background:#fff;border-radius:12px;padding:10px;box-shadow:0 30px 60px -30px rgba(22,35,44,.55),0 0 0 1px var(--rule)}
+.u-obrazovka a{grid-area:1/1;opacity:0;visibility:hidden;transition:opacity .45s,visibility .45s;cursor:zoom-in}
+.u-obrazovka a.on{opacity:1;visibility:visible}
+.u-obrazovka img{width:100%;height:auto;display:block;border-radius:6px}
+.u-popisek{margin:14px 0 0;text-align:center}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Nápověda – FaqrAi</title><meta name="description" content="Nápověda k programům FaqrAi a FaqrAi Simple: začínáme, faktury, DPH, daně OSVČ, pokladna, sklad, balík pro účetní, licence, zálohy dat."><link rel="icon" href="img/favicon.svg?v=3" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png?v=3" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3"><link rel="stylesheet" href="style.css?v=202611240955">
+<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Nápověda – FaqrAi</title><meta name="description" content="Nápověda k programům FaqrAi a FaqrAi Simple: začínáme, faktury, DPH, daně OSVČ, pokladna, sklad, balík pro účetní, licence, zálohy dat."><link rel="icon" href="img/favicon.svg?v=3" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png?v=3" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3"><link rel="stylesheet" href="style.css?v=202611241014">
 <style>.help{display:grid;grid-template-columns:260px 1fr;gap:28px;align-items:start}.toc{position:sticky;top:84px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}.toc a{display:block;padding:5px 8px;border-radius:8px;text-decoration:none;font-size:14px;color:var(--muted)}.toc a:hover{background:var(--bg);color:var(--ink)}.toc input{width:100%;font:inherit;padding:9px 10px;border:1px solid #cfd6de;border-radius:9px;margin-bottom:8px}
 .art{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:16px}.art h2{font-size:22px;margin-bottom:6px}.art h3{font-size:16px;margin:16px 0 4px}.art p,.art li{font-size:15px;color:#2a3542}.art kbd{font:12px var(--mono);background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:1px 6px}.art.hid{display:none}.art mark{background:#fff3bf}
 @media (max-width:900px){.help{grid-template-columns:1fr}.toc{position:static}}</style><link rel="canonical" href="https://faqrai.cz/napoveda.html">
@@ -16,10 +16,10 @@
   <div><b>FaqrAi</b><br><span id="provider"></span><br><span class="small">Výpočty v programech jsou pomůcka, ne daňové poradenství.</span></div>
   <nav aria-label="Odkazy v patičce"><a href="stahnout.html">Ke stažení</a><a href="objednavka.html">Koupit licenci</a><a href="overeni.html">Ověření licence</a><a href="napoveda.html">Nápověda</a><a href="podpora.html">Podpora</a><a href="beta.html">Beta testování</a><a href="prispevek.html">Podpořit vývoj</a><a href="o-mne.html">O mně</a><a href="pro-koho.html">Pro koho</a><a href="prechod.html">Přechod odjinud</a><a href="ucetni.html">Pro účetní</a><a href="srovnani.html">Srovnání</a><a href="obchodni-podminky.html">Obchodní podmínky</a><a href="licencni-podminky.html">Licenční podmínky</a><a href="ochrana-udaju.html">Ochrana údajů</a></nav>
 </div></footer>
-<script src="config.js?v=202611240955"></script>
+<script src="config.js?v=202611241014"></script>
 <script>(function(){const C=window.FAQRAI_CFG;document.getElementById("provider").textContent=[C.provider.name,C.provider.ico?"IČO "+C.provider.ico:"",C.provider.address,C.provider.email].filter(Boolean).join(" · ");
 const arts=[...document.querySelectorAll(".art")];document.getElementById("tocList").innerHTML=arts.map(a=>`<a href="#${a.id}">${a.dataset.t}</a>`).join("");
 const norm=s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
 document.getElementById("q").addEventListener("input",e=>{const q=norm(e.target.value.trim());arts.forEach(a=>{a.classList.toggle("hid",q.length>1&&!norm(a.textContent).includes(q));});});})();</script>
-<script src="mobil.js?v=202611240955"></script>
+<script src="mobil.js?v=202611241014"></script>
 </body></html>
