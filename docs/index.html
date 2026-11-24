@@ -9,67 +9,80 @@
 <meta property="og:description" content="Předplatné ročně nebo měsíčně bez závazku. Data zůstávají u vás.">
 <meta property="og:image" content="img/og.jpg">
 <link rel="icon" href="img/favicon.svg?v=3" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png?v=3" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=3">
-<link rel="stylesheet" href="style.css?v=202611232232">
+<link rel="stylesheet" href="style.css?v=202611240955">
 <script>document.documentElement.classList.add("js")</script>
 <link rel="canonical" href="https://faqrai.cz/">
 </head>
-<body>
+<body class="uvod">
 <a class="skip" href="#obsah">Přeskočit na obsah</a>
 <header class="top"><div class="wrap">
   <a class="brand" href="./"><img src="img/logo-faqrai.svg" alt="">FaqrAi</a>
   <nav class="main" aria-label="Hlavní nabídka"><a href="#co-umi">Co umí</a><a href="#programy">Programy</a><a href="#cenik" class="keep">Ceník</a><a href="stahnout.html">Ke stažení</a><a href="napoveda.html">Nápověda</a><a class="btn primary" href="objednavka.html">Koupit licenci</a></nav>
 </div></header>
 
-<main id="obsah">
-<section class="hero"><div class="wrap">
-  <div>
-    <h1>Faktury a daně na vlastním počítači.</h1>
-    <p class="lead">FaqrAi vystaví fakturu, sám pozná zaplacení z banky, připomene dlužníky a připraví daňové přiznání nebo DPH. Účetní dostane jednou měsíčně všechno v jednom balíku. Licenci koupíte na rok, navždy, nebo platíte měsíčně bez závazku.</p>
-    <div class="cta"><a class="btn primary" href="stahnout.html">Stáhnout na 30 dní zdarma</a><a class="btn" href="#cenik">Ceník</a></div>
-    <p class="small muted">Zkušební verze má všechny funkce. Po 30 dnech zadáte licenční klíč a pokračujete se stejnými daty.</p>
-    <ul class="facts"><li>Windows a macOS</li><li>data zůstávají u vás</li><li>čeština, angličtina, němčina</li></ul>
+<main id="obsah" style="--c:var(--simple)">
+<section class="u-hero"><div class="wrap">
+  <div class="txt">
+    <div class="u-prepinac" role="group" aria-label="Kdo jste"><button type="button" data-kdo="osvc" aria-pressed="true">Jsem OSVČ</button><button type="button" data-kdo="firma" aria-pressed="false">Mám firmu</button></div>
+    <p class="u-prod" id="uProd">FaqrAi Simple</p>
+    <h1>Konec měsíce za třicet vteřin.</h1>
+    <p class="lead" id="uPopis">Faktury, účtenky a výpis z banky – program je seřadí, spáruje platby a pošle účetní jeden balík. Nebo vám rovnou spočítá daň a pojistné.</p>
+    <div class="cta"><a class="btn u-c" href="stahnout.html" id="uStahnout">Stáhnout na 30 dní zdarma</a><a class="btn" href="#cenik">Ceník</a><span class="small muted" id="uCena"></span></div>
+    <p class="small muted" style="margin-top:14px">Zkušební verze má všechny funkce. Po 30 dnech zadáte licenční klíč a pokračujete se stejnými daty. Windows a macOS, data zůstávají u vás.</p>
   </div>
-  <div aria-hidden="true">
-    <div class="sheet">
-      <div class="hd"><b>Faktura</b><span class="num">č. 20260041</span></div>
-      <div class="parties">
-        <div><small>Dodavatel</small><b>Jana Nováková</b><br>Grafické studio<br>Dlouhá 12, Brno<br><span class="num">IČO 27074358</span></div>
-        <div><small>Odběratel</small><b>Kavárna U Mostu s.r.o.</b><br>Mostní 3, Olomouc<br><span class="num">IČO 25596641</span></div>
-      </div>
-      <table><thead><tr><th>Položka</th><th class="r">Množství</th><th class="r">Cena</th></tr></thead><tbody>
-        <tr><td>Návrh jídelního lístku</td><td class="r">1</td><td class="r">9 500,00</td></tr>
-        <tr><td>Fotografie interiéru</td><td class="r">1</td><td class="r">6 200,00</td></tr>
-        <tr><td>Tisková data, úpravy</td><td class="r">3,5 h</td><td class="r">2 450,00</td></tr>
-      </tbody></table>
-      <div class="foot">
-        <div class="qr" id="qr"></div>
-        <div class="stamp">UHRAZENO<small>14. 11. 2026 · z výpisu Fio</small></div>
-        <div class="total"><small>Splatnost 28. 11. 2026 · VS 20260041</small><small>Celkem k úhradě</small><b>18 150,00 Kč</b></div>
-      </div>
-    </div>
+  <div class="u-stul" aria-hidden="true">
+    <div class="u-list u-l1"><b>Faktura</b><span class="mono">FV20260015</span><div class="u-carky"><i style="width:90%"></i><i style="width:70%"></i><i style="width:80%"></i></div><b style="margin-top:40px;text-align:right;font-size:24px">27 225 Kč</b></div>
+    <div class="u-list u-l2"><div style="text-align:center;font-weight:500">ÚČTENKA</div><div style="margin-top:8px">Papír A4 …… 289<br>Toner …… 1 490<br>Pošta …… 64</div><div style="margin-top:12px;border-top:1px dashed #56646C;padding-top:6px;font-weight:500">Celkem 1 843</div></div>
+    <div class="u-list u-l3"><b>Výpis z banky</b><div class="mono" style="margin-top:10px;display:flex;flex-direction:column;gap:6px;color:var(--ink)"><span>+ 48 400,00 Kavárna Mezi Řádky</span><span>+ 14 520,00 Studio Pixel</span><span>− 1 843,00 Papírnictví</span></div></div>
+    <div class="u-obalka"><div class="zad"></div><div class="chlopen"></div><div class="stitek" id="uStitek">Balík pro účetní</div><div class="u-razitko">ODESLÁNO</div></div>
   </div>
 </div></section>
 
-<section class="paper" id="co-umi"><div class="wrap">
+<div class="u-pas" aria-hidden="true"><div id="uPas"></div></div>
+
+<section class="u-tma" id="co-umi"><div class="wrap">
   <div class="sec-head"><h2>Co za vás program udělá</h2><p>Od vystavení faktury po podklady pro finanční úřad. Každý řádek je hotová práce, kterou nemusíte dělat ručně.</p></div>
-  <table class="items">
-    <thead><tr><th>Úkol</th><th>Jak to program řeší</th></tr></thead>
-    <tbody>
-      <tr><td>Vystavit a poslat fakturu</td><td><p>Faktura s QR platbou za minutu, i v eurech, angličtině nebo němčině. Odejde e-mailem přímo z programu v jazyce odběratele, s PDF a elektronickou fakturou v příloze.</p></td></tr>
-      <tr><td>Poznat, kdo zaplatil</td><td><p>Fio, MONETA a Raiffeisenbank napojíte přímo, ostatní banky přes výpis nebo hlídanou složku. Platby se spárují podle variabilního symbolu a faktury se označí jako uhrazené.</p></td></tr>
-      <tr><td>Připomenout dlužníky</td><td><p>Upomínky podle vašich pravidel, úrok z prodlení a přehled, kolik peněz má přijít v příštích 12 týdnech. Odběratel může zaplatit i kartou přes Comgate nebo Stripe.</p></td></tr>
-      <tr><td>Převzít doklady z e-shopu</td><td><p>Faktury a dobropisy ze Shoptetu, Upgates nebo WooCommerce včetně položek, DPH, OSS a cizích měn. Vyúčtování Comgate, GoPay, Stripe nebo dobírek Zásilkovny označí objednávky jako zaplacené a poplatky zapíše do výdajů.</p></td></tr>
-      <tr><td>Zpracovat přijaté doklady</td><td><p>Fotku nebo sken účtenky program přečte sám, bez internetu. PDF a ISDOC uložené do složky se připraví jako výdaje ke kontrole.</p></td></tr>
-      <tr><td>Spočítat daně OSVČ</td><td><p>Daňové přiznání řádek po řádku, přehledy pro ČSSZ a zdravotní pojišťovnu, paušální daň, vedlejší činnost a další příjmy.</p><span class="where">FaqrAi Simple</span></td></tr>
-      <tr><td>Podat DPH</td><td><p>Přiznání k DPH a kontrolní hlášení jako XML k nahrání na daňový portál, DPH na vstupu i výstupu, souhrnné hlášení.</p><span class="where">FaqrAi</span></td></tr>
-      <tr><td>Předat podklady účetní</td><td><p>Balík za měsíc nebo rok: PDF faktur, ISDOC, přehledy a přílohy přijatých dokladů. Program ho může poslat sám, vždy po skončení měsíce.</p></td></tr>
-      <tr><td>Vést pokladnu, sklad a víc firem</td><td><p>Pokladní doklady a kniha, jednoduchý sklad, víc počítačů s rolemi a víc firem v jednom programu.</p><span class="where">FaqrAi</span></td></tr>
-      <tr><td>Hlídat zálohy a termíny</td><td><p>Denní zálohy i šifrovaná kopie, kterou program sám zkontroluje. Upozorní na splatnosti, zálohy na daň a přiznání.</p></td></tr>
-    </tbody>
-  </table>
+  <div class="u-ukol"><h3>Vystavit a poslat fakturu</h3><p>Faktura s QR platbou za minutu, i v eurech, angličtině nebo němčině. Odejde e-mailem přímo z programu v jazyce odběratele, s PDF a elektronickou fakturou v příloze.</p></div>
+  <div class="u-ukol"><h3>Poznat, kdo zaplatil</h3><p>Fio, MONETA a Raiffeisenbank napojíte přímo, ostatní banky přes výpis nebo hlídanou složku. Platby se spárují podle variabilního symbolu a faktury se označí jako uhrazené.</p></div>
+  <div class="u-ukol"><h3>Připomenout dlužníky</h3><p>Upomínky podle vašich pravidel, úrok z prodlení a přehled, kolik peněz má přijít v příštích 12 týdnech. Odběratel může zaplatit i kartou přes Comgate nebo Stripe.</p></div>
+  <div class="u-ukol"><h3>Převzít doklady z e-shopu</h3><p>Faktury a dobropisy ze Shoptetu, Upgates nebo WooCommerce včetně položek, DPH, OSS a cizích měn. Vyúčtování Comgate, GoPay, Stripe nebo dobírek Zásilkovny označí objednávky jako zaplacené a poplatky zapíše do výdajů.</p></div>
+  <div class="u-ukol"><h3>Zpracovat přijaté doklady</h3><p>Fotku nebo sken účtenky program přečte sám, bez internetu. PDF a ISDOC uložené do složky se připraví jako výdaje ke kontrole.</p></div>
+  <div class="u-ukol"><h3>Spočítat daně OSVČ</h3><p>Daňové přiznání řádek po řádku, přehledy pro ČSSZ a zdravotní pojišťovnu, paušální daň, vedlejší činnost a další příjmy.<br><span class="where">FaqrAi Simple</span></p></div>
+  <div class="u-ukol"><h3>Podat DPH</h3><p>Přiznání k DPH a kontrolní hlášení jako XML k nahrání na daňový portál, DPH na vstupu i výstupu, souhrnné hlášení.<br><span class="where">FaqrAi</span></p></div>
+  <div class="u-ukol"><h3>Předat podklady účetní</h3><p>Balík za měsíc nebo rok: PDF faktur, ISDOC, přehledy a přílohy přijatých dokladů. Program ho může poslat sám, vždy po skončení měsíce.</p></div>
+  <div class="u-ukol"><h3>Vést pokladnu, sklad a víc firem</h3><p>Pokladní doklady a kniha, jednoduchý sklad, víc počítačů s rolemi a víc firem v jednom programu.<br><span class="where">FaqrAi</span></p></div>
+  <div class="u-ukol"><h3>Hlídat zálohy a termíny</h3><p>Denní zálohy i šifrovaná kopie, kterou program sám zkontroluje. Upozorní na splatnosti, zálohy na daň a přiznání.</p></div>
 </div></section>
 
-<section id="programy"><div class="wrap">
+<section class="u-faktura"><div class="wrap">
+  <div class="txt">
+    <h2>Faktura za minutu</h2>
+    <p>Napravo vidíte, co program udělá sám: doplní odběratele z ARES, spočítá DPH, přidá QR platbu a pošle doklad e-mailem i s elektronickou fakturou. Vy jen zkontrolujete.</p>
+    <p class="mono" style="font-size:15px;color:var(--stamp)">Opakované faktury, dobropisy, zálohové faktury, cizí měny</p>
+  </div>
+  <div class="u-fk" aria-hidden="true">
+    <div class="list">
+      <div class="hd"><b>Faktura</b><span class="mono muted" style="font-size:15px">FV20260015</span></div>
+      <div class="small muted">Odběratel · IČO 27074358</div>
+      <div class="odb">Pekárna Liboc s.r.o., Praha</div>
+      <div class="pol"><div class="rad"><span>Grafický návrh obalů</span><span class="mono">18 000,00</span></div><div class="rad"><span>Tisková data, 3 varianty</span><span class="mono">4 500,00</span></div><div class="rad"><span>DPH 21 %</span><span class="mono">4 725,00</span></div></div>
+      <div class="sum"><div class="qr" id="qr"></div><b>27 225 Kč</b></div>
+      <div class="u-razitko">ODESLÁNO</div>
+    </div>
+    <div class="zprava"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9EE0C2" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg><span>E-mail s PDF a ISDOC odešel odběrateli</span></div>
+  </div>
+</div></section>
+
+<section id="ukazka" style="padding-top:24px"><div class="wrap">
+  <div class="sec-head"><h2>Jak program vypadá</h2><p>Skutečné obrazovky s ukázkovými daty. Najeďte na výtisk, narovná se.</p></div>
+  <div class="u-vytisky">
+    <figure><img src="img/shot-faqrai-faktury.jpg" alt="FaqrAi – přehled vydaných faktur a termínů" loading="lazy" width="1200" height="760"><figcaption>FaqrAi – vydané faktury a termíny</figcaption></figure>
+    <figure><img src="img/shot-simple-dane.jpg" alt="FaqrAi Simple – daň a pojistné" loading="lazy" width="1200" height="760"><figcaption>Simple – daň, sociální a zdravotní pojištění</figcaption></figure>
+    <figure><img src="img/shot-faqrai-dph.jpg" alt="FaqrAi – DPH a obrat" loading="lazy" width="1200" height="760"><figcaption>DPH a obrat – podklady ke kontrolnímu hlášení</figcaption></figure>
+  </div>
+</div></section>
+
+<section id="programy" style="padding-top:40px"><div class="wrap">
   <div class="sec-head"><h2>Dva programy podle toho, jak podnikáte</h2><p>Oba mají stejný vzhled, stejné napojení na banky a stejné aktualizace. Liší se tím, jaké daně a kolik lidí obslouží.</p></div>
   <div class="programs">
     <article class="program" style="--c:var(--simple)">
@@ -101,13 +114,29 @@
   </div>
 </div></section>
 
-<section id="beta"><div class="wrap split" style="align-items:center">
+<section class="u-terminy" id="terminy"><div class="wrap">
+  <div class="sec-head"><h2>Termíny hlídá program</h2><p>Přiznání, kontrolní hlášení, přehledy pro pojišťovny i zálohy. Program je zná podle zákona, připomene je včas a podklady připraví předem. Klikněte na měsíc.</p></div>
+  <div class="u-osa-obal"><div class="u-osa" id="uOsa"><span class="hotovo" id="uHotovo"></span></div></div>
+  <div class="u-mesic" aria-live="polite"><div class="nazev"><b id="uMesic"></b><p id="uShrnuti"></p></div><div class="u-karty" id="uKarty"></div></div>
+  <p class="pozn" id="uPozn"></p>
+</div></section>
+
+<section class="u-clovek"><div class="wrap">
+  <div class="u-foto"><div><img src="img/pavel-vitek.jpg" alt="Pavel Vítek" width="600" height="600" loading="lazy"></div></div>
+  <div class="txt">
+    <h2>Za programem je člověk, ne korporace</h2>
+    <p>Jsem Pavel Vítek a software vyvíjím deset let. FaqrAi dělám tak, aby fungoval dlouhé roky: stabilně, bez zbytečných změn a s daty u vás.</p>
+    <a href="o-mne.html" style="font-weight:700">Víc o mně a o tom, na co se můžete spolehnout</a>
+  </div>
+</div></section>
+
+<section id="beta" class="paper"><div class="wrap split" style="align-items:center">
   <div><h2>Hledám beta testery</h2><p class="lead" style="font-size:18px">Vyzkoušejte FaqrAi nebo FaqrAi Simple v běžném provozu a hlaste, co nefunguje. Tester dostane bezplatnou licenci na šest měsíců.</p></div>
   <div><p>Stačí hlásit chyby tlačítkem v programu a jednou měsíčně vyplnit krátké hodnocení. Beta verze je ve vývoji, výpočty v ní jsou jen orientační.</p>
   <div class="cta"><a class="btn primary" href="beta.html#prihlaska">Přihlásit se do testu</a><a class="btn" href="prispevek.html">Podpořit vývoj</a></div></div>
 </div></section>
 
-<section class="paper" id="cenik"><div class="wrap">
+<section class="u-cenik" id="cenik"><div class="wrap">
   <div class="sec-head"><h2>Ceník</h2><p>Jen předplatné – ročně nebo měsíčně, bez závazku. Dva tarify: Základ pro daně a evidenci, Plus navíc s automatikou.</p></div>
   <div style="overflow-x:auto"><table class="prices" id="prices"></table></div>
   <div class="price-notes">
@@ -145,6 +174,8 @@
     <details><summary>Nahrazuje program účetní?</summary><p>Ne. Hlídá náležitosti dokladů, počítá DPH i podklady k přiznání a připraví balík pro účetní, ale rozhodnutí v daňových otázkách nechte na odborníkovi. Výpočty jsou pomůcka.</p></details>
   </div>
 </div></section>
+
+<div class="u-konec"><div class="wrap"><div><b>Zkuste to tento měsíc.</b><p style="margin:10px 0 0">Plná verze na 30 dní. Když si pak licenci pořídíte, data zůstanou.</p></div><a class="btn" href="stahnout.html">Stáhnout zkušební verzi</a></div></div>
 </main>
 
 <footer><div class="wrap">
@@ -152,13 +183,12 @@
   <nav aria-label="Odkazy v patičce"><a href="stahnout.html">Ke stažení</a><a href="objednavka.html">Koupit licenci</a><a href="overeni.html">Ověření licence</a><a href="napoveda.html">Nápověda</a><a href="podpora.html">Podpora</a><a href="beta.html">Beta testování</a><a href="prispevek.html">Podpořit vývoj</a><a href="o-mne.html">O mně</a><a href="pro-koho.html">Pro koho</a><a href="prechod.html">Přechod odjinud</a><a href="ucetni.html">Pro účetní</a><a href="srovnani.html">Srovnání</a><a href="obchodni-podminky.html">Obchodní podmínky</a><a href="licencni-podminky.html">Licenční podmínky</a><a href="ochrana-udaju.html">Ochrana údajů</a></nav>
 </div></footer>
 
-<script src="config.js?v=202611232232"></script>
+<script src="config.js?v=202611240955"></script>
 <script src="qrcode.js"></script>
 <script>
 (function(){
   const C = window.FAQRAI_CFG, kc = n => new Intl.NumberFormat("cs-CZ").format(Math.round(n)) + " Kč";
   const P = id => C.products.find(p => p.id === id);
-  const yrs = n => n === 1 ? "rok" : n < 5 ? "roky" : "let";
   /* ceník z config.js */
   const tier = id => (C.tiers || []).find(t => t.id === id) || { name: "" };
   const prods = ["simple", "faqrai"].map(P).filter(p => p && p.available).flatMap(p => p.zaklad && C.tiers ? [{ ...p, ...p.zaklad, name: p.name + " " + tier("zaklad").name, tarifId: "zaklad" }, { ...p, name: p.name + " " + tier("plus").name, tarifId: "plus" }] : [p]);
@@ -177,14 +207,71 @@
     { k: "firm", label: "Každá další firma", y: "firmYear", l: "firmLifetime", m: "firmMonth" }
   ].map(x => `<tr><th scope="row">${x.label}</th>${prods.map(p => `<td>${p[x.y] ? `${kc(p[x.y])} / rok<small style="display:block">${p[x.m] ? kc(p[x.m]) + " / měsíc" : ""}</small>` : `<span class="muted">${x.k === "seat" ? "vaše počítače v ceně" : "jedna osoba"}</span>`}</td>`).join("")}</tr>`).join("");
   document.getElementById("prices").innerHTML = head + `<tbody>${rows}${extra}</tbody><tfoot><tr><td></td>${prods.map(p => `<td><a class="btn ${p.id}" href="objednavka.html?p=${p.id}${p.tarifId ? "&t=" + p.tarifId : ""}">Objednat ${p.short}${p.tarifId ? " " + tier(p.tarifId).name : ""}</a></td>`).join("")}</tr></tfoot>`;
-  document.querySelectorAll("[data-from]").forEach(el => { const p = P(el.dataset.from); if(p){ const z = p.zaklad ? { ...p, ...p.zaklad } : p; el.textContent = `od ${kc(z.year)} na rok nebo ${kc(z.month)} měsíčně, bez závazku.`; } });
+  const od = id => { const p = P(id); if(!p) return null; const z = p.zaklad ? { ...p, ...p.zaklad } : p; return z; };
+  document.querySelectorAll("[data-from]").forEach(el => { const z = od(el.dataset.from); if(z) el.textContent = `od ${kc(z.year)} na rok nebo ${kc(z.month)} měsíčně, bez závazku.`; });
   document.getElementById("vatNote").textContent = C.provider.vatPayer ? "Ceny jsou bez DPH 21 %." : "Nejsme plátci DPH, ceny jsou konečné.";
   document.getElementById("provider").textContent = [C.provider.name, C.provider.ico ? "IČO " + C.provider.ico : ""].filter(Boolean).join(", ");
   const m = document.getElementById("mail"); m.textContent = C.provider.email; m.href = "mailto:" + C.provider.email;
   /* QR platba na ukázkové faktuře (formát SPD, ukázkový účet) */
-  try { const q = qrcode(0, "M"); q.addData("SPD*1.0*ACC:CZ6508000000192000145399*AM:18150.00*CC:CZK*X-VS:20260041*MSG:FAKTURA 20260041"); q.make(); document.getElementById("qr").innerHTML = q.createSvgTag({ cellSize: 2, margin: 0, scalable: true }); } catch(e) {}
+  try { const q = qrcode(0, "M"); q.addData("SPD*1.0*ACC:CZ6508000000192000145399*AM:27225.00*CC:CZK*X-VS:20260015*MSG:FAKTURA 20260015"); q.make(); document.getElementById("qr").innerHTML = q.createSvgTag({ cellSize: 2, margin: 0, scalable: true }); } catch(e) {}
+
+  /* úvod: OSVČ / firma */
+  const MES = ["leden", "únor", "březen", "duben", "květen", "červen", "červenec", "srpen", "září", "říjen", "listopad", "prosinec"];
+  const ted = new Date(), minuly = new Date(ted.getFullYear(), ted.getMonth() - 1, 1);
+  document.getElementById("uStitek").textContent = `Balík pro účetní · ${MES[minuly.getMonth()]} ${minuly.getFullYear()}`;
+  const TXT = {
+    osvc: { c: "var(--simple)", prod: "FaqrAi Simple", id: "simple", popis: "Faktury, účtenky a výpis z banky – program je seřadí, spáruje platby a pošle účetní jeden balík. Nebo vám rovnou spočítá daň a pojistné." },
+    firma: { c: "var(--faqrai)", prod: "FaqrAi", id: "faqrai", popis: "Vydané i přijaté doklady, DPH, kontrolní hlášení a výpis z banky – program je seřadí, spáruje platby a pošle účetní jeden balík. Vy dál děláte svou práci." }
+  };
+  const main = document.getElementById("obsah");
+  const zvol = kdo => {
+    const t = TXT[kdo], z = od(t.id);
+    main.style.setProperty("--c", t.c);
+    document.getElementById("uProd").textContent = t.prod;
+    document.getElementById("uPopis").textContent = t.popis;
+    document.getElementById("uCena").textContent = z ? `pak od ${kc(z.month)} měsíčně` : "";
+    document.querySelectorAll(".u-prepinac button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.kdo === kdo)));
+  };
+  document.querySelectorAll(".u-prepinac button").forEach(b => b.addEventListener("click", () => zvol(b.dataset.kdo)));
+  zvol("osvc");
+
+  /* běžící pás funkcí */
+  const F = ["QR platba", "ISDOC", "Kontrolní hlášení", "Přehled pro ČSSZ", "Upomínky", "Párování plateb z banky", "OCR účtenek", "Shoptet a WooCommerce", "Pokladna", "Balík pro účetní"];
+  document.getElementById("uPas").innerHTML = [...F, ...F].map(f => `<span>${f}</span>`).join("");
+
+  /* termíny roku – posun na pracovní den podle svátků (včetně Velikonoc) */
+  const R = ted.getFullYear();
+  const velikonoce = y => { const a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, mm = Math.floor((a + 11 * h + 22 * l) / 451), mes = Math.floor((h + l - 7 * mm + 114) / 31), den = ((h + l - 7 * mm + 114) % 31) + 1; return new Date(y, mes - 1, den); };
+  const v = velikonoce(R), svatky = new Set(["1.1", "1.5", "8.5", "5.7", "6.7", "28.9", "28.10", "17.11", "24.12", "25.12", "26.12", `${new Date(R, v.getMonth(), v.getDate() - 2).getDate()}.${new Date(R, v.getMonth(), v.getDate() - 2).getMonth() + 1}`, `${new Date(R, v.getMonth(), v.getDate() + 1).getDate()}.${new Date(R, v.getMonth(), v.getDate() + 1).getMonth() + 1}`]);
+  const prac = (mes, den) => { const d = new Date(R, mes, den); while (d.getDay() === 0 || d.getDay() === 6 || svatky.has(`${d.getDate()}.${d.getMonth() + 1}`)) d.setDate(d.getDate() + 1); return d; };
+  const fd = d => `${d.getDate()}. ${d.getMonth() + 1}.`;
+  const pE = prac(4, 1), pPrehl = prac(pE.getMonth() + 1, pE.getDate());
+  const terminyMesice = i => {
+    const out = [{ den: fd(prac(i, 25)), co: "Přiznání k DPH a kontrolní hlášení", p: "XML za předchozí měsíc připraví z vašich dokladů a den předem připomene." }];
+    if (i === 3) out.push({ den: fd(prac(3, 1)), co: "Daňové přiznání na papíře", p: "Vyplní přiznání k dani z příjmů včetně příloh." });
+    if (i === pE.getMonth()) out.push({ den: fd(pE), co: "Přiznání elektronicky", p: "Podání přes datovou schránku nebo daňový portál." });
+    if (i === pPrehl.getMonth()) out.push({ den: fd(pPrehl), co: "Přehledy pro ČSSZ a pojišťovnu", p: "Při elektronickém podání přiznání. Program spočítá pojistné a nové zálohy." });
+    if (i === 6) out.push({ den: fd(prac(6, 1)), co: "Přiznání s daňovým poradcem", p: "Podklady pro poradce v jednom balíku." });
+    if (i % 3 === 2) out.push({ den: fd(prac(i, 15)), co: "Záloha na daň z příjmů", p: "Jen pokud vám povinnost platit zálohy vznikla – program to ohlídá." });
+    if (out.length < 3) out.push({ den: fd(new Date(R, i, 1)), co: `Balík pro účetní za ${MES[(i + 11) % 12]}`, p: "PDF, ISDOC a souhrny v jednom ZIPu – program ho může poslat sám." });
+    const k = d => { const [dd, mm] = d.split(".").map(x => parseInt(x)); return mm * 100 + dd; };
+    return out.slice(0, 3).sort((x, y) => k(x.den) - k(y.den));
+  };
+  const DNES = ted.getMonth(), osa = document.getElementById("uOsa");
+  document.getElementById("uHotovo").style.width = `${((DNES + .5) / 12) * 100}%`;
+  osa.insertAdjacentHTML("beforeend", MES.map((n, i) => `<button type="button" data-m="${i}" aria-pressed="false" aria-label="${n}">${n.slice(0, 3)}<i class="${i < DNES ? "pryc" : i === DNES ? "ted" : ""}" style="animation-delay:${i * .08}s${i === DNES ? `,1.2s` : ""}"></i></button>`).join(""));
+  const fajfka = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1D6B52" stroke-width="3" role="img" aria-label="Hotovo"><path d="M4 12l5 5L20 6"/></svg>`;
+  const ukaz = i => {
+    osa.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.m === i)));
+    document.getElementById("uMesic").textContent = MES[i][0].toUpperCase() + MES[i].slice(1);
+    document.getElementById("uShrnuti").textContent = i < DNES ? "Hotovo – všechno podáno včas." : i === DNES ? "Teď. Program má podklady připravené." : "Program připomene předem.";
+    document.getElementById("uKarty").innerHTML = terminyMesice(i).map(t => `<div><span class="den">${t.den}${i < DNES ? fajfka : ""}</span><h3>${t.co}</h3><p>${t.p}</p></div>`).join("");
+  };
+  osa.addEventListener("click", e => { const b = e.target.closest("button[data-m]"); if (b) ukaz(+b.dataset.m); });
+  ukaz(DNES);
+  document.getElementById("uPozn").textContent = `Termíny roku ${R} posunuté na pracovní den. DPH a kontrolní hlášení pro plátce s měsíčním obdobím; program počítá podle vašeho nastavení.`;
 })();
 </script>
-<script src="mobil.js?v=202611232232"></script>
+<script src="mobil.js?v=202611240955"></script>
 </body>
 </html>
