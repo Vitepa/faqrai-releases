@@ -12,7 +12,7 @@ window.FAQRAI_CFG = {
   prodejOd: "2026-12-01T00:00:00+01:00",      // do tohoto okamžiku web nenabízí koupi licence, jen beta test zdarma (mobil.js)
   supportEmail: "podpora@faqrai.cz",         // technická podpora (stránka Podpora, převod dat, reklamace)
   orderEndpoint: "https://faqrai-stahovani.faqrai.workers.dev/objednavka",   // objednávky jdou do služby na Cloudflare (čtou se ve Správci); prázdné = e-mailem
-  account: { number: "", iban: "" },
+  account: { number: "4325716005/5500", iban: "CZ53 5500 0000 0043 2571 6005" },   // firemní účet (Raiffeisenbank)
   prispevky: { castky: [200, 500, 1000], zprava: "PRISPEVEK FAQRAI" },   // stránka Podpořte vývoj: nabízené částky a zpráva pro příjemce (QR používá IBAN výše)
   beta: { endpoint: "https://faqrai-stahovani.faqrai.workers.dev/prihlaska" },   // přihlášky do beta testu: služba na Cloudflare (čtou se v generátoru licencí); prázdné = e-mailem         // bankovní účet; IBAN je potřeba pro QR platbu (např. "CZ6508000000192000145399")
   releases: "https://github.com/Vitepa/faqrai-releases/releases/latest",
