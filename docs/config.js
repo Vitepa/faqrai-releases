@@ -109,5 +109,5 @@ window.FAQRAI_CFG = {
 
 /* Souhlas s ukládáním v prohlížeči (cookies a localStorage). Nezbytné: jen záznam této volby.
    Preferenční (se souhlasem): zapamatování vyplněného formuláře před stažením („faqrai-stazeni“). Analytické a reklamní nepoužíváme. */
-window.faqraiSouhlas = function () { try { return JSON.parse(localStorage.getItem("faqrai-cookies") || "null"); } catch (e) { return null; } };
-window.faqraiPreferencni = function () { const s = window.faqraiSouhlas(); return !!(s && s.preferencni); };
+window.faqraiSouhlas = function () { try { const s = JSON.parse(localStorage.getItem("faqrai-cookies") || "null"); return s && s.v >= 2 ? s : null; } catch (e) { return null; } };   // v1 (bez analytických kategorií) = je potřeba zeptat se znovu
+window.faqraiPreferencni = function () { let s = window.faqraiSouhlas(); if (!s) { try { const o = JSON.parse(localStorage.getItem("faqrai-cookies") || "null"); if (o && o.preferencni) s = o; } catch (e) {} } return !!(s && s.preferencni); };
