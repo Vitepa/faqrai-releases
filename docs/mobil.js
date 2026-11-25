@@ -57,7 +57,10 @@
   }
   // předvolby cookies: lišta při první návštěvě a odkaz „Nastavení cookies“ v patičce
   const ulozVolbu = v => { try { localStorage.setItem("faqrai-cookies", JSON.stringify({ v: 2, preferencni: !!v.preferencni, analyticke: !!v.analyticke, marketingove: !!v.marketingove, kdy: new Date().toISOString() })); if (!v.preferencni) localStorage.removeItem("faqrai-stazeni"); } catch (e) {} if (window.faqraiGtm) faqraiGtm(v); };
-  const lista = document.createElement("div"); lista.className = "cookies-lista"; lista.setAttribute("role", "region"); lista.setAttribute("aria-label", "Cookies");
+  const lista = document.createElement("dialog"); lista.className = "cookies-lista"; lista.setAttribute("aria-label", "Cookies");
+  /* bez volby nejde s webem pracovat (okno přes stránku); výjimka: zásady ochrany údajů, na které vede odkaz Podrobnosti */
+  const naZasadach = /ochrana-udaju\.html$/.test(location.pathname);
+  lista.addEventListener("cancel", e => { if (!(window.faqraiSouhlas && faqraiSouhlas())) e.preventDefault(); });
   const vykresli = nastaveni => {
     const s = (window.faqraiSouhlas && faqraiSouhlas()) || { preferencni: window.faqraiPreferencni && faqraiPreferencni() };
     const chk = (id, on, nazev, popis) => `<label class="cl-r"><input type="checkbox" id="${id}" ${on ? "checked" : ""}> <span><b>${nazev}</b> – ${popis}</span></label>`;
@@ -69,7 +72,7 @@
         <div class="cl-b"><button class="btn primary" id="clUloz" type="button">Uložit volbu</button><button class="btn" id="clVse" type="button">Povolit vše</button><a href="ochrana-udaju.html#cookies">Podrobnosti</a></div></div>`
       : `<div class="wrap"><p>Web potřebuje jen nezbytné úložiště. S vaším souhlasem použijeme i cookies Googlu pro měření návštěvnosti a reklamy a zapamatujeme si údaje z formuláře před stažením. Souhlas můžete kdykoli změnit v patičce. <a href="ochrana-udaju.html#cookies">Podrobnosti</a></p>
         <div class="cl-b"><button class="btn" id="clAno" type="button">Povolit vše</button><button class="btn" id="clNe" type="button">Jen nezbytné</button><button class="btn" id="clNast" type="button">Nastavení</button></div></div>`;
-    const zavri = () => lista.remove();
+    const zavri = () => { if (lista.open) lista.close(); lista.remove(); document.documentElement.classList.remove("cookies-ceka"); };
     const q = id => lista.querySelector("#" + id);
     const vse = { preferencni: true, analyticke: true, marketingove: true };
     if (q("clAno")) q("clAno").onclick = () => { ulozVolbu(vse); zavri(); };
@@ -78,6 +81,11 @@
     if (q("clNast")) q("clNast").onclick = () => vykresli(true);
     if (q("clUloz")) q("clUloz").onclick = () => { ulozVolbu({ preferencni: q("clPref").checked, analyticke: q("clAnal").checked, marketingove: q("clMark").checked }); zavri(); };
     if (!lista.isConnected) document.body.appendChild(lista);
+    const blokovat = !naZasadach || nastaveni;
+    lista.classList.toggle("okno", blokovat);
+    if (!lista.open) { try { blokovat ? lista.showModal() : lista.show(); } catch (e) { lista.setAttribute("open", ""); } }
+    if (blokovat) document.documentElement.classList.add("cookies-ceka");
+    const prvni = lista.querySelector("#clAno, #clUloz"); if (prvni && blokovat) prvni.focus();
   };
   if (!window.faqraiSouhlas || !faqraiSouhlas()) vykresli(false);
   const pata = document.querySelector("footer nav");
