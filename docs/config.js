@@ -19,6 +19,7 @@ window.FAQRAI_CFG = {
   releasesApi: "https://api.github.com/repos/Vitepa/faqrai-releases/releases",   // pro stránku Ke stažení (seznam změn)
   sluzba: "https://faqrai-stahovani.faqrai.workers.dev",                          // služba ke stažení (cloudflare/stahovani): instalačky aktuální verze
   publicKey: "5Begww25ucs6NtjGc04n9BNlK9saI39/nNcVYj2U75o=",                     // veřejný klíč licencí (ověření na webu); musí být shodný s src/licence-public-key.txt
+  cloudKey: "EEEiSc+jCpcOaEZhSiUK6BGfgpbMeuxdOPxC9oOch+c=",   // veřejný klíč služby pro licence vydané automaticky po zaplacení (omezená platnost, viz cloudflare/stahovani/src/licence-cloud.js)
   trialDays: 30,
   invoiceDueDays: 14,
 
@@ -55,7 +56,10 @@ window.FAQRAI_CFG = {
       desc: "Podvojné účetnictví pro s.r.o. a spolky", seats: true, year: 4990, seatYear: 1490, lifetime: null,
       bullets: ["účetní deník, hlavní kniha, osnova pro podnikatele", "předkontace dokladů z FaqrAi", "rozvaha, výsledovka, příloha", "přiznání k DPPO"] },
     { id: "server", byte: 4, name: "FaqrAi Server", short: "Server", color: "#17465C", logo: "img/logo-server.svg", available: false, eta: "2027",
-      desc: "Server ve vaší síti pro celou firmu", seats: true, year: 14900, seatYear: 990, lifetime: null, perUserLabel: "uživatel",
+      desc: "Server ve vaší síti pro celou firmu", seats: true, lifetime: null, perUserLabel: "stanice",
+      // roční paušál za firmu podle počtu stanic (stanice = počítač s aplikací FaqrAi připojený k serveru; web se nepočítá);
+      // licence aplikací na stanicích se platí zvlášť; jen roční předplatné, zkušební režim 30 dní (1 firma, 3 stanice)
+      year: 12900, includedSeats: 5, seatYear: 790, firmYear: 2990, maxSeats: 254, maxFirms: 50, yearlyOnly: true,
       bullets: ["všechny počítače s FaqrAi nad jednou šifrovanou databází", "přihlášení přes Active Directory nebo Entra ID", "doklady i v SharePointu, přístup z prohlížeče", "sám se aktualizuje, FixPacky i bez internetu"] }
   ],
 
